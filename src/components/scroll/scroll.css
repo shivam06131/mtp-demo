@@ -14,7 +14,7 @@
   color: #333333;
   font-size: 26px;
   line-height: 31px;
-  padding-top: 16px;
+  padding-top: 35px;
   font-weight: normal;
   font-family: "chantal";
 }
@@ -38,21 +38,31 @@
 
   display: flex;
   justify-content: center;
+  min-height: 200px;
+  transition: 600ms;
+}
+.search2 {
+  min-height: 70px !important;
 }
 .search-form-wrap {
   background-color: #f9f8f7;
   display: flex;
   min-width: 885px;
 }
+.form-wrap-2 {
+  min-width: auto;
+}
 .search-sub {
   display: flex;
   align-items: center;
 }
 .sub {
-  padding-right: 143px !important;
+  padding-right: 12px !important;
+  /* width: 160px !important; */
 }
 .location {
-  padding-right: 64px !important;
+  padding-right: 40px !important;
+  /* width: 160px !important; */
 }
 .search-sub::after {
   content: "";

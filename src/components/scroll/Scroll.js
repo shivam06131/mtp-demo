@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../index.css";
 import "../scroll/scroll.css";
 import "../banner/Banner.css";
@@ -21,51 +21,27 @@ import priceIcon from "../../assets/price/price-icon.png";
 
 const Scroll = () => {
   const [display, setDisplay] = useState();
-  const searchRef = createRef();
-  const scrollHeightRef = createRef();
-
-  useEffect(() => {
-    console.log(searchRef);
-  }, [searchRef]);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      // const scrollTop =
-      //   window.pageYOffset || document.documentElement.scrollTop;
-      // if (document.getElementById("toggleSearchForm")) {
-      //   if (scrollTop > document.getElementById("toggleSearchForm").offsetTop) {
-      //     setInViewPort(true);
-      //   } else {
-      //     setInViewPort(false);
-      //   }
-      // }
-      console.log("Scrolling");
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      if (
+        scrollTop + document.documentElement.clientHeight - 200 >
+        document.getElementById("search").offsetTop
+      ) {
+        setDisplay(true);
+      } else {
+        setDisplay(false);
+      }
     });
     return () => {
       window.removeEventListener("scroll", () => {});
     };
   }, []);
 
-  const onScroll = () => {
-    const search = searchRef.current.getBoundingClientRect();
-    const pageHeight = scrollHeightRef.current.getBoundingClientRect();
-    console.log("page ,div", pageHeight.height, search.top);
-    if (pageHeight.height > search.top) {
-      console.log("search bar appeared");
-      setDisplay(true);
-    }
-    if (search.top > pageHeight.height) {
-      console.log("less");
-      setDisplay(false);
-    }
-  };
-
   return (
-    <div
-      onScroll={onScroll}
-      style={{ overflowY: "scroll", height: "100vh" }}
-      ref={scrollHeightRef}
-    >
+    <div>
       <div>
         {/*   ----------navbar ------------*/}
         <div className="nav-wrapper">
@@ -132,7 +108,7 @@ const Scroll = () => {
               <img className="scroll-arrow" src={arrow} alt="" />
             </div>
           </div>
-          <div className="search" ref={searchRef}>
+          <div className="search" id="search">
             <div className="container search-center">
               <div className="search-form-wrap">
                 <div className="search-sub">
@@ -159,7 +135,7 @@ const Scroll = () => {
         </div>
         {/*   ----------search ------------*/}
         <div
-          className="search"
+          className="search search2"
           style={{
             position: "fixed",
             bottom: 0,
@@ -167,12 +143,12 @@ const Scroll = () => {
             // right: "17px",
             width: "100%",
             opacity: display ? "1" : "0",
-            height: display ? "100px" : "30px",
+            // minHeight: display && "70px!important",
             transition: "200ms",
           }}
         >
           <div className="container search-center">
-            <div className="search-form-wrap">
+            <div className="search-form-wrap form-wrap-2">
               <div className="search-sub">
                 <img src={search} alt="" />
                 <input
