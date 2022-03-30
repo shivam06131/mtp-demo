@@ -1,0 +1,31 @@
+.price {
+  background-color: #f4efe6;
+  padding: 257px 0px;
+  display: flex;
+  justify-content: center;
+}
+.price-data-holder {
+  display: flex;
+}
+.price-content {
+  padding-left: 77px;
+  min-height: 236px;
+  max-width: 718px;
+}
+.price-content h6 {
+  font-size: 34px;
+  line-height: 52px;
+  color: #333333;
+  font-family: "solitaire-mvb-pro";
+  font-weight: normal;
+}
+.price-content p {
+  color: #ea9500;
+  font-size: 12px;
+  font-weight: 900;
+  padding-top: 13px;
+}
+.price-icon {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,73 @@
+.banner {
+  display: flex;
+  justify-content: center;
+  background: conic-gradient(
+    from 3deg at 44% 100%,
+    rgba(244, 239, 230, 1) 0%,
+    rgba(244, 239, 230, 1) 13%,
+    rgba(244, 239, 230, 1) 27%,
+    rgba(234, 224, 215, 1) 50%,
+    rgba(234, 224, 215, 1) 76%,
+    rgba(234, 224, 215, 1) 100%
+  );
+}
+.left-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 20px;
+}
+.right-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 20px;
+}
+.status-img {
+  height: 35px;
+}
+.nav {
+  display: flex;
+}
+.left-banner {
+  background-color: #eae0d7;
+}
+.left-banner ul {
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 6px;
+  padding-bottom: 20px;
+}
+.left-banner ul li {
+  text-decoration: none;
+  list-style: none;
+  padding-right: 80px;
+}
+.left-banner ul li p {
+  margin: 0px;
+  letter-spacing: 0.6px;
+  color: #666666;
+  text-transform: uppercase;
+}
+
+.right-banner {
+  background-color: #f4efe6;
+}
+.right-banner ul {
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 6px;
+  padding-bottom: 20px;
+}
+.right-banner ul li {
+  text-decoration: none;
+  list-style: none;
+}
+.right-banner ul li p {
+  margin: 0px;
+  letter-spacing: 0.6px;
+  color: #666666;
+  text-transform: uppercase;
+}

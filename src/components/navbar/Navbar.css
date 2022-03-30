@@ -1,0 +1,56 @@
+.nav-wrapper {
+  padding: 17px 0px;
+  display: flex;
+  justify-content: center;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.explore-heading {
+  margin: 0px;
+  letter-spacing: 0.6px;
+  color: #666666;
+  text-transform: uppercase;
+  opacity: 1;
+  cursor: pointer;
+}
+.nav-right {
+  display: flex;
+}
+.icon {
+  cursor: pointer;
+  padding-left: 210px;
+}
+.nav-right p {
+  letter-spacing: 0.6px;
+  color: #666666;
+  text-transform: uppercase;
+  opacity: 1;
+  cursor: pointer;
+}
+.nav-right a {
+  text-decoration: none;
+  letter-spacing: 0.6px;
+  color: #ffffff;
+  text-transform: uppercase;
+  opacity: 1;
+  background-color: #c6521e;
+  padding: 9px 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 37px;
+  border-bottom-right-radius: 37px;
+  cursor: pointer;
+}
+.nav-right-inner {
+  padding-right: 21px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+}
+.dropdown {
+  padding-right: 42px;
+}
