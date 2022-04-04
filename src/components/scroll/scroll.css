@@ -43,6 +43,7 @@
 }
 .search2 {
   min-height: 70px !important;
+  z-index: 3;
 }
 .search-form-wrap {
   background-color: #f9f8f7;

@@ -5,3 +5,11 @@ export const getData = async () => {
   const value = await data.json();
   return value;
 };
+
+export const getVideo = async () => {
+  const data = await fetch(
+    "https://api.tutorspoint.uk/api/get-site-setting-details"
+  );
+  const value = await data.json();
+  return value;
+};

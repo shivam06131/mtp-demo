@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "../../index.css";
 import "../scroll/scroll.css";
 import "../banner/Banner.css";
@@ -19,9 +20,30 @@ import "../navbar/Navbar.css";
 import "../styles/price.css";
 import priceIcon from "../../assets/price/price-icon.png";
 
+import "../styles/learning.css";
+import LearnOne from "../../assets/learning/learn-1.png";
+import LearnTwo from "../../assets/learning/learn-2.png";
+import LearnThree from "../../assets/learning/learn-3.png";
+
+import "../styles/feature-tutor.css";
+
+import Tab from "react-bootstrap/Tab";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Nav from "react-bootstrap/Nav";
+// import Sonnet from "react-bootstrap/Sonnet";
+
 const Scroll = () => {
   const [display, setDisplay] = useState();
+  const dispatch = useDispatch();
 
+  const video = useSelector((state) => state);
+  let videoData;
+  if (Array.isArray(video)) {
+    [videoData] = video;
+    console.log("videoData", videoData);
+  }
+  //scroll
   useEffect(() => {
     window.addEventListener("scroll", () => {
       const scrollTop =
@@ -38,6 +60,11 @@ const Scroll = () => {
     return () => {
       window.removeEventListener("scroll", () => {});
     };
+  }, []);
+
+  //video
+  useEffect(() => {
+    dispatch({ type: "GET_VIDEO" });
   }, []);
 
   return (
@@ -188,7 +215,71 @@ const Scroll = () => {
             </div>
           </div>
         </div>
-        {/*   ---------- ------------*/}
+        {/*   ---------- Learning Platform ------------*/}
+        <div className="learning-platform">
+          <div className="container">
+            <h5 className="learn-heading lear">
+              The most personalized-distant learning platform
+            </h5>
+            <div className="learn-banner">
+              <div className="banner-item">
+                <div className="banner-img-wrap">
+                  <img src={LearnOne} alt="" />
+                </div>
+                <p className="banner-body">
+                  Dana Learns anytime anywhere she likes on the smart device of
+                  her preference, it’s very convenient in her time-zone
+                </p>
+              </div>
+              <div className="banner-item">
+                <div className="banner-img-wrap">
+                  <img src={LearnTwo} alt="" />
+                </div>
+                <p className="banner-body">
+                  The ratings and comprehensive profile allows her to learn from
+                  the most qualified tutor in the world which also includes
+                  their priceless resources
+                </p>
+              </div>
+              <div className="banner-item">
+                <div className="banner-img-wrap">
+                  <img src={LearnThree} alt="" />
+                </div>
+                <p className="banner-body">
+                  She finds the sessions quite effective as the classes have
+                  been designed for a real-time seamless learning experience &
+                  her parents can see her progress on the application too.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/*   ----------Featured Tutor  ------------*/}
+        {videoData && (
+          <div className="feature-tutor">
+            <div className="feature-video">
+              <video
+                className="video"
+                autoPlay
+                muted
+                src={videoData && videoData.tutor_of_the_week_video}
+                preload="auto"
+                loop
+                // controls
+              ></video>
+              {/*<div className="video-detail">afdas</div> */}
+              {/* <div className="container feature-banner-container">
+                <div className="feature-banner ">
+                  <h6>Our Featured Tutor of the Month</h6>
+                </div>
+              </div>*/}
+            </div>
+          </div>
+        )}
+
+        {/*   ---------- tabs ------------*/}
+
+        {/*   ----------  ------------*/}
       </div>
     </div>
   );

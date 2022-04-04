@@ -1,0 +1,30 @@
+.feature-video {
+  width: 100%;
+  height: 750px;
+  /* position: relative; */
+  /* margin-bottom: 90px; */
+  /* background-color: #888; */
+  padding-bottom: 127px;
+}
+.video {
+  width: 100%;
+  height: 100%;
+}
+.video-detail {
+  position: absolute;
+  bottom: 0px;
+  left: 20px;
+  z-index: 2;
+}
+.feature-banner h6 {
+  position: absolute;
+  bottom: 0px;
+  left: 20px;
+  font-weight: bold;
+  line-height: 27px;
+  font-size: 20px;
+  columns: #707070;
+}
+.feature-banner-container {
+  position: relative;
+}

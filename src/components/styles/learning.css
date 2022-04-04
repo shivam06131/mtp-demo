@@ -1,0 +1,43 @@
+.learning-platform {
+  background-color: #f9f8f7;
+  padding: 122px 0px;
+  display: flex;
+  justify-content: center;
+}
+.learn-heading {
+  font-family: "Chantal";
+  font-size: 48px;
+  line-height: 59px;
+  font-weight: normal;
+  text-align: center;
+}
+.learn-banner {
+  display: flex;
+  justify-content: space-between;
+}
+.banner-item {
+  max-width: 400px;
+}
+.banner-img-wrap {
+  min-height: 265px;
+  display: flex;
+  align-items: flex-end;
+}
+.banner-item img {
+  /* padding-top: 64px;
+  padding-bottom: 51px; */
+}
+.banner-item p {
+  font-size: 19px;
+  font-family: "Solitaire MVB Pro";
+  line-height: 28px;
+  text-align: center;
+  color: #666666;
+  padding-top: 51px;
+}
+/* .second-item {
+  padding-top: 60px !important;
+}
+.last-item {
+  padding-top: 0px !important;
+} */
