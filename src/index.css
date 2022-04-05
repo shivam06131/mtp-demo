@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
   margin: 0px;
+  font-family: "Solitaire MVB Pro";
 }
 
 code {
@@ -13,7 +14,7 @@ code {
     monospace;
 }
 .container {
-  max-width: 1225px;
+  max-width: 1225px !important;
   width: 100%;
   padding: 0px 15px;
   box-sizing: border-box;
@@ -26,4 +27,8 @@ h4,
 h5,
 h6 {
   margin: 0px;
+}
+a:hover {
+  color: #c6521e;
+  cursor: pointer;
 }

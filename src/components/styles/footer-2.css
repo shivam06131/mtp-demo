@@ -1,0 +1,28 @@
+.footer-2 {
+  background-color: #c4bdb8;
+}
+.footer-2-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+.footer-2-wrap > a {
+  color: #333333;
+  text-decoration: none;
+  padding: 29px 0px;
+}
+.footer2-inner-wrap {
+  padding: 29px 0px;
+}
+.footer2-inner-wrap a {
+  color: #333333;
+  text-decoration: none;
+}
+.footer2-inner-wrap img {
+  text-decoration: none;
+  padding: 29px 0px;
+}
+.footer2-inner-wrap-one {
+  display: flex;
+  min-width: 332px;
+  justify-content: space-between;
+}

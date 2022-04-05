@@ -1,0 +1,45 @@
+.tutor {
+  padding: 87px 0px 68px 0px;
+  background-color: #f4efe6;
+}
+.tutor-wrap {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 55px;
+}
+.tutor-left h4 {
+  padding-top: 87px;
+  font-family: "Chantal";
+  font-size: 48px;
+  line-height: 59px;
+}
+.tutor-left p {
+  padding-top: 37px;
+  max-width: 490px;
+  font-size: 19px;
+  line-height: 28px;
+}
+.tutor-right {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-tutor {
+  min-height: auto;
+  transition: 500ms;
+}
+.container-tutor {
+  justify-content: center;
+  transition: 500ms ease-out;
+  width: 100% !important;
+}
+
+.btn-holder {
+  padding-top: 15px;
+}
+
+.star-icon {
+  height: 20px;
+}

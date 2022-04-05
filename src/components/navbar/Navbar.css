@@ -30,7 +30,7 @@
   opacity: 1;
   cursor: pointer;
 }
-.nav-right a {
+.button-primary {
   text-decoration: none;
   letter-spacing: 0.6px;
   color: #ffffff;
@@ -40,7 +40,7 @@
   padding: 9px 27px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   border-top-right-radius: 37px;
   border-bottom-right-radius: 37px;
   cursor: pointer;
@@ -50,6 +50,9 @@
   display: flex;
   cursor: pointer;
   align-items: center;
+}
+.nav-right-inner p {
+  margin: 0px;
 }
 .dropdown {
   padding-right: 42px;

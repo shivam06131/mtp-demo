@@ -27,21 +27,44 @@ import LearnThree from "../../assets/learning/learn-3.png";
 
 import "../styles/feature-tutor.css";
 
+import "../styles/tabs.css";
 import Tab from "react-bootstrap/Tab";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 // import Sonnet from "react-bootstrap/Sonnet";
+import tabImgOne from "../../assets/tabs/one.png";
+import tabImgTwo from "../../assets/tabs/two.png";
+import tabImgThree from "../../assets/tabs/three.png";
+import tabImgFour from "../../assets/tabs/four.png";
+import tab_one from "../../assets/tabs/tab-one.png";
+
+import Rating from "react-rating";
+import { Fade } from "react-bootstrap";
+
+import "../styles/tutor.css";
+import tutorImage from "../../assets/tutor/Group 1522.png";
+
+import "../styles/footer.css";
+
+import "../styles/footer-2.css";
+import footer2_image from "../../assets/footer-2/social network.png";
+
+import StartImg from "../../assets/video/star.png";
+
+import bannerVideo from "../../assets/banner/home_banner_video.mp4";
 
 const Scroll = () => {
   const [display, setDisplay] = useState();
+  const [displaySearchTwo, setDisplaySearchTwo] = useState(false);
   const dispatch = useDispatch();
 
   const video = useSelector((state) => state);
+  // const video2 = useSelector((state) => state.firstVideo);
+
   let videoData;
   if (Array.isArray(video)) {
     [videoData] = video;
-    console.log("videoData", videoData);
   }
   //scroll
   useEffect(() => {
@@ -61,10 +84,33 @@ const Scroll = () => {
       window.removeEventListener("scroll", () => {});
     };
   }, []);
+  console.log(display);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+
+      if (
+        scrollTop + document.documentElement.clientHeight - 100 >
+        document.getElementById("tutor-search").offsetTop
+      ) {
+        setDisplaySearchTwo(true);
+        setDisplay(false);
+      } else {
+        setDisplaySearchTwo(false);
+        // setDisplay(true);
+      }
+    });
+    return () => {
+      window.removeEventListener("scroll", () => {});
+    };
+  }, []);
 
   //video
   useEffect(() => {
     dispatch({ type: "GET_VIDEO" });
+    // dispatch({ type: "GET_VIDEO_ONE" });
   }, []);
 
   return (
@@ -84,17 +130,30 @@ const Scroll = () => {
                 <p className="dropdown">En / aed</p>
                 <p>sign up</p>
               </div>
-              <a href="#">log in</a>
+              <a className="button-primary" href="#">
+                log in
+              </a>
             </div>
           </div>
         </div>
         {/*   ----------banner ------------*/}
         <div className="banner">
           <div className="container">
-            <div className="nav">
+            <div className="banner-wrap"></div>
+            <div className="banner-icons">
+              <img src={light} alt="" className="status-img" />
+              <img src={live} alt="" className="status-img live-img" />
+            </div>
+            <video
+              src={bannerVideo}
+              style={{ width: "100%" }}
+              preload="auto"
+              autoPlay
+              loop
+              muted
+            ></video>
+            <div className="banner-bottom">
               <div className="left-banner">
-                <img src={light} alt="" className="status-img" />
-                <img src={imgOne} alt="" />
                 <ul>
                   <li>
                     <p>Dubai</p>
@@ -111,8 +170,6 @@ const Scroll = () => {
                 </ul>
               </div>
               <div className="right-banner">
-                <img src={live} alt="" className="status-img" />
-                <img src={imgTwo} alt="" />
                 <ul>
                   <li>
                     <p>Dubai</p>
@@ -167,15 +224,18 @@ const Scroll = () => {
             position: "fixed",
             bottom: 0,
             left: 0,
-            // right: "17px",
             width: "100%",
             opacity: display ? "1" : "0",
-            // minHeight: display && "70px!important",
-            transition: "200ms",
           }}
         >
           <div className="container search-center">
-            <div className="search-form-wrap form-wrap-2">
+            <div
+              className="search-form-wrap"
+              style={{
+                minWidth: displaySearchTwo ? "100%" : "60%",
+                transition: "500ms",
+              }}
+            >
               <div className="search-sub">
                 <img src={search} alt="" />
                 <input
@@ -267,19 +327,248 @@ const Scroll = () => {
                 loop
                 // controls
               ></video>
-              {/*<div className="video-detail">afdas</div> */}
-              {/* <div className="container feature-banner-container">
-                <div className="feature-banner ">
-                  <h6>Our Featured Tutor of the Month</h6>
+              <div className="video-details">
+                <div className="container inner-container">
+                  <div className="video-data-container">
+                    <Rating
+                      emptySymbol={<img src={StartImg} className="star-icon" />}
+                    />
+                    <h6>Meet Miss McGrath</h6>
+                    <p className="video-body">
+                      Teaches Physics for Ordinary & Advanced Level Cambridge
+                      International Examinations
+                    </p>
+                    <p>learn more</p>
+                  </div>
                 </div>
-              </div>*/}
+              </div>
             </div>
           </div>
         )}
-
         {/*   ---------- tabs ------------*/}
+        <div className="tabs">
+          <div className="container">
+            <Tab.Container
+              id="left-tabs-example"
+              defaultActiveKey="first"
+              transition={Fade}
+            >
+              <Row>
+                <Col sm={6}>
+                  <Nav variant="pills" className="flex-column">
+                    <Nav.Item className="nav-item">
+                      <Nav.Link eventKey="first" className="tab-toggler">
+                        <div className="tab-img-wrap">
+                          <div className="tab-logo">
+                            <img src={tabImgOne} alt="" />
+                          </div>
+                          <div className="tab-details">
+                            <h6>HD Quality</h6>
+                            <p>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Duis tristique lorem nulla.
+                            </p>
+                          </div>
+                        </div>
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className="nav-item">
+                      <Nav.Link eventKey="second" className="tab-toggler">
+                        <div className="tab-img-wrap">
+                          <div className="tab-logo">
+                            <img src={tabImgTwo} alt="" />
+                          </div>
+                          <div className="tab-details">
+                            <h6>Professional Tutors</h6>
+                            <p>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Duis tristique lorem nulla.
+                            </p>
+                          </div>
+                        </div>
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className="nav-item">
+                      <Nav.Link eventKey="third" className="tab-toggler">
+                        <div className="tab-img-wrap">
+                          <div className="tab-logo">
+                            <img src={tabImgThree} alt="" />
+                          </div>
+                          <div className="tab-details">
+                            <h6>Learn anytime, anywhere</h6>
+                            <p>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Duis tristique lorem nulla.
+                            </p>
+                          </div>
+                        </div>
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className="nav-item">
+                      <Nav.Link eventKey="four" className="tab-toggler">
+                        <div className="tab-img-wrap">
+                          <div className="tab-logo">
+                            <img src={tabImgFour} alt="" />
+                          </div>
+                          <div className="tab-details">
+                            <h6>Responsive</h6>
+                            <p>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Duis tristique lorem nulla.
+                            </p>
+                          </div>
+                        </div>
+                      </Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                </Col>
+                <Col sm={6} className="tab-col-Two">
+                  <Tab.Content>
+                    <Tab.Pane eventKey="first" className="tab-result">
+                      <img src={tab_one} alt="" className="tab-img" />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="second" className="tab-result">
+                      <img src={tab_one} alt="" className="tab-img" />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="third" className="tab-result">
+                      <img src={tab_one} alt="" className="tab-img" />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="four" className="tab-result">
+                      <img src={tab_one} alt="" className="tab-img" />
+                    </Tab.Pane>
+                  </Tab.Content>
+                </Col>
+              </Row>
+            </Tab.Container>
+          </div>
+        </div>
+        {/*   ---------- tutor  ------------*/}
+        <div className="tutor">
+          <div className="container tutor-wrap">
+            <div className="tutor-left">
+              <h4>Search your next tutor</h4>
+              <p>
+                Connecting learners with tutors and educational resources around
+                the world. My Tutor Point hosts the best tutors in the world and
+                connects them to the students who require a high standard
+                learning experience for a reasonable price.
+              </p>
+            </div>
+            <div className="tutor-right">
+              <img src={tutorImage} alt="" srcset="" />
+            </div>
+          </div>
+          {/*   ---------- search tutor ------------*/}
 
-        {/*   ----------  ------------*/}
+          <div className="container" id="tutor-search">
+            <div
+              className="search search-tutor"
+              style={{ borderRadius: display ? "0px" : "0px 35px 35px 0px" }}
+              id="search"
+            >
+              <div className="container search-center container-tutor ">
+                <div
+                  className="search-form-wrap"
+                  style={{
+                    minWidth: display ? "60%" : "94%",
+                    transitionProperty: "width flex ",
+                    transition: "all 400ms",
+                  }}
+                >
+                  <div className="search-sub">
+                    <img src={search} alt="" />
+                    <input
+                      type="text"
+                      className="search-input sub"
+                      placeholder="Choose a subject"
+                    />
+                  </div>
+                  <div className="search-sub">
+                    <img src={location} alt="" />
+                    <input
+                      type="text"
+                      className="search-input location"
+                      placeholder="Enter your location or address"
+                    />
+                  </div>
+                  <img src={web} alt="" className="web-icon" />
+                </div>
+                <img src={arrowRight} alt="" className="arrow-right" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/*   ---------- footer ------------*/}
+        <footer className="footer">
+          <div className="container footer-wrap">
+            <div className="footer-item">
+              <h6>Company</h6>
+              <p>About My Tutor Point</p>
+              <p>Careers</p>
+              <p>Press</p>
+              <p>Help</p>
+              <p>Contact Us</p>
+            </div>
+            <div className="footer-item">
+              <h6>Student</h6>
+              <p>Parent Account</p>
+              <p>Teacher's Directory</p>
+              <p>Subject Directory</p>
+            </div>
+            <div className="footer-item">
+              <h6>Tutor</h6>
+              <p>Become a Teacher</p>
+              <p>Teacher's Handbook</p>
+              <p>Directory</p>
+            </div>
+            <div className="footer-item">
+              <h6>Institutes</h6>
+              <p>lorem Ipsum</p>
+              <p>lorem Ipsum</p>
+              <p>lorem Ipsum</p>
+              <p>lorem Ipsum</p>
+            </div>
+            <div className="footer-item">
+              <h6>Communities</h6>
+              <p>lorem Ipsum</p>
+              <p>lorem Ipsum</p>
+              <p>lorem Ipsum</p>
+              <p>lorem Ipsum</p>
+              <p>lorem Ipsum</p>
+            </div>
+            <div className="footer-item">
+              <h6>Subscribe</h6>
+              <input
+                type="text"
+                className="search-input sub"
+                placeholder="Email"
+              />
+              <div className="btn-holder">
+                <a className="button-primary " href="#">
+                  log in
+                </a>
+              </div>
+            </div>
+          </div>
+        </footer>
+        {/*   ---------- footer 2  ------------*/}
+        <footer className="footer-2">
+          <div className="container footer-2-wrap">
+            <a href="#">© My Tutor Point Ltd, 2020</a>
+            <div className="footer2-inner-wrap footer2-inner-wrap-one">
+              <a href="#">Terms & Conditions </a>
+              <a href="#">Privacy </a>
+              <a href="#">Legal </a>
+              <a href="#">Sitemap </a>
+            </div>
+            <div>
+              <a href="#" className="footer2-inner-wrap">
+                <img src={footer2_image} alt="" srcset="" />
+              </a>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );

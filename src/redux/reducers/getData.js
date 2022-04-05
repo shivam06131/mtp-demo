@@ -6,6 +6,9 @@ const dataReducer = (state = {}, action) => {
     case "STORE_VIDEO_DATA":
       return (state.video = [action.payload]);
 
+    case "STORE_FIRST_VIDEO_DATA":
+      return (state.firstVideo = [action.payload]);
+
     default:
       return state;
   }

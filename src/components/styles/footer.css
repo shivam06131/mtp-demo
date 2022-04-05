@@ -1,0 +1,22 @@
+.footer {
+  padding: 45px 0px !important;
+  background-color: #e0d8d3;
+}
+.footer-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+.footer-item h6 {
+  font-family: "Solitaire MVB Pro";
+  font-size: 20px;
+  line-height: 27px;
+  color: #333333;
+  font-weight: bold;
+}
+.footer-item p {
+  font-family: "Solitaire MVB Pro";
+  font-size: 16px;
+  line-height: 34px;
+  color: #333333;
+  margin: 0px;
+}

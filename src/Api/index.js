@@ -13,3 +13,12 @@ export const getVideo = async () => {
   const value = await data.json();
   return value;
 };
+export const getFirstVideo = async () => {
+  console.log("get video 2");
+  const data = await fetch(
+    "https://api.tutorspoint.uk/api/augmentivs3files.s3.eu-west-2.amazonaws.com/home_banner_video.mp4"
+  );
+  console.log("value", value);
+  const value = await data.json();
+  return value;
+};

@@ -23,10 +23,6 @@
   display: flex;
   align-items: flex-end;
 }
-.banner-item img {
-  /* padding-top: 64px;
-  padding-bottom: 51px; */
-}
 .banner-item p {
   font-size: 19px;
   font-family: "Solitaire MVB Pro";
@@ -35,9 +31,3 @@
   color: #666666;
   padding-top: 51px;
 }
-/* .second-item {
-  padding-top: 60px !important;
-}
-.last-item {
-  padding-top: 0px !important;
-} */

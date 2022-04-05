@@ -2,32 +2,33 @@
   display: flex;
   justify-content: center;
   background: conic-gradient(
-    from 3deg at 44% 100%,
-    rgba(244, 239, 230, 1) 0%,
-    rgba(244, 239, 230, 1) 13%,
-    rgba(244, 239, 230, 1) 27%,
-    rgba(234, 224, 215, 1) 50%,
-    rgba(234, 224, 215, 1) 76%,
-    rgba(234, 224, 215, 1) 100%
+    from 180deg at 50% 0%,
+    rgba(234, 224, 215, 1) 0%,
+    rgba(234, 224, 215, 1) 14%,
+    rgba(234, 224, 215, 1) 29%,
+    rgba(244, 239, 230, 1) 54%,
+    rgba(244, 239, 230, 1) 71%,
+    rgba(244, 239, 230, 1) 100%
   );
 }
 .left-banner {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 .right-banner {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 .status-img {
   height: 35px;
 }
 .nav {
   display: flex;
+  /* flex-direction: column; */
 }
 .left-banner {
   background-color: #eae0d7;
@@ -70,4 +71,20 @@
   letter-spacing: 0.6px;
   color: #666666;
   text-transform: uppercase;
+}
+.live-img {
+  width: 33px;
+}
+.banner-icons {
+  display: flex;
+  justify-content: space-between;
+}
+.banner-wrap {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.banner-bottom {
+  display: flex;
+  justify-content: space-between;
 }

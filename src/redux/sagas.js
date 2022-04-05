@@ -17,10 +17,19 @@ function* getVideo() {
     console.log(error);
   }
 }
+function* getFirstVideo() {
+  try {
+    const data = yield API.getFirstVideo();
+    yield put({ type: "STORE_FIRST_VIDEO_DATA", payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 function* mySaga() {
   yield takeLatest("USER_FETCH_REQUESTED", fetchData);
   yield takeLatest("GET_VIDEO", getVideo);
+  yield takeLatest("GET_VIDEO_ONE", getFirstVideo);
 }
 
 export default mySaga;
