@@ -41,7 +41,6 @@
   color: #ffffff;
 }
 .video-data-container p:last-child {
-  font-family: "Solitaire MVB Pro";
   font-size: 12px;
   line-height: 16px;
   font-weight: 600;
@@ -50,7 +49,6 @@
 }
 .video-body {
   font-size: 16px;
-  font-family: "Solitaire MVB Pro";
   line-height: 24px;
   color: #ffffff;
   max-width: 514px;

@@ -15,6 +15,15 @@
   text-transform: uppercase;
   opacity: 1;
   cursor: pointer;
+
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  font-family: "solitaire-mvb-pro";
+}
+.explore-heading:hover {
+  color: #c6521e;
+  cursor: pointer;
 }
 .nav-right {
   display: flex;
@@ -33,7 +42,7 @@
 .button-primary {
   text-decoration: none;
   letter-spacing: 0.6px;
-  color: #ffffff;
+  color: #ffffff !important;
   text-transform: uppercase;
   opacity: 1;
   background-color: #c6521e;
@@ -44,6 +53,13 @@
   border-top-right-radius: 37px;
   border-bottom-right-radius: 37px;
   cursor: pointer;
+
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+.button-primary:hover {
+  color: black !important;
 }
 .nav-right-inner {
   padding-right: 21px;
@@ -51,8 +67,17 @@
   cursor: pointer;
   align-items: center;
 }
-.nav-right-inner p {
+.nav-right-inner a {
   margin: 0px;
+  text-decoration: none;
+  color: #666666;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+}
+.nav-right-inner a:hover {
+  color: #c6521e;
+  cursor: pointer;
 }
 .dropdown {
   padding-right: 42px;

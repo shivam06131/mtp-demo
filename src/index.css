@@ -6,12 +6,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
   margin: 0px;
-  font-family: "Solitaire MVB Pro";
+  font-family: "solitaire-mvb-pro";
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: "solitaire-mvb-pro";
 }
 .container {
   max-width: 1225px !important;
@@ -31,4 +30,8 @@ h6 {
 a:hover {
   color: #c6521e;
   cursor: pointer;
+}
+a {
+  /* font-family: "Solitaire MVB Pro"; */
+  text-decoration: none !important;
 }

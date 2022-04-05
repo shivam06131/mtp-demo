@@ -6,17 +6,26 @@
   display: flex;
   justify-content: space-between;
 }
+.footer-item {
+  display: flex;
+  flex-direction: column;
+}
 .footer-item h6 {
-  font-family: "Solitaire MVB Pro";
+  /* font-family: "Solitaire MVB Pro"; */
   font-size: 20px;
   line-height: 27px;
   color: #333333;
   font-weight: bold;
 }
-.footer-item p {
-  font-family: "Solitaire MVB Pro";
+.footer-item a {
+  /* font-family: "Solitaire MVB Pro"; */
   font-size: 16px;
+  text-decoration: none;
   line-height: 34px;
   color: #333333;
   margin: 0px;
+}
+.footer-item a:hover {
+  color: #c6521e;
+  cursor: pointer;
 }

@@ -51,6 +51,7 @@ import "../styles/footer-2.css";
 import footer2_image from "../../assets/footer-2/social network.png";
 
 import StartImg from "../../assets/video/star.png";
+import StartImg2 from "../../assets/video/Path 983.png";
 
 import bannerVideo from "../../assets/banner/home_banner_video.mp4";
 
@@ -120,15 +121,17 @@ const Scroll = () => {
         <div className="nav-wrapper">
           <div className="container nav">
             <div className="nav-left">
-              <p className="explore-heading">Explore</p>
+              <a className="explore-heading">Explore</a>
             </div>
             <div className="icon">
               <img src={logo} alt="" />
             </div>
             <div className="nav-right">
               <div className="nav-right-inner">
-                <p className="dropdown">En / aed</p>
-                <p>sign up</p>
+                <a href="#" className="dropdown">
+                  En / aed
+                </a>
+                <a href="#">sign up</a>
               </div>
               <a className="button-primary" href="#">
                 log in
@@ -332,6 +335,7 @@ const Scroll = () => {
                   <div className="video-data-container">
                     <Rating
                       emptySymbol={<img src={StartImg} className="star-icon" />}
+                      fullSymbol={<img src={StartImg2} className="star-icon" />}
                     />
                     <h6>Meet Miss McGrath</h6>
                     <p className="video-body">
@@ -504,38 +508,38 @@ const Scroll = () => {
           <div className="container footer-wrap">
             <div className="footer-item">
               <h6>Company</h6>
-              <p>About My Tutor Point</p>
-              <p>Careers</p>
-              <p>Press</p>
-              <p>Help</p>
-              <p>Contact Us</p>
+              <a href="#">About My Tutor Point</a>
+              <a href="#">Careers</a>
+              <a href="#">Press</a>
+              <a href="#">Help</a>
+              <a href="#">Contact Us</a>
             </div>
             <div className="footer-item">
               <h6>Student</h6>
-              <p>Parent Account</p>
-              <p>Teacher's Directory</p>
-              <p>Subject Directory</p>
+              <a href="#">Parent Account</a>
+              <a href="#">Teacher's Directory</a>
+              <a href="#">Subject Directory</a>
             </div>
             <div className="footer-item">
-              <h6>Tutor</h6>
-              <p>Become a Teacher</p>
-              <p>Teacher's Handbook</p>
-              <p>Directory</p>
+              <h6 href="#">Tutor</h6>
+              <a href="#">Become a Teacher</a>
+              <a href="#">Teacher's Handbook</a>
+              <a href="#">Directory</a>
             </div>
             <div className="footer-item">
               <h6>Institutes</h6>
-              <p>lorem Ipsum</p>
-              <p>lorem Ipsum</p>
-              <p>lorem Ipsum</p>
-              <p>lorem Ipsum</p>
+              <a href="#">lorem Ipsum</a>
+              <a href="#">lorem Ipsum</a>
+              <a href="#">lorem Ipsum</a>
+              <a href="#">lorem Ipsum</a>
             </div>
             <div className="footer-item">
               <h6>Communities</h6>
-              <p>lorem Ipsum</p>
-              <p>lorem Ipsum</p>
-              <p>lorem Ipsum</p>
-              <p>lorem Ipsum</p>
-              <p>lorem Ipsum</p>
+              <a href="#">lorem Ipsum</a>
+              <a href="#">lorem Ipsum</a>
+              <a href="#">lorem Ipsum</a>
+              <a href="#">lorem Ipsum</a>
+              <a href="#">lorem Ipsum</a>
             </div>
             <div className="footer-item">
               <h6>Subscribe</h6>
@@ -545,7 +549,7 @@ const Scroll = () => {
                 placeholder="Email"
               />
               <div className="btn-holder">
-                <a className="button-primary " href="#">
+                <a className="button-primary login-btn" href="#">
                   log in
                 </a>
               </div>
