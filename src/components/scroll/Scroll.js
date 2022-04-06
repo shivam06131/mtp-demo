@@ -67,6 +67,7 @@ const Scroll = () => {
   if (Array.isArray(video)) {
     [videoData] = video;
   }
+
   //scroll
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -85,7 +86,6 @@ const Scroll = () => {
       window.removeEventListener("scroll", () => {});
     };
   }, []);
-  console.log(display);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -93,7 +93,7 @@ const Scroll = () => {
         window.pageYOffset || document.documentElement.scrollTop;
 
       if (
-        scrollTop + document.documentElement.clientHeight - 100 >
+        scrollTop + document.documentElement.clientHeight - 650 >
         document.getElementById("tutor-search").offsetTop
       ) {
         setDisplaySearchTwo(true);
@@ -112,8 +112,9 @@ const Scroll = () => {
   useEffect(() => {
     dispatch({ type: "GET_VIDEO" });
     // dispatch({ type: "GET_VIDEO_ONE" });
-  }, []);
-
+  }, [dispatch]);
+  console.log("display", display);
+  // console.log("display 2", displaySearchTwo);
   return (
     <div>
       <div>
@@ -218,46 +219,6 @@ const Scroll = () => {
               </div>
               <img src={arrowRight} alt="" className="arrow-right" />
             </div>
-          </div>
-        </div>
-        {/*   ----------search ------------*/}
-        <div
-          className="search search2"
-          style={{
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            width: "100%",
-            opacity: display ? "1" : "0",
-          }}
-        >
-          <div className="container search-center">
-            <div
-              className="search-form-wrap"
-              style={{
-                minWidth: displaySearchTwo ? "100%" : "60%",
-                transition: "500ms",
-              }}
-            >
-              <div className="search-sub">
-                <img src={search} alt="" />
-                <input
-                  type="text"
-                  className="search-input sub"
-                  placeholder="Choose a subject"
-                />
-              </div>
-              <div className="search-sub">
-                <img src={location} alt="" />
-                <input
-                  type="text"
-                  className="search-input location"
-                  placeholder="Enter your location or address"
-                />
-              </div>
-              <img src={web} alt="" className="web-icon" />
-            </div>
-            <img src={arrowRight} alt="" className="arrow-right" />
           </div>
         </div>
         {/*   ----------price ------------*/}
@@ -458,25 +419,29 @@ const Scroll = () => {
                 learning experience for a reasonable price.
               </p>
             </div>
-            <div className="tutor-right">
-              <img src={tutorImage} alt="" srcset="" />
+            <div className="tutor-right" id="tutor-search">
+              <img src={tutorImage} alt="" />
             </div>
           </div>
           {/*   ---------- search tutor ------------*/}
 
-          <div className="container" id="tutor-search">
+          <div className={"container" + " " + (display ? "fix-to-bottom" : "")}>
             <div
               className="search search-tutor"
-              style={{ borderRadius: display ? "0px" : "0px 35px 35px 0px" }}
+              style={{
+                borderRadius: display ? "0px" : "0px 35px 35px 0px",
+                minHeight: display ? "85px" : "71px",
+                transition: "all 400ms",
+              }}
               id="search"
             >
-              <div className="container search-center container-tutor ">
+              <div className="container search-center container-tutor">
                 <div
                   className="search-form-wrap"
                   style={{
                     minWidth: display ? "60%" : "94%",
-                    transitionProperty: "width flex ",
-                    transition: "all 400ms",
+                    transitionProperty: "width",
+                    transition: "all 500ms",
                   }}
                 >
                   <div className="search-sub">
@@ -568,7 +533,7 @@ const Scroll = () => {
             </div>
             <div>
               <a href="#" className="footer2-inner-wrap">
-                <img src={footer2_image} alt="" srcset="" />
+                <img src={footer2_image} alt="" />
               </a>
             </div>
           </div>

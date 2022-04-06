@@ -78,6 +78,7 @@
 .banner-icons {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 3px;
 }
 .banner-wrap {
   display: flex;

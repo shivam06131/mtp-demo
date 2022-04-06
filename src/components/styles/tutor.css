@@ -1,6 +1,7 @@
 .tutor {
   padding: 87px 0px 68px 0px;
   background-color: #f4efe6;
+  min-height: 752px;
 }
 .tutor-wrap {
   display: flex;
@@ -28,12 +29,10 @@
 
 .search-tutor {
   min-height: auto;
-  transition: 500ms;
+  transition: all 500ms;
 }
 .container-tutor {
   justify-content: center;
-  transition: 500ms ease-out;
-  width: 100% !important;
 }
 
 .btn-holder {
@@ -42,4 +41,20 @@
 
 .star-icon {
   height: 20px;
+}
+.fix-to-bottom {
+  max-width: 100% !important;
+  padding: 0px !important;
+  position: fixed;
+  bottom: 0;
+  /* height: 0px; */
+  z-index: 5;
+}
+.fix-to-bottom .search {
+  border-radius: 0px !important;
+}
+
+.initial-height {
+  min-height: 0px;
+  transition: all 400ms;
 }

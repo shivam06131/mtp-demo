@@ -26,6 +26,10 @@
   min-width: 332px;
   justify-content: space-between;
 }
+.footer2-inner-wrap-one > a:hover {
+  color: #c6521e;
+  cursor: pointer;
+}
 .footer-2-wrap > a:hover {
   color: #c6521e;
   cursor: pointer;

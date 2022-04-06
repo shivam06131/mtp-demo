@@ -39,8 +39,8 @@
   display: flex;
   justify-content: center;
   min-height: 200px;
-  transition-property: height opacity !important;
-  transition: height 600ms;
+  /* transition-property: height opacity !important;
+  transition: height 600ms; */
 }
 .search2 {
   min-height: 70px !important;
@@ -50,10 +50,8 @@
   background-color: #f9f8f7;
   display: flex;
   min-width: 885px;
-  transition: "500ms";
 }
 .form-wrap-2 {
-  /* min-width: auto; */
   min-width: 60%;
 }
 .search-sub {
