@@ -74,7 +74,9 @@ const Scroll = () => {
         window.pageYOffset || document.documentElement.scrollTop;
       if (
         scrollTop + document.documentElement.clientHeight - 200 >
-        document.getElementById("search").offsetTop
+          document.getElementById("search").offsetTop &&
+        scrollTop + document.documentElement.clientHeight - 650 <
+          document.getElementById("tutor-search").offsetTop
       ) {
         setDisplay(true);
       } else {
@@ -97,10 +99,8 @@ const Scroll = () => {
         document.getElementById("tutor-search").offsetTop
       ) {
         setDisplaySearchTwo(true);
-        setDisplay(false);
       } else {
         setDisplaySearchTwo(false);
-        // setDisplay(true);
       }
     });
     return () => {
@@ -112,8 +112,14 @@ const Scroll = () => {
   useEffect(() => {
     dispatch({ type: "GET_VIDEO" });
     // dispatch({ type: "GET_VIDEO_ONE" });
+<<<<<<< Updated upstream
   }, []);
 
+=======
+  }, [dispatch]);
+  // console.log("display", display);
+  console.log("display 2", displaySearchTwo);
+>>>>>>> Stashed changes
   return (
     <div>
       <div>
@@ -464,19 +470,51 @@ const Scroll = () => {
           </div>
           {/*   ---------- search tutor ------------*/}
 
+<<<<<<< Updated upstream
           <div className="container" id="tutor-search">
             <div
               className="search search-tutor"
               style={{ borderRadius: display ? "0px" : "0px 35px 35px 0px" }}
+=======
+          <div
+            className={
+              " fix-to-bottom" + " " + (displaySearchTwo && "container")
+            }
+            // className="fix-to-bottom "
+            style={{
+              opacity: (display || displaySearchTwo) && "1",
+              visibility: (display || displaySearchTwo) && "visible",
+              position: displaySearchTwo && "static",
+              transitionProperty: "opacity",
+              transition: "all 500ms",
+            }}
+          >
+            <div
+              className="search search-tutor"
+              style={
+                {
+                  // borderRadius: display ? "0px" : "0px 35px 35px 0px",
+                  // minHeight: displaySearchTwo ? "71px" : "85px",
+                  // transition: "all 400ms",
+                }
+              }
+>>>>>>> Stashed changes
               id="search"
             >
               <div className="container search-center container-tutor ">
                 <div
                   className="search-form-wrap"
                   style={{
+<<<<<<< Updated upstream
                     minWidth: display ? "60%" : "94%",
                     transitionProperty: "width flex ",
                     transition: "all 400ms",
+=======
+                    minWidth: displaySearchTwo ? "94%" : "60%",
+                    transitionProperty: "width",
+                    // transition: displaySearchTwo && "all 500ms",
+                    transition: "400ms",
+>>>>>>> Stashed changes
                   }}
                 >
                   <div className="search-sub">
