@@ -28,11 +28,11 @@
 
 .search-tutor {
   min-height: auto;
-  transition: 500ms;
+  /* transition: 500ms; */
 }
 .container-tutor {
   justify-content: center;
-  transition: 500ms ease-out;
+  /* transition: 500ms ease-out; */
   width: 100% !important;
 }
 
@@ -53,13 +53,20 @@
   right: 0;
   visibility: hidden;
   z-index: 5;
-  transition: 400ms;
+  /* transition: 400ms; */
 }
 .fix-to-bottom .search {
   border-radius: 0px !important;
 }
 
-.initial-height {
-  min-height: 0px;
-  /* transition: all 400ms; */
+.search-stick-bottom {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  height: 0px;
+  /* transition-property: opacity; */
+  /* transition: all 200ms; */
 }

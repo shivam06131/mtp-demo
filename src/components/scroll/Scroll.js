@@ -75,7 +75,7 @@ const Scroll = () => {
       if (
         scrollTop + document.documentElement.clientHeight - 200 >
           document.getElementById("search").offsetTop &&
-        scrollTop + document.documentElement.clientHeight - 650 <
+        scrollTop + document.documentElement.clientHeight - 520 <
           document.getElementById("tutor-search").offsetTop
       ) {
         setDisplay(true);
@@ -87,7 +87,7 @@ const Scroll = () => {
       window.removeEventListener("scroll", () => {});
     };
   }, []);
-  console.log(display);
+  // console.log(display);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -95,12 +95,14 @@ const Scroll = () => {
         window.pageYOffset || document.documentElement.scrollTop;
 
       if (
-        scrollTop + document.documentElement.clientHeight - 100 >
+        scrollTop + document.documentElement.clientHeight - 520 >
         document.getElementById("tutor-search").offsetTop
       ) {
         setDisplaySearchTwo(true);
+        // setDisplay(false);
       } else {
         setDisplaySearchTwo(false);
+        // setDisplay(true);
       }
     });
     return () => {
@@ -112,14 +114,11 @@ const Scroll = () => {
   useEffect(() => {
     dispatch({ type: "GET_VIDEO" });
     // dispatch({ type: "GET_VIDEO_ONE" });
-<<<<<<< Updated upstream
   }, []);
 
-=======
-  }, [dispatch]);
-  // console.log("display", display);
-  console.log("display 2", displaySearchTwo);
->>>>>>> Stashed changes
+  // console.log("display one ", display);
+  // console.log("displaySearchTwo ", displaySearchTwo);
+
   return (
     <div>
       <div>
@@ -227,7 +226,7 @@ const Scroll = () => {
           </div>
         </div>
         {/*   ----------search ------------*/}
-        <div
+        {/* <div
           className="search search2"
           style={{
             position: "fixed",
@@ -265,7 +264,7 @@ const Scroll = () => {
             </div>
             <img src={arrowRight} alt="" className="arrow-right" />
           </div>
-        </div>
+        </div>*/}
         {/*   ----------price ------------*/}
         <div className="price">
           <div className="container">
@@ -464,57 +463,32 @@ const Scroll = () => {
                 learning experience for a reasonable price.
               </p>
             </div>
-            <div className="tutor-right">
+            <div className="tutor-right" id="tutor-search">
               <img src={tutorImage} alt="" srcset="" />
             </div>
           </div>
           {/*   ---------- search tutor ------------*/}
 
-<<<<<<< Updated upstream
-          <div className="container" id="tutor-search">
+          <div className="container">
             <div
-              className="search search-tutor"
-              style={{ borderRadius: display ? "0px" : "0px 35px 35px 0px" }}
-=======
-          <div
-            className={
-              " fix-to-bottom" + " " + (displaySearchTwo && "container")
-            }
-            // className="fix-to-bottom "
-            style={{
-              opacity: (display || displaySearchTwo) && "1",
-              visibility: (display || displaySearchTwo) && "visible",
-              position: displaySearchTwo && "static",
-              transitionProperty: "opacity",
-              transition: "all 500ms",
-            }}
-          >
-            <div
-              className="search search-tutor"
-              style={
-                {
-                  // borderRadius: display ? "0px" : "0px 35px 35px 0px",
-                  // minHeight: displaySearchTwo ? "71px" : "85px",
-                  // transition: "all 400ms",
-                }
-              }
->>>>>>> Stashed changes
+              className="search search-tutor search-stick-bottom"
+              style={{
+                borderRadius: display ? "0px" : "0px 35px 35px 0px",
+                opacity: (display || displaySearchTwo) && "1",
+                visibility: (display || displaySearchTwo) && "visible",
+                position: displaySearchTwo && "static",
+                height: (display || displaySearchTwo) && "85px",
+                transition: "all 200ms",
+              }}
               id="search"
             >
               <div className="container search-center container-tutor ">
                 <div
                   className="search-form-wrap"
                   style={{
-<<<<<<< Updated upstream
-                    minWidth: display ? "60%" : "94%",
+                    minWidth: displaySearchTwo ? "94%" : "60%",
                     transitionProperty: "width flex ",
                     transition: "all 400ms",
-=======
-                    minWidth: displaySearchTwo ? "94%" : "60%",
-                    transitionProperty: "width",
-                    // transition: displaySearchTwo && "all 500ms",
-                    transition: "400ms",
->>>>>>> Stashed changes
                   }}
                 >
                   <div className="search-sub">
