@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../../index.css";
 import "../scroll/scroll.css";
@@ -11,8 +11,6 @@ import arrowRight from "../../assets/scroll/search/arrow.png";
 
 import light from "../../assets/banner/light.svg";
 import live from "../../assets/banner/live tag.svg";
-import imgOne from "../../assets/banner/imgOne.svg";
-import imgTwo from "../../assets/banner/imgTwo.svg";
 
 import logo from "../../assets/nav/logo.svg";
 import "../navbar/Navbar.css";
@@ -51,7 +49,7 @@ import "../styles/footer-2.css";
 import footer2_image from "../../assets/footer-2/social network.png";
 
 import StartImg from "../../assets/video/star.png";
-import StartImg2 from "../../assets/video/Path 983.png";
+import StartImg2 from "../../assets/video/Path 986.png";
 
 import bannerVideo from "../../assets/banner/home_banner_video.mp4";
 
@@ -59,6 +57,7 @@ const Scroll = () => {
   const [display, setDisplay] = useState();
   const [displaySearchTwo, setDisplaySearchTwo] = useState(false);
   const dispatch = useDispatch();
+  const scrollRef = useRef(null);
 
   const video = useSelector((state) => state);
   // const video2 = useSelector((state) => state.firstVideo);
@@ -75,7 +74,7 @@ const Scroll = () => {
       if (
         scrollTop + document.documentElement.clientHeight - 200 >
           document.getElementById("search").offsetTop &&
-        scrollTop + document.documentElement.clientHeight - 520 <
+        scrollTop + document.documentElement.clientHeight - 620 <
           document.getElementById("tutor-search").offsetTop
       ) {
         setDisplay(true);
@@ -87,7 +86,6 @@ const Scroll = () => {
       window.removeEventListener("scroll", () => {});
     };
   }, []);
-  // console.log(display);
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -95,7 +93,7 @@ const Scroll = () => {
         window.pageYOffset || document.documentElement.scrollTop;
 
       if (
-        scrollTop + document.documentElement.clientHeight - 520 >
+        scrollTop + document.documentElement.clientHeight - 620 >
         document.getElementById("tutor-search").offsetTop
       ) {
         setDisplaySearchTwo(true);
@@ -114,10 +112,11 @@ const Scroll = () => {
   useEffect(() => {
     dispatch({ type: "GET_VIDEO" });
     // dispatch({ type: "GET_VIDEO_ONE" });
-  }, []);
+  }, [dispatch]);
 
-  // console.log("display one ", display);
-  // console.log("displaySearchTwo ", displaySearchTwo);
+  const handleArrowScroll = () => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div>
@@ -126,7 +125,9 @@ const Scroll = () => {
         <div className="nav-wrapper">
           <div className="container nav">
             <div className="nav-left">
-              <a className="explore-heading">Explore</a>
+              <a href="#" className="explore-heading">
+                Explore
+              </a>
             </div>
             <div className="icon">
               <img src={logo} alt="" />
@@ -197,7 +198,12 @@ const Scroll = () => {
                 Emily, Dana, and Bilal are having an <span>algebra</span> class
                 with the tutor
               </p>
-              <img className="scroll-arrow" src={arrow} alt="" />
+              <img
+                className="scroll-arrow"
+                src={arrow}
+                alt=""
+                onClick={handleArrowScroll}
+              />
             </div>
           </div>
           <div className="search" id="search">
@@ -226,47 +232,9 @@ const Scroll = () => {
           </div>
         </div>
         {/*   ----------search ------------*/}
-        {/* <div
-          className="search search2"
-          style={{
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            width: "100%",
-            opacity: display ? "1" : "0",
-          }}
-        >
-          <div className="container search-center">
-            <div
-              className="search-form-wrap"
-              style={{
-                minWidth: displaySearchTwo ? "100%" : "60%",
-                transition: "500ms",
-              }}
-            >
-              <div className="search-sub">
-                <img src={search} alt="" />
-                <input
-                  type="text"
-                  className="search-input sub"
-                  placeholder="Choose a subject"
-                />
-              </div>
-              <div className="search-sub">
-                <img src={location} alt="" />
-                <input
-                  type="text"
-                  className="search-input location"
-                  placeholder="Enter your location or address"
-                />
-              </div>
-              <img src={web} alt="" className="web-icon" />
-            </div>
-            <img src={arrowRight} alt="" className="arrow-right" />
-          </div>
-        </div>*/}
+
         {/*   ----------price ------------*/}
-        <div className="price">
+        <div className="price" id="price" ref={scrollRef}>
           <div className="container">
             <div className="price-data-holder">
               <div className="price-icon">
@@ -464,7 +432,7 @@ const Scroll = () => {
               </p>
             </div>
             <div className="tutor-right" id="tutor-search">
-              <img src={tutorImage} alt="" srcset="" />
+              <img src={tutorImage} alt="" />
             </div>
           </div>
           {/*   ---------- search tutor ------------*/}
@@ -477,7 +445,7 @@ const Scroll = () => {
                 opacity: (display || displaySearchTwo) && "1",
                 visibility: (display || displaySearchTwo) && "visible",
                 position: displaySearchTwo && "static",
-                height: (display || displaySearchTwo) && "85px",
+                height: display ? "85px" : "70px",
                 transition: "all 200ms",
               }}
               id="search"
@@ -580,7 +548,7 @@ const Scroll = () => {
             </div>
             <div>
               <a href="#" className="footer2-inner-wrap">
-                <img src={footer2_image} alt="" srcset="" />
+                <img src={footer2_image} alt="" />
               </a>
             </div>
           </div>

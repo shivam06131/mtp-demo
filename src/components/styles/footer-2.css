@@ -17,6 +17,10 @@
   color: #333333;
   text-decoration: none;
 }
+.footer2-inner-wrap a:hover {
+  color: #c6521e;
+  cursor: pointer;
+}
 .footer2-inner-wrap img {
   text-decoration: none;
   padding: 29px 0px;

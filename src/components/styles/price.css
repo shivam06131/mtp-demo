@@ -22,7 +22,8 @@
 .price-content p {
   color: #ea9500;
   font-size: 12px;
-  font-weight: 900;
+  font-family: "solitaire-mvb-pro";
+  font-weight: 400;
   padding-top: 13px;
 }
 .price-icon {

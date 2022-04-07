@@ -18,6 +18,8 @@
   max-width: 490px;
   font-size: 19px;
   line-height: 28px;
+  font-family: "solitaire-mvb-pro";
+  color: #666666;
 }
 .tutor-right {
   width: 50%;
@@ -67,6 +69,5 @@
   opacity: 0;
   visibility: hidden;
   height: 0px;
-  /* transition-property: opacity; */
-  /* transition: all 200ms; */
+  z-index: 6;
 }

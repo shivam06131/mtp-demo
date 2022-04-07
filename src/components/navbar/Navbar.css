@@ -10,15 +10,13 @@
 }
 .explore-heading {
   margin: 0px;
-  letter-spacing: 0.6px;
   color: #666666;
   text-transform: uppercase;
-  opacity: 1;
   cursor: pointer;
 
   font-size: 12px;
   line-height: 16px;
-  font-weight: 400;
+  font-weight: 500;
   font-family: "solitaire-mvb-pro";
 }
 .explore-heading:hover {
@@ -57,6 +55,7 @@
   font-size: 12px;
   line-height: 16px;
   font-weight: 400;
+  font-family: "solitaire-mvb-pro";
 }
 .button-primary:hover {
   color: black !important;
@@ -74,6 +73,8 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
+  text-transform: uppercase;
+  font-family: "solitaire-mvb-pro";
 }
 .nav-right-inner a:hover {
   color: #c6521e;

@@ -29,6 +29,7 @@
 }
 .center .scroll-arrow {
   padding-top: 7px;
+  cursor: pointer;
 }
 
 /* -------------------------- */
