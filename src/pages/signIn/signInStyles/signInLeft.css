@@ -6,7 +6,14 @@
   position: relative;
 }
 .left-img::after {
-  content: "signing up is not as difficult as her word-problem";
   position: absolute;
-  top: 50px;
+  content: "signing up is not as difficult as her word-problem";
+  font-size: 36px;
+  line-height: 44px;
+  font-family: "chantal";
+  max-width: 597px;
+  left: 95px;
+  right: 95px;
+  text-align: center;
+  top: 45px;
 }
