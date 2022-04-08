@@ -66,20 +66,27 @@ const Scroll = () => {
   if (Array.isArray(video)) {
     [videoData] = video;
   }
+  // console.log("search", display);
   //scroll
   useEffect(() => {
+    //client height = window height
+    //scrollTop = total height scrolled
+    //offsetTop = div's top from start of page
     window.addEventListener("scroll", () => {
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
-      if (
-        scrollTop + document.documentElement.clientHeight - 200 >
-          document.getElementById("search").offsetTop &&
-        scrollTop + document.documentElement.clientHeight - 620 <
-          document.getElementById("tutor-search").offsetTop
-      ) {
-        setDisplay(true);
-      } else {
-        setDisplay(false);
+      if (document.getElementById("search")) {
+        if (
+          scrollTop >
+            document.getElementById("search").offsetTop -
+              document.documentElement.clientHeight +
+              77 &&
+          scrollTop < document.getElementById("tutor-search").offsetTop
+        ) {
+          setDisplay(true);
+        } else {
+          setDisplay(false);
+        }
       }
     });
     return () => {
@@ -87,20 +94,15 @@ const Scroll = () => {
     };
   }, []);
 
+  console.log("two", displaySearchTwo);
   useEffect(() => {
     window.addEventListener("scroll", () => {
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
-
-      if (
-        scrollTop + document.documentElement.clientHeight - 620 >
-        document.getElementById("tutor-search").offsetTop
-      ) {
+      if (scrollTop > document.getElementById("tutor-search").offsetTop) {
         setDisplaySearchTwo(true);
-        // setDisplay(false);
       } else {
         setDisplaySearchTwo(false);
-        // setDisplay(true);
       }
     });
     return () => {
@@ -206,10 +208,10 @@ const Scroll = () => {
               />
             </div>
           </div>
-          <div className="search" id="search">
+          <div className="search">
             <div className="container search-center">
               <div className="search-form-wrap">
-                <div className="search-sub">
+                <div className="search-sub" id="search">
                   <img src={search} alt="" />
                   <input
                     type="text"
@@ -231,8 +233,6 @@ const Scroll = () => {
             </div>
           </div>
         </div>
-        {/*   ----------search ------------*/}
-
         {/*   ----------price ------------*/}
         <div className="price" id="price" ref={scrollRef}>
           <div className="container">
@@ -421,7 +421,7 @@ const Scroll = () => {
         </div>
         {/*   ---------- tutor  ------------*/}
         <div className="tutor">
-          <div className="container tutor-wrap">
+          <div className="container tutor-wrap" id="tutor-search">
             <div className="tutor-left">
               <h4>Search your next tutor</h4>
               <p>
@@ -431,7 +431,7 @@ const Scroll = () => {
                 learning experience for a reasonable price.
               </p>
             </div>
-            <div className="tutor-right" id="tutor-search">
+            <div className="tutor-right">
               <img src={tutorImage} alt="" />
             </div>
           </div>
@@ -448,7 +448,7 @@ const Scroll = () => {
                 height: display ? "85px" : "70px",
                 transition: "all 200ms",
               }}
-              id="search"
+              // id="search"
             >
               <div className="container search-center container-tutor ">
                 <div
