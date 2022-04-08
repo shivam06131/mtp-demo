@@ -1,0 +1,12 @@
+.signIn-wrapper {
+  display: flex;
+  padding-bottom: 100px;
+}
+.left-img {
+  position: relative;
+}
+.left-img::after {
+  content: "signing up is not as difficult as her word-problem";
+  position: absolute;
+  top: 50px;
+}

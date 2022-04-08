@@ -1,13 +1,10 @@
 import React from "react";
-import Banner from "./components/banner/Banner";
-import Navbar from "./components/navbar/Navbar";
-import Scroll from "./components/scroll/Scroll";
+import Layout from "./layout/Layout";
 
 const App = () => {
   return (
     <div>
-      {/*<Navbar />*/}
-      <Scroll />
+      <Layout />
     </div>
   );
 };
