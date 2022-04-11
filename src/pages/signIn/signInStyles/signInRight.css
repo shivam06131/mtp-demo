@@ -39,40 +39,113 @@
 .form-passive:active {
   background-color: #ea9500 !important;
 }
-.form-input-wrap {
+.input-wrap {
   padding-top: 20px;
 }
-.form-input-wrap input {
-  outline: none;
-  border: none;
-  border-radius: 30px;
-  padding: 12px 17px;
+.top {
+  min-width: 225px;
 }
-.input-end {
+.top input {
+  max-width: 100px !important;
+}
+.name-inputs {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
-.w-full {
+.signIn-input input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  line-height: 19px;
+  color: #999999;
   width: 100%;
 }
-.top {
-  margin-top: 20px !important;
-}
-.form-controls.form-control {
-  width: auto !important;
-  outline: none !important;
-  border: none !important;
-  border-radius: 30px !important;
-  padding: 12px 17px !important;
-  position: relative;
-}
-.form-controls::after {
-  position: absolute;
-  background-image: url("../assets/right-section/name-icon.png");
-  right: 0;
-  top: 0;
+.signIn-input {
+  padding: 12px 17px;
+  max-height: 44px;
+  border-radius: 20px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.form-controls.form-control:focus {
-  box-shadow: none;
+.signIn-input input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input-select-group {
+  display: flex;
+  width: 60%;
+}
+
+/* -------------------------react select ---------------  */
+.target2.css-b62m3t-container .css-1s2u09g-control {
+  border-radius: 20px !important;
+  min-height: 44px !important;
+  border-color: white;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+.target2.css-b62m3t-container .css-1pahdxg-control {
+  border-radius: 20px !important;
+  min-height: 44px !important;
+  border: 0px !important;
+  outline: none !important;
+  border-color: white;
+  box-shadow: none !important;
+}
+.target2.css-b62m3t-container
+  .css-1s2u09g-control
+  .css-1hb7zxy-IndicatorsContainer
+  .css-1okebmr-indicatorSeparator {
+  display: none !important;
+}
+.target2.css-b62m3t-container
+  .css-1pahdxg-control
+  .css-1hb7zxy-IndicatorsContainer
+  .css-1okebmr-indicatorSeparator {
+  display: none !important;
+}
+
+.target2.css-b62m3t-container .css-1s2u09g-control .css-319lph-ValueContainer {
+  padding-left: 20px !important;
+}
+.target2.css-b62m3t-container .css-1pahdxg-control .css-319lph-ValueContainer {
+  padding-left: 20px !important;
+}
+
+/* -------------------------react phone number ---------------  */
+.react-phone.PhoneInput .PhoneInputCountry .PhoneInputCountrySelect {
+  width: 20px;
+  border: none !important;
+  outline: none !important;
+  color: #999999;
+}
+.react-phone.PhoneInput .PhoneInputCountry .PhoneInputCountryIcon {
+  width: 20px;
+}
+.react-phone.PhoneInput .PhoneInputCountry {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.react-phone {
+  display: flex;
+}
+.sign-up-btn {
+  min-height: 44px;
+}
+.terms {
+  font-size: 12px;
+  padding-top: 7px;
+  line-height: 16px;
+  color: #666666;
+}
+.terms span {
+  color: #c6521e;
+  cursor: pointer;
 }

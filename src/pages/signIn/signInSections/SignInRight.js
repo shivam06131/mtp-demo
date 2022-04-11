@@ -1,76 +1,117 @@
-import React from "react";
+import React, { useState } from "react";
 import studentImg from "../assets/right-section/student.png";
 import parentImg from "../assets/right-section/parents.png";
 import tutortImg from "../assets/right-section/tutor.png";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
+import NameIcon from "../assets/right-section/name-icon.png";
+import MilIcon from "../assets/right-section/mail-icon.png";
+import MobileIcon from "../assets/right-section/mobile-icon.png";
+import InputField from "./InputField";
+import Select from "react-select";
+import PhoneInput from "react-phone-number-input";
 
-const SigninRight = () => {
+import "../../../layout/navbar/Navbar.css";
+
+const SignInRight = () => {
+  const [value, setValue] = useState("");
+  const options = [
+    { value: "facebook", label: "facebook" },
+    { value: "instagram", label: "instagram" },
+    { value: "other", label: "other" },
+  ];
   return (
     <div className="signIn-form-wrap">
       <div className="form-top">
         <a className="form-passive" href="#">
-          <img src={studentImg} alt="" srcset="" />
+          <img src={studentImg} alt="" />
           <p>student</p>
         </a>
         <a className="form-passive" href="#">
-          <img src={parentImg} alt="" srcset="" />
+          <img src={parentImg} alt="" />
           <p>Parents</p>
         </a>
         <a className="form-passive" href="#">
-          <img src={tutortImg} alt="" srcset="" />
+          <img src={tutortImg} alt="" />
           <p>tutor</p>
         </a>
       </div>
-      {/* <Row>
-        <Col className="form-input-wrap">
-          <input type="text" placeholder="First Name" />
-        </Col>
-        <Col className="form-input-wrap input-end">
-          <input type="text" placeholder="Last Name" />
-        </Col>
-      </Row>
-      <Col className="form-input-wrap ">
-        <input type="email" className="w-full" placeholder="Email Address" />
-      </Col>
-      <Col className="form-input-wrap ">
-        <input type="number" className="w-full" placeholder="Mobile Number" />
-      </Col>
-      <Col className="form-input-wrap ">
-        <input
-          type="text"
-          className="w-full"
-          placeholder="Where did you hear about us?"
-        />
-  </Col> */}
-      <div className="form-wrap">
-        <Form>
-          <Row className="mb-3 top">
-            <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Control
-                className="form-controls"
-                type="email"
-                placeholder="Enter email"
+      <div className="name-inputs">
+        {/* --------input one ------------- */}
+        <div className="input-wrap top">
+          <div className="signIn-input">
+            <div className="input-select-group">
+              <input
+                type="text"
+                placeholder="First Name"
+                autoComplete="new-password"
               />
-            </Form.Group>
-
-            <Form.Group
-              as={Col}
-              controlId="formGridPassword"
-              className="input-end"
-            >
-              <Form.Control
-                className="form-controls"
-                type="password"
-                placeholder="Password"
+            </div>
+            <img src={NameIcon} alt="" />
+          </div>
+        </div>
+        {/* --------input tw0 ------------- */}
+        <div className="input-wrap top">
+          <div className="signIn-input">
+            <div className="input-select-group">
+              <input
+                type="text"
+                placeholder="Last Name"
+                autoComplete="new-password"
               />
-            </Form.Group>
-          </Row>
-        </Form>
+            </div>
+            <img src={NameIcon} alt="" />
+          </div>
+        </div>
       </div>
+
+      {/* --------input three ------------- */}
+      <div className="input-wrap">
+        <div className="signIn-input">
+          <div className="input-select-group">
+            <input
+              type="email"
+              placeholder="Email Address"
+              autoComplete="new-password"
+            />
+          </div>
+          <img src={MilIcon} alt="" />
+        </div>
+      </div>
+      {/* --------input four ------------- */}
+      <div className="input-wrap">
+        {/* <InputField
+          dropdown={true}
+          placeholder={"Mobile Number"}
+          icon={MobileIcon}
+          type={"number"}
+        />*/}
+        <PhoneInput
+          placeholder="Enter phone number"
+          value={value}
+          onChange={setValue}
+          className="react-phone signIn-input"
+        />
+      </div>
+      {/* --------input five ------------- */}
+      <div className="input-wrap">
+        <Select
+          placeholder="Where did you hear about us?"
+          className="target2"
+          options={options}
+        />
+      </div>
+      {/* --------signup button ------------- */}
+      <div className="input-wrap">
+        <a href="#" className="button-primary sign-up-btn">
+          sign up
+        </a>
+      </div>
+      {/* --------terms and condition ------------- */}
+      <p className="terms">
+        By clicking “Sign up” you are agreeing to 'My Tutor Point Ltd'
+        <span> Terms & Conditions</span> and <span>Privacy Policy</span>.
+      </p>
     </div>
   );
 };
 
-export default SigninRight;
+export default SignInRight;

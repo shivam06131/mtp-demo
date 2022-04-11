@@ -26,7 +26,11 @@ const Navbar = () => {
               sign up
             </a>
           </div>
-          <a className="button-primary" href="#">
+          <a
+            className="button-primary"
+            href="#"
+            onClick={() => navigate("/login")}
+          >
             log in
           </a>
         </div>

@@ -4,7 +4,7 @@ import LeftImg from "../assets/left-section/shutterstock_1614042562.png";
 const SignInLeft = () => {
   return (
     <div className="left-img">
-      <img src={LeftImg} alt="" srcset="" />
+      <img src={LeftImg} alt="" />
     </div>
   );
 };
