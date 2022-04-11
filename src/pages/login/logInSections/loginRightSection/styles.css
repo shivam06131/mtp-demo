@@ -1,0 +1,29 @@
+.login-right-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  background-color: #f4efe6;
+}
+.login-in-wrap {
+  min-width: 480px;
+  display: flex;
+  flex-direction: column;
+}
+.login-right-wrap h1 {
+  font-size: 36px;
+  line-height: 44px;
+  font-family: "chantal";
+  color: #333333;
+  margin: 0px;
+}
+.login-right-wrap .sun-heading {
+  font-size: 14px;
+  line-height: 30px;
+  font-family: "solitaire-mvb-pro";
+  color: #666666;
+  margin: 0px;
+}
+.top {
+  min-height: 44px;
+}

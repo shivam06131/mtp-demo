@@ -39,6 +39,9 @@
 .form-passive:active {
   background-color: #ea9500 !important;
 }
+.form-active {
+  background-color: #ea9500 !important;
+}
 .input-wrap {
   padding-top: 20px;
 }
@@ -58,7 +61,9 @@
   font-size: 14px;
   line-height: 19px;
   color: #999999;
-  width: 100%;
+  /* width: 100%; */
+  min-width: 90%;
+  font-family: "solitaire-mvb-pro";
 }
 .signIn-input {
   padding: 12px 17px;
@@ -69,6 +74,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  /* overflow: hidden; */
 }
 
 .signIn-input input::-webkit-outer-spin-button,
@@ -78,10 +84,16 @@ input::-webkit-inner-spin-button {
 }
 .input-select-group {
   display: flex;
-  width: 60%;
+  width: 100%;
 }
 
 /* -------------------------react select ---------------  */
+.target2 {
+  font-size: 14px;
+  line-height: 19px;
+  color: #999999;
+  font-family: "solitaire-mvb-pro";
+}
 .target2.css-b62m3t-container .css-1s2u09g-control {
   border-radius: 20px !important;
   min-height: 44px !important;
@@ -118,7 +130,29 @@ input::-webkit-inner-spin-button {
   padding-left: 20px !important;
 }
 
+.target2.css-b62m3t-container
+  .css-26l3qy-menu
+  .css-4ljt47-MenuList
+  .css-1n7v3ny-option {
+  background-color: #f4efe6;
+}
+.target2.css-b62m3t-container
+  .css-26l3qy-menu
+  .css-4ljt47-MenuList
+  .css-9gakcf-option {
+  background-color: #c6521e;
+}
+.target2.css-b62m3t-container
+  .css-1pahdxg-control
+  .css-319lph-ValueContainer
+  .css-qc6sy-singleValue {
+  font-size: 14px;
+  line-height: 19px;
+  color: #999999;
+  font-family: "solitaire-mvb-pro";
+}
 /* -------------------------react phone number ---------------  */
+
 .react-phone.PhoneInput .PhoneInputCountry .PhoneInputCountrySelect {
   width: 20px;
   border: none !important;

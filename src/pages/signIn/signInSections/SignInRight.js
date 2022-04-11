@@ -21,7 +21,7 @@ const SignInRight = () => {
   return (
     <div className="signIn-form-wrap">
       <div className="form-top">
-        <a className="form-passive" href="#">
+        <a className="form-passive form-active" href="#">
           <img src={studentImg} alt="" />
           <p>student</p>
         </a>
@@ -97,6 +97,8 @@ const SignInRight = () => {
           placeholder="Where did you hear about us?"
           className="target2"
           options={options}
+          isClearable={true}
+          // menuIsOpen={true}
         />
       </div>
       {/* --------signup button ------------- */}

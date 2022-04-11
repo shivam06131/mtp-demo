@@ -4,9 +4,11 @@ import LoginRight from "./logInSections/loginRightSection/LoginRight";
 
 const Login = () => {
   return (
-    <div>
-      <LoginLeft />
-      <LoginRight />
+    <div className="container">
+      <div style={{ display: "flex", paddingBottom: "100px" }}>
+        <LoginLeft />
+        <LoginRight />
+      </div>
     </div>
   );
 };
