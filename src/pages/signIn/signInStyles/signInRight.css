@@ -1,0 +1,78 @@
+.signIn-form-wrap {
+  padding: 50px 58px;
+  background-color: #f4efe6;
+}
+.form-top {
+  display: flex;
+}
+.form-passive {
+  background-color: #f5baa6;
+  display: flex;
+  min-width: 159px;
+  align-items: center;
+  min-height: 40px;
+  transition: 300ms;
+}
+.form-passive:nth-child(odd) {
+  border-left: 1px solid #f4efe6;
+  border-right: 1px solid #f4efe6;
+}
+.form-passive img {
+  /* padding-left: 15px; */
+  padding: 4px;
+  padding-left: 15px;
+  padding-right: 0px;
+}
+.form-passive p {
+  font-size: 14px;
+  line-height: 19px;
+  padding-left: 22px;
+  padding-right: 40px;
+  color: #ffffff;
+  font-family: "solitaire-mvb-pro";
+  margin: 0;
+  text-transform: uppercase;
+}
+.form-passive:hover {
+  background-color: #ea9500 !important;
+}
+.form-passive:active {
+  background-color: #ea9500 !important;
+}
+.form-input-wrap {
+  padding-top: 20px;
+}
+.form-input-wrap input {
+  outline: none;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 17px;
+}
+.input-end {
+  display: flex;
+  justify-content: flex-end;
+}
+.w-full {
+  width: 100%;
+}
+.top {
+  margin-top: 20px !important;
+}
+.form-controls.form-control {
+  width: auto !important;
+  outline: none !important;
+  border: none !important;
+  border-radius: 30px !important;
+  padding: 12px 17px !important;
+  position: relative;
+}
+.form-controls::after {
+  position: absolute;
+  background-image: url("../assets/right-section/name-icon.png");
+  right: 0;
+  top: 0;
+}
+
+.form-controls.form-control:focus {
+  box-shadow: none;
+}

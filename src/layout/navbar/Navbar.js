@@ -2,8 +2,10 @@ import React from "react";
 import "./Navbar.css";
 import "../../index.css";
 import logo from "../../assets/nav/logo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <div className="nav-wrapper">
       <div className="container nav-bar">
@@ -13,14 +15,16 @@ const Navbar = () => {
           </a>
         </div>
         <div className="icon">
-          <img src={logo} alt="" />
+          <img onClick={() => navigate("/")} src={logo} alt="" />
         </div>
         <div className="nav-right">
           <div className="nav-right-inner">
             <a href="#" className="dropdown">
               En / aed
             </a>
-            <a href="#">sign up</a>
+            <a href="#" onClick={() => navigate("/signIn")}>
+              sign up
+            </a>
           </div>
           <a className="button-primary" href="#">
             log in
