@@ -35,10 +35,6 @@ const SignInRight = () => {
     aboutUs: Yup.string().required("required"),
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("button clicked");
-  };
   return (
     <Formik
       initialValues={{
@@ -51,98 +47,46 @@ const SignInRight = () => {
       validationSchema={validate}
       validateOnChange={false}
       validateOnBlur={false}
-      onSubmit={(values, { validate }) => {
-        console.log("validating");
-        validate(values);
-      }}
     >
       {(formik) => (
-        <div className="signIn-form-wrap">
-          <form>
-            {console.log("Formik", formik)}
-            <div className="form-top">
-              <a className="form-passive form-active" href="#">
-                <img src={studentImg} alt="" />
-                <p>student</p>
-              </a>
-              <a className="form-passive" href="#">
-                <img src={parentImg} alt="" />
-                <p>Parents</p>
-              </a>
-              <a className="form-passive" href="#">
-                <img src={tutortImg} alt="" />
-                <p>tutor</p>
-              </a>
-            </div>
-            <div className="name-inputs">
-              {/* --------input one ------------- */}
-              <div>
-                <Field name="firstName">
-                  {({ field, form, meta }) => (
-                    <div className="input-wrap top">
-                      <div className="signIn-input">
-                        <div className="input-select-group">
-                          <div>
-                            <input
-                              type="text"
-                              placeholder="First Name"
-                              autoComplete="new-password"
-                              {...field}
-                            />
-                          </div>
-                        </div>
-                        <img src={NameIcon} alt="" />
-                      </div>
-                      <p className="error">
-                        <ErrorMessage name={field.name} />
-                      </p>
-                    </div>
-                  )}
-                </Field>
-              </div>
-              {/* --------input tw0 ------------- */}
-              <div>
-                <Field name="lastName">
-                  {({ field, form, meta }) => (
-                    <div className="input-wrap top">
-                      <div className="signIn-input">
-                        <div className="input-select-group">
-                          <input
-                            type="text"
-                            placeholder="Last Name"
-                            autoComplete="new-password"
-                            {...field}
-                          />
-                        </div>
-                        <img src={NameIcon} alt="" />
-                      </div>
-                      <p className="error">
-                        <ErrorMessage name={field.name} />
-                      </p>
-                    </div>
-                  )}
-                </Field>
-              </div>
-            </div>
-            {/* --------input three ------------- */}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            console.log("formik.values", formik.values);
+            formik.handleSubmit();
+          }}
+          className="signIn-form-wrap"
+        >
+          <div className="form-top">
+            <a className="form-passive form-active" href="#">
+              <img src={studentImg} alt="" />
+              <p>student</p>
+            </a>
+            <a className="form-passive" href="#">
+              <img src={parentImg} alt="" />
+              <p>Parents</p>
+            </a>
+            <a className="form-passive" href="#">
+              <img src={tutortImg} alt="" />
+              <p>tutor</p>
+            </a>
+          </div>
+          <div className="name-inputs">
+            {/* --------input one ------------- */}
             <div>
-              <Field name="email">
+              <Field name="firstName">
                 {({ field, form, meta }) => (
-                  <div className="input-wrap">
+                  <div className="input-wrap top">
                     <div className="signIn-input">
                       <div className="input-select-group">
-                        <Field name="email">
-                          {({ field, form, meta }) => (
-                            <input
-                              type="email"
-                              placeholder="Email Address"
-                              autoComplete="new-password"
-                              {...field}
-                            />
-                          )}
-                        </Field>
+                        <input
+                          type="text"
+                          placeholder="First Name"
+                          autoComplete="new-password"
+                          {...field}
+                        />
                       </div>
-                      <img src={MilIcon} alt="" />
+                      <img src={NameIcon} alt="" />
                     </div>
                     <p className="error">
                       <ErrorMessage name={field.name} />
@@ -151,77 +95,127 @@ const SignInRight = () => {
                 )}
               </Field>
             </div>
-            {/* --------input four ------------- */}
+            {/* --------input tw0 ------------- */}
             <div>
-              <Field name="phone">
+              <Field name="lastName">
                 {({ field, form, meta }) => (
-                  <div className="input-wrap">
-                    {/* <InputField
+                  <div className="input-wrap top">
+                    <div className="signIn-input">
+                      <div className="input-select-group">
+                        <input
+                          type="text"
+                          placeholder="Last Name"
+                          autoComplete="new-password"
+                          {...field}
+                        />
+                      </div>
+                      <img src={NameIcon} alt="" />
+                    </div>
+                    <p className="error">
+                      <ErrorMessage name={field.name} />
+                    </p>
+                  </div>
+                )}
+              </Field>
+            </div>
+          </div>
+          {/* --------input three ------------- */}
+          <div>
+            <Field name="email">
+              {({ field, form, meta }) => (
+                <div className="input-wrap">
+                  <div className="signIn-input">
+                    <div className="input-select-group">
+                      <Field name="email">
+                        {({ field, form, meta }) => (
+                          <input
+                            type="email"
+                            placeholder="Email Address"
+                            autoComplete="new-password"
+                            {...field}
+                          />
+                        )}
+                      </Field>
+                    </div>
+                    <img src={MilIcon} alt="" />
+                  </div>
+                  <p className="error">
+                    <ErrorMessage name={field.name} />
+                  </p>
+                </div>
+              )}
+            </Field>
+          </div>
+          {/* --------input four ------------- */}
+          <div>
+            <Field name="phone">
+              {({ field, form, meta }) => (
+                <div className="input-wrap">
+                  {/* <InputField
           dropdown={true}
           placeholder={"Mobile Number"}
           icon={MobileIcon}
           type={"number"}
         />*/}
 
-                    <PhoneInput
-                      placeholder="Enter phone number"
-                      value={value}
-                      // onChange={setValue}
-                      className="react-phone signIn-input"
-                      onChange={(selectedOption) => {
-                        form.setFieldValue("phone", selectedOption);
-                        console.log("form ", form, field);
-                        return setValue(selectedOption);
-                      }}
-                    />
-                    <p className="error">
-                      <ErrorMessage name={field.name} />
-                    </p>
-                  </div>
-                )}
-              </Field>
-            </div>
-            {/* --------input five ------------- */}
-            <div>
-              <Field name="aboutUs">
-                {({ field, form, meta }) => (
-                  <div className="input-wrap">
-                    <Select
-                      placeholder="Where did you hear about us?"
-                      className="target2"
-                      options={options}
-                      isClearable={true}
-                      onChange={(selectedOption) => {
-                        form.setFieldValue("aboutUs", selectedOption.value);
-                      }}
-                      // menuIsOpen={true}
-                    />
-                    <p className="error">
-                      <ErrorMessage name={field.name} />
-                    </p>
-                  </div>
-                )}
-              </Field>
-            </div>
-            {/* --------signup button ------------- */}
-            <div className="input-wrap">
-              <a
-                href="adsf"
-                // type="submit"
-                className="button-primary sign-up-btn"
-                // onSubmit={() => handleSubmit()}
-                onClick={formik.handleSubmit}
-              >
-                sign up
-              </a>
-            </div>
-            {/* --------terms and condition ------------- */}
-            <p className="terms">
-              By clicking “Sign up” you are agreeing to 'My Tutor Point Ltd'
-              <span> Terms & Conditions</span> and <span>Privacy Policy</span>.
-            </p>
-          </form>
-        </div>
+                  <PhoneInput
+                    placeholder="Enter phone number"
+                    value={value}
+                    // onChange={setValue}
+                    className="react-phone signIn-input"
+                    onChange={(selectedOption) => {
+                      form.setFieldValue("phone", selectedOption);
+                      console.log("form ", form, field);
+                      return setValue(selectedOption);
+                    }}
+                  />
+                  <p className="error">
+                    <ErrorMessage name={field.name} />
+                  </p>
+                </div>
+              )}
+            </Field>
+          </div>
+          {/* --------input five ------------- */}
+          <div>
+            <Field name="aboutUs">
+              {({ field, form, meta }) => (
+                <div className="input-wrap">
+                  <Select
+                    placeholder="Where did you hear about us?"
+                    className="target2"
+                    options={options}
+                    isClearable={true}
+                    onChange={(selectedOption) => {
+                      form.setFieldValue("aboutUs", selectedOption.value);
+                    }}
+                    // menuIsOpen={true}
+                  />
+                  <p className="error">
+                    <ErrorMessage name={field.name} />
+                  </p>
+                </div>
+              )}
+            </Field>
+          </div>
+          {/* --------signup button ------------- */}
+          <div className="input-wrap">
+            <button
+              href="#"
+              type="submit"
+              className="button-primary sign-up-btn"
+              // onSubmit={() => handleSubmit()}
+              // onClick={formik.handleSubmit}
+            >
+              sign up
+            </button>
+          </div>
+          {/* --------terms and condition ------------- */}
+          <p className="terms">
+            By clicking “Sign up” you are agreeing to 'My Tutor Point Ltd'
+            <span> Terms & Conditions</span> and <span>Privacy Policy</span>.
+          </p>
+        </form>
       )}
     </Formik>
   );

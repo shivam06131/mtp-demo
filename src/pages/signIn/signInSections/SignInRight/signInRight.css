@@ -1,6 +1,9 @@
 .signIn-form-wrap {
-  padding: 50px 58px;
+  padding: 0px 58px;
+  display: flex;
   background-color: #f4efe6;
+  flex-direction: column;
+  justify-content: center;
 }
 .form-top {
   display: flex;
@@ -172,6 +175,9 @@ input::-webkit-inner-spin-button {
 }
 .sign-up-btn {
   min-height: 44px;
+  border: none;
+  outline: none;
+  width: 100%;
 }
 .terms {
   font-size: 12px;
