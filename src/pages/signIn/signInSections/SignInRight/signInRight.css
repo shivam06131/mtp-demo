@@ -183,3 +183,12 @@ input::-webkit-inner-spin-button {
   color: #c6521e;
   cursor: pointer;
 }
+
+.error {
+  margin: 0px;
+  font-size: 14px;
+  padding-top: 4px;
+  padding-left: 20px;
+  color: red;
+  font-family: "solitaire-mvb-pro";
+}
