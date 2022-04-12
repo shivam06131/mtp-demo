@@ -49,17 +49,17 @@ const SignInRight = () => {
         aboutUs: "",
       }}
       validationSchema={validate}
-      // validateOnChange={false}
-      // validateOnBlur={false}
+      validateOnChange={false}
+      validateOnBlur={false}
       onSubmit={(values, { validate }) => {
         console.log("validating");
         validate(values);
       }}
     >
       {(formik) => (
-        <form onSubmit={handleSubmit}>
-          <div className="signIn-form-wrap">
-            {console.log("Formik", formik.values)}
+        <div className="signIn-form-wrap">
+          <form>
+            {console.log("Formik", formik)}
             <div className="form-top">
               <a className="form-passive form-active" href="#">
                 <img src={studentImg} alt="" />
@@ -182,29 +182,35 @@ const SignInRight = () => {
               </Field>
             </div>
             {/* --------input five ------------- */}
-            <div className="input-wrap">
+            <div>
               <Field name="aboutUs">
                 {({ field, form, meta }) => (
-                  <Select
-                    placeholder="Where did you hear about us?"
-                    className="target2"
-                    options={options}
-                    isClearable={true}
-                    onChange={(selectedOption) => {
-                      form.setFieldValue("aboutUs", selectedOption.value);
-                    }}
-
-                    // menuIsOpen={true}
-                  />
+                  <div className="input-wrap">
+                    <Select
+                      placeholder="Where did you hear about us?"
+                      className="target2"
+                      options={options}
+                      isClearable={true}
+                      onChange={(selectedOption) => {
+                        form.setFieldValue("aboutUs", selectedOption.value);
+                      }}
+                      // menuIsOpen={true}
+                    />
+                    <p className="error">
+                      <ErrorMessage name={field.name} />
+                    </p>
+                  </div>
                 )}
               </Field>
             </div>
             {/* --------signup button ------------- */}
             <div className="input-wrap">
               <a
+                href="adsf"
                 // type="submit"
                 className="button-primary sign-up-btn"
                 // onSubmit={() => handleSubmit()}
+                onClick={formik.handleSubmit}
               >
                 sign up
               </a>
@@ -214,8 +220,8 @@ const SignInRight = () => {
               By clicking “Sign up” you are agreeing to 'My Tutor Point Ltd'
               <span> Terms & Conditions</span> and <span>Privacy Policy</span>.
             </p>
-          </div>
-        </form>
+          </form>
+        </div>
       )}
     </Formik>
   );
