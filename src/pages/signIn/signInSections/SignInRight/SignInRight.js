@@ -8,7 +8,7 @@ import MobileIcon from "../../assets/right-section/mobile-icon.png";
 // import InputField from "../../InputField";
 import Select from "react-select";
 import PhoneInput from "react-phone-number-input";
-import { Form, Formik } from "formik";
+import { Field, Formik, useField, FormikProps, Values, Form } from "formik";
 
 // import "../../../layout/navbar/Navbar.css";
 import "../../../../layout/navbar/Navbar.css";
@@ -21,6 +21,9 @@ const SignInRight = () => {
     { value: "instagram", label: "instagram" },
     { value: "other", label: "other" },
   ];
+  console.log("Value", value);
+
+  const handleChange = (value) => {};
   return (
     <Formik
       initialValues={{
@@ -33,7 +36,7 @@ const SignInRight = () => {
     >
       {(formik) => (
         <div className="signIn-form-wrap">
-          {console.log("Formik", formik)}
+          {console.log("Formik", formik.values)}
           <div className="form-top">
             <a className="form-passive form-active" href="#">
               <img src={studentImg} alt="" />
@@ -50,14 +53,20 @@ const SignInRight = () => {
           </div>
           <div className="name-inputs">
             {/* --------input one ------------- */}
+
             <div className="input-wrap top">
               <div className="signIn-input">
                 <div className="input-select-group">
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    autoComplete="new-password"
-                  />
+                  <Field name="firstName">
+                    {({ field, form, meta }) => (
+                      <input
+                        type="text"
+                        placeholder="First Name"
+                        autoComplete="new-password"
+                        {...field}
+                      />
+                    )}
+                  </Field>
                 </div>
                 <img src={NameIcon} alt="" />
               </div>
@@ -66,11 +75,16 @@ const SignInRight = () => {
             <div className="input-wrap top">
               <div className="signIn-input">
                 <div className="input-select-group">
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    autoComplete="new-password"
-                  />
+                  <Field name="lastName">
+                    {({ field, form, meta }) => (
+                      <input
+                        type="text"
+                        placeholder="Last Name"
+                        autoComplete="new-password"
+                        {...field}
+                      />
+                    )}
+                  </Field>
                 </div>
                 <img src={NameIcon} alt="" />
               </div>
@@ -81,11 +95,16 @@ const SignInRight = () => {
           <div className="input-wrap">
             <div className="signIn-input">
               <div className="input-select-group">
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  autoComplete="new-password"
-                />
+                <Field name="email">
+                  {({ field, form, meta }) => (
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      autoComplete="new-password"
+                      {...field}
+                    />
+                  )}
+                </Field>
               </div>
               <img src={MilIcon} alt="" />
             </div>
@@ -98,22 +117,38 @@ const SignInRight = () => {
           icon={MobileIcon}
           type={"number"}
         />*/}
-            <PhoneInput
-              placeholder="Enter phone number"
-              value={value}
-              onChange={setValue}
-              className="react-phone signIn-input"
-            />
+            <Field name="phone">
+              {({ field, form, meta }) => (
+                <PhoneInput
+                  placeholder="Enter phone number"
+                  value={value}
+                  // onChange={setValue}
+                  className="react-phone signIn-input"
+                  onChange={(selectedOption) => {
+                    form.setFieldValue("phone", selectedOption);
+                    return setValue(selectedOption);
+                  }}
+                />
+              )}
+            </Field>
           </div>
           {/* --------input five ------------- */}
           <div className="input-wrap">
-            <Select
-              placeholder="Where did you hear about us?"
-              className="target2"
-              options={options}
-              isClearable={true}
-              // menuIsOpen={true}
-            />
+            <Field name="aboutUs">
+              {({ field, form, meta }) => (
+                <Select
+                  placeholder="Where did you hear about us?"
+                  className="target2"
+                  options={options}
+                  isClearable={true}
+                  onChange={(selectedOption) => {
+                    form.setFieldValue("aboutUs", selectedOption.value);
+                  }}
+
+                  // menuIsOpen={true}
+                />
+              )}
+            </Field>
           </div>
           {/* --------signup button ------------- */}
           <div className="input-wrap">
