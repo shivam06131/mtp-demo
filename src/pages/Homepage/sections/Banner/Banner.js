@@ -2,9 +2,10 @@ import React from "react";
 // import "./Banner.css";
 // import "../../index.css";
 
-import light from "../../../assets/banner/light.svg";
-import live from "../../../assets/banner/live tag.svg";
-import bannerVideo from "../../../assets/banner/home_banner_video.mp4";
+import light from "../../assets/banner/light.svg";
+import live from "../../assets/banner/live tag.svg";
+import bannerVideo from "../../assets/banner/home_banner_video.mp4";
+import "./Banner.css";
 
 const Banner = () => {
   return (

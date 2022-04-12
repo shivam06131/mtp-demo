@@ -3,11 +3,12 @@ import Tab from "react-bootstrap/Tab";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
-import tabImgOne from "../.../../../../assets/tabs/one.png";
-import tabImgTwo from "../.../../../../assets/tabs/two.png";
-import tabImgThree from "../.../../../../assets/tabs/three.png";
-import tabImgFour from "../.../../../../assets/tabs/four.png";
-import tab_one from "../.../../../../assets/tabs/tab-one.png";
+import tabImgOne from "../../assets/tabs/one.png";
+import tabImgTwo from "../../assets/tabs/two.png";
+import tabImgThree from "../../assets/tabs/three.png";
+import tabImgFour from "../../assets/tabs/four.png";
+import tab_one from "../../assets/tabs/tab-one.png";
+import "./tabs.css";
 
 import { Fade } from "react-bootstrap";
 

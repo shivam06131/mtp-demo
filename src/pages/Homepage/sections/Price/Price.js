@@ -1,5 +1,6 @@
 import React from "react";
-import priceIcon from "../.../../../../assets/price/price-icon.png";
+import priceIcon from "../../assets/price/price-icon.png";
+import "./price.css";
 
 const Price = ({ scrollRef }) => {
   return (

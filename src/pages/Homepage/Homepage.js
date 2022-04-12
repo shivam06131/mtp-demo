@@ -1,24 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Banner from "./sections/Banner";
-import Learning from "./sections/Learning";
-import Price from "./sections/Price";
-import ScrollSection from "./sections/ScrollSection";
-import SearchOne from "./sections/SearchOne";
-import SearchTutor from "./sections/SearchTutor";
-import TabSection from "./sections/TabSection";
-import TutorVideo from "./sections/TutorVideo";
+import Banner from "./sections/Banner/Banner";
+import Learning from "./sections/Learning/Learning";
+import Price from "./sections/Price/Price";
+import ScrollSection from "./sections/Scroll/ScrollSection";
+import SearchOne from "./sections/SearchOne/SearchOne";
+import SearchTutor from "./sections/SearchTutor/SearchTutor";
+import TabSection from "./sections/TabSection/TabSection";
+import TutorVideo from "./sections/TutorVideo/TutorVideo";
 
 import "../../index.css";
-import "./styles/scroll.css";
-import "./styles/Banner.css";
-import "./styles/price.css";
-import "./styles/feature-tutor.css";
-import "./styles/learning.css";
-import "./styles/tabs.css";
-import "./styles/tutor.css";
-import "./styles/footer.css";
-import "./styles/footer-2.css";
 
 const Homepage = () => {
   const [display, setDisplay] = useState();

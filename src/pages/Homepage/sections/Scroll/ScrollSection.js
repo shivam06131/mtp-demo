@@ -1,5 +1,6 @@
 import React from "react";
-import arrow from "../.../../../../assets/scroll/arrow.svg";
+import arrow from "../../assets/scroll/arrow.svg";
+import "./scroll.css";
 
 const ScrollSection = ({ scrollRef }) => {
   const handleArrowScroll = () => {

@@ -1,9 +1,9 @@
 import React from "react";
-import tutorImage from "../.../../../../assets/tutor/Group 1522.png";
-import search from "../.../../../../assets/scroll/search/search icon.png";
-import location from "../.../../../../assets/scroll/search/location icon.png";
-import web from "../.../../../../assets/scroll/search/web icon.png";
-import arrowRight from "../.../../../../assets/scroll/search/arrow.png";
+import tutorImage from "../../assets/tutor/Group 1522.png";
+import search from "../../assets/scroll/search/search icon.png";
+import location from "../../assets/scroll/search/location icon.png";
+import web from "../../assets/scroll/search/web icon.png";
+import arrowRight from "../../assets/scroll/search/arrow.png";
 
 const SearchTutor = ({ display, displaySearchTwo }) => {
   return (

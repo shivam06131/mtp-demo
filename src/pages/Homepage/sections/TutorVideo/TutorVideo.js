@@ -1,7 +1,9 @@
 import React from "react";
-import StartImg from "../.../../../../assets/video/star.png";
-import StartImg2 from "../.../../../../assets/video/Path 986.png";
+import StartImg from "../../assets/video/star.png";
+import StartImg2 from "../../assets/video/Path 986.png";
 import Rating from "react-rating";
+import "./tutor.css";
+import "./feature-tutor.css";
 
 const TutorVideo = ({ videoData }) => {
   return (

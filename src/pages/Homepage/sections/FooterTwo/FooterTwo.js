@@ -1,6 +1,7 @@
 import React from "react";
-import footer2_image from "../.../../../../assets/footer-2/social network.png";
+import footer2_image from "../../assets/footer-2/social network.png";
 // import footer2_image from "../../assets/footer-2/social network.png";
+import "./footer-2.css";
 
 const FooterTwo = () => {
   return (

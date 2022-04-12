@@ -1,9 +1,9 @@
 import React from "react";
 import "../../index.css";
-import SignInLeft from "./signInSections/SignInLeft";
-import SignInRight from "./signInSections/SignInRight";
-import "./signInStyles/signInLeft.css";
-import "./signInStyles/signInRight.css";
+import SignInLeft from "./signInSections/SignInLeft/SignInLeft";
+import SignInRight from "./signInSections/SignInRight/SignInRight";
+// import "./signInStyles/signInLeft.css";
+// import "./signInStyles/signInRight.css";
 
 const SignIn = () => {
   return (

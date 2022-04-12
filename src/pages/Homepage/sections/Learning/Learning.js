@@ -1,9 +1,10 @@
 import React from "react";
 // import "../styles/learning.css";
-import LearnOne from "../.../../../../assets/learning/learn-1.png";
+import LearnOne from "../../assets/learning/learn-1.png";
 // import LearnOne from "../../assets/learning/learn-1.png";
-import LearnTwo from "../.../../../../assets/learning/learn-2.png";
-import LearnThree from "../.../../../../assets/learning/learn-3.png";
+import LearnTwo from "../../assets/learning/learn-2.png";
+import LearnThree from "../../assets/learning/learn-3.png";
+import "./learning.css";
 
 const Learning = () => {
   return (

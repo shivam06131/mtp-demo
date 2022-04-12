@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-import "../../../signIn/signInStyles/signInRight.css";
+import "../../../signIn/signInSections/SignInRight/signInRight.css";
 import mailIcon from "../../assets/right/mail.png";
 import lockIcon from "../../assets/right/lock.png";
 import "../../../../layout/navbar/Navbar.css";
