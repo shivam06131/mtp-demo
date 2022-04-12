@@ -26,10 +26,19 @@ function* getFirstVideo() {
   }
 }
 
+function* postSignInData(action) {
+  try {
+    console.log("action in postSignInData", action.payload);
+  } catch (error) {
+    console.log("error occoured at postSignInData saga action ", error);
+  }
+}
+
 function* mySaga() {
   yield takeLatest("USER_FETCH_REQUESTED", fetchData);
   yield takeLatest("GET_VIDEO", getVideo);
   yield takeLatest("GET_VIDEO_ONE", getFirstVideo);
+  yield takeLatest("POST_SIGN_IN_DATA", postSignInData);
 }
 
 export default mySaga;

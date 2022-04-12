@@ -10,6 +10,7 @@ import Select from "react-select";
 import PhoneInput from "react-phone-number-input";
 import { Field, Formik, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
 
 // import "../../../layout/navbar/Navbar.css";
 import "../../../../layout/navbar/Navbar.css";
@@ -17,6 +18,7 @@ import "./signInRight.css";
 
 const SignInRight = () => {
   const [value, setValue] = useState("");
+  const dispatch = useDispatch();
   const options = [
     { value: "facebook", label: "facebook" },
     { value: "instagram", label: "instagram" },
@@ -53,6 +55,20 @@ const SignInRight = () => {
           onSubmit={(e) => {
             e.preventDefault();
             console.log("formik.values", formik.values);
+            const { firstName, lastName, email, phone, aboutUs } =
+              formik.values;
+            dispatch({
+              type: "POST_SIGN_IN_DATA",
+              payload: {
+                first_name: firstName,
+                last_name: lastName,
+                email,
+                phone,
+                type: null,
+                hear_from: aboutUs,
+                hear_from_other: null,
+              },
+            });
             formik.handleSubmit();
           }}
           className="signIn-form-wrap"
