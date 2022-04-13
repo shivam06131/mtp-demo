@@ -14,7 +14,7 @@ function* getVideo() {
     const data = yield API.getVideo();
     yield put({ type: "STORE_VIDEO_DATA", payload: data });
   } catch (error) {
-    console.log(error);
+    console.log("error occoured at getVideo saga action ", error);
   }
 }
 function* getFirstVideo() {
@@ -22,16 +22,27 @@ function* getFirstVideo() {
     const data = yield API.getFirstVideo();
     yield put({ type: "STORE_FIRST_VIDEO_DATA", payload: data });
   } catch (error) {
-    console.log(error);
+    console.log("error occoured at getFirstVideo saga action ", error);
   }
 }
 
 function* postSignInData(action) {
   try {
-    console.log("action.payload", action);
     let payload = action.payload;
     const data = yield API.postSignInData(payload);
-    console.log("response data ", data);
+    localStorage.setItem("sign_in_data", JSON.stringify(data));
+    yield put({ type: "STORE_SIGN_IN_DATA", payload: data });
+  } catch (error) {
+    console.log("error occoured at postSignInData saga action ", error);
+  }
+}
+function* postLogInData(action) {
+  try {
+    let payload = action.payload;
+    console.log("login payload", payload);
+    const data = yield API.postLogInData(payload);
+    localStorage.setItem("log_in_data", JSON.stringify(data));
+    yield put({ type: "STORE_LOG_IN_DATA", payload: data });
   } catch (error) {
     console.log("error occoured at postSignInData saga action ", error);
   }
@@ -42,6 +53,7 @@ function* mySaga() {
   yield takeLatest("GET_VIDEO", getVideo);
   yield takeLatest("GET_VIDEO_ONE", getFirstVideo);
   yield takeLatest("POST_SIGN_IN_DATA", postSignInData);
+  yield takeLatest("POST_LOG_IN_DATA", postLogInData);
 }
 
 export default mySaga;

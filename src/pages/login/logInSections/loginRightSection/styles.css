@@ -27,3 +27,17 @@
 .top {
   min-height: 44px;
 }
+.login-forget-pass {
+  display: flex;
+  justify-content: flex-end;
+}
+.login-forget-pass a {
+  font-size: 12px;
+  line-height: 16px;
+  color: #666666;
+  text-decoration: none;
+  padding-top: 6px;
+}
+.login-forget-pass a:hover {
+  color: #c6521e;
+}

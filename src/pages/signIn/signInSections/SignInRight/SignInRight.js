@@ -33,7 +33,7 @@ const SignInRight = () => {
       setRecaptchaValue(true);
     }
   };
-
+  console.log("values", value);
   const options = [
     { value: "facebook", label: "facebook" },
     { value: "instagram", label: "instagram" },
@@ -43,13 +43,17 @@ const SignInRight = () => {
   const validate = Yup.object({
     firstName: Yup.string()
       .max(15, "must not be more than 15 characters")
-      .required("required"),
+      .required("Enter your first name."),
     lastName: Yup.string()
       .max(15, "must not be more than 15 characters")
-      .required("required"),
-    email: Yup.string().email("type valid email").required("required"),
-    phone: Yup.number().required("required"),
-    aboutUs: Yup.string().required("required"),
+      .required("Enter your last name."),
+    email: Yup.string()
+      .email("Enter a valid email.")
+      .required("Enter a valid email."),
+    phone: Yup.number().required("Enter your mobile number."),
+    aboutUs: Yup.string().required(
+      "Select from the dropdown list or type your own."
+    ),
   });
 
   const formik = useFormik({
@@ -77,7 +81,7 @@ const SignInRight = () => {
     // mobile: "914444444444"
     // referral_code: ""
     // role: "student"
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       dispatch({
         type: "POST_SIGN_IN_DATA",
         payload: {
@@ -187,23 +191,26 @@ const SignInRight = () => {
         {/* --------input four ------------- */}
         <div>
           <div className="input-wrap">
-            <PhoneInput
-              placeholder="Enter phone number"
-              id="phone"
-              name="phone"
-              value={value}
-              // onChange={setValue}
-              className="react-phone signIn-input"
-              onChange={(selectedOption) => {
-                // form.setFieldValue("phone", selectedOption);
-                formik.values.phone = selectedOption;
-                return setValue(selectedOption);
-              }}
-            />
+            <div className="signIn-input">
+              <PhoneInput
+                placeholder="Enter phone number"
+                id="phone"
+                name="phone"
+                // defaultCountry=
+                value={value}
+                // onChange={setValue}
+                className="react-phone "
+                onChange={(selectedOption) => {
+                  // form.setFieldValue("phone", selectedOption);
+                  formik.values.phone = selectedOption;
+                  return setValue(selectedOption);
+                }}
+              />
+              <img src={MobileIcon} alt="" />
+            </div>
             {formik.touched.phone && formik.errors.phone ? (
               <span className="error">{formik.errors.phone}</span>
             ) : null}
-            <div></div>
           </div>
         </div>
         {/* --------input five ------------- */}

@@ -172,6 +172,7 @@ input::-webkit-inner-spin-button {
 }
 .react-phone {
   display: flex;
+  width: 100%;
 }
 .sign-up-btn {
   min-height: 44px;

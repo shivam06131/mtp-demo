@@ -1,4 +1,5 @@
 import axios from "axios";
+
 export const getData = async () => {
   const data = await fetch(
     "https://countriesnow.space/api/v0.1/countries/capital"
@@ -25,12 +26,16 @@ export const getFirstVideo = async () => {
 };
 
 export const postSignInData = async (payload) => {
-  console.log("payload", payload);
   const data = await axios.post(
     "https://api.tutorspoint.uk/api/registration",
     payload
   );
-  console.log("response data", data);
-  // const value = await data.json();
-  // return value;
+  return data;
+};
+export const postLogInData = async (payload) => {
+  const data = await axios.post(
+    "https://api.tutorspoint.uk/api/login",
+    payload
+  );
+  return data;
 };
