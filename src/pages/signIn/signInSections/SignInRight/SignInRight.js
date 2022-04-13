@@ -8,9 +8,14 @@ import MobileIcon from "../../assets/right-section/mobile-icon.png";
 // import InputField from "../../InputField";
 import Select from "react-select";
 import PhoneInput from "react-phone-number-input";
-import { Field, Formik, ErrorMessage, Form } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
+
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptcha,
+} from "react-google-recaptcha-v3";
 
 // import "../../../layout/navbar/Navbar.css";
 import "../../../../layout/navbar/Navbar.css";
@@ -19,6 +24,16 @@ import "./signInRight.css";
 const SignInRight = () => {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
+  const [recaptchaValue, setRecaptchaValue] = useState(false);
+
+  const handleReCaptchaVerify = async (token) => {
+    if (!token) {
+      setRecaptchaValue(false);
+    } else {
+      setRecaptchaValue(true);
+    }
+  };
+
   const options = [
     { value: "facebook", label: "facebook" },
     { value: "instagram", label: "instagram" },
@@ -37,203 +52,207 @@ const SignInRight = () => {
     aboutUs: Yup.string().required("required"),
   });
 
-  return (
-    <Formik
-      initialValues={{
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        aboutUs: "",
-      }}
-      validationSchema={validate}
-      validateOnChange={false}
-      validateOnBlur={false}
-    >
-      {(formik) => (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            console.log("formik.values", formik.values);
-            const { firstName, lastName, email, phone, aboutUs } =
-              formik.values;
-            dispatch({
-              type: "POST_SIGN_IN_DATA",
-              payload: {
-                first_name: firstName,
-                last_name: lastName,
-                email,
-                phone,
-                type: null,
-                hear_from: aboutUs,
-                hear_from_other: null,
-              },
-            });
-            formik.handleSubmit();
-          }}
-          className="signIn-form-wrap"
-        >
-          <div className="form-top">
-            <a className="form-passive form-active" href="#">
-              <img src={studentImg} alt="" />
-              <p>student</p>
-            </a>
-            <a className="form-passive" href="#">
-              <img src={parentImg} alt="" />
-              <p>Parents</p>
-            </a>
-            <a className="form-passive" href="#">
-              <img src={tutortImg} alt="" />
-              <p>tutor</p>
-            </a>
-          </div>
-          <div className="name-inputs">
-            {/* --------input one ------------- */}
-            <div>
-              <Field name="firstName">
-                {({ field, form, meta }) => (
-                  <div className="input-wrap top">
-                    <div className="signIn-input">
-                      <div className="input-select-group">
-                        <input
-                          type="text"
-                          placeholder="First Name"
-                          autoComplete="new-password"
-                          {...field}
-                        />
-                      </div>
-                      <img src={NameIcon} alt="" />
-                    </div>
-                    <p className="error">
-                      <ErrorMessage name={field.name} />
-                    </p>
-                  </div>
-                )}
-              </Field>
-            </div>
-            {/* --------input tw0 ------------- */}
-            <div>
-              <Field name="lastName">
-                {({ field, form, meta }) => (
-                  <div className="input-wrap top">
-                    <div className="signIn-input">
-                      <div className="input-select-group">
-                        <input
-                          type="text"
-                          placeholder="Last Name"
-                          autoComplete="new-password"
-                          {...field}
-                        />
-                      </div>
-                      <img src={NameIcon} alt="" />
-                    </div>
-                    <p className="error">
-                      <ErrorMessage name={field.name} />
-                    </p>
-                  </div>
-                )}
-              </Field>
-            </div>
-          </div>
-          {/* --------input three ------------- */}
-          <div>
-            <Field name="email">
-              {({ field, form, meta }) => (
-                <div className="input-wrap">
-                  <div className="signIn-input">
-                    <div className="input-select-group">
-                      <Field name="email">
-                        {({ field, form, meta }) => (
-                          <input
-                            type="email"
-                            placeholder="Email Address"
-                            autoComplete="new-password"
-                            {...field}
-                          />
-                        )}
-                      </Field>
-                    </div>
-                    <img src={MilIcon} alt="" />
-                  </div>
-                  <p className="error">
-                    <ErrorMessage name={field.name} />
-                  </p>
-                </div>
-              )}
-            </Field>
-          </div>
-          {/* --------input four ------------- */}
-          <div>
-            <Field name="phone">
-              {({ field, form, meta }) => (
-                <div className="input-wrap">
-                  {/* <InputField
-          dropdown={true}
-          placeholder={"Mobile Number"}
-          icon={MobileIcon}
-          type={"number"}
-        />*/}
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      aboutUs: "",
+    },
+    //   email: "userone@gmail.com"
+    // first_name: "user"
+    // hear_from: "Facebook"
+    // hear_from_other: ""
+    // last_name: "one"
+    // mobile: "916666666666"
+    // referral_code: ""
+    // role: "student"
 
-                  <PhoneInput
-                    placeholder="Enter phone number"
-                    value={value}
-                    // onChange={setValue}
-                    className="react-phone signIn-input"
-                    onChange={(selectedOption) => {
-                      form.setFieldValue("phone", selectedOption);
-                      console.log("form ", form, field);
-                      return setValue(selectedOption);
-                    }}
-                  />
-                  <p className="error">
-                    <ErrorMessage name={field.name} />
-                  </p>
-                </div>
-              )}
-            </Field>
-          </div>
-          {/* --------input five ------------- */}
+    //     email: "useroneone@gmail.com"
+    // first_name: "userone"
+    // hear_from: "Facebook"
+    // hear_from_other: ""
+    // last_name: "userOneLast"
+    // mobile: "914444444444"
+    // referral_code: ""
+    // role: "student"
+    onSubmit: async (values) => {
+      dispatch({
+        type: "POST_SIGN_IN_DATA",
+        payload: {
+          first_name: values.firstName,
+          last_name: values.lastName,
+          email: values.email,
+          mobile: values.phone,
+          // type: null,
+          hear_from: values.aboutUs,
+          hear_from_other: "",
+          referral_code: "",
+          // is_recaptcha_verified: recaptchaValue,
+          role: "student",
+        },
+      });
+    },
+    validationSchema: validate,
+  });
+
+  return (
+    <GoogleReCaptchaProvider reCaptchaKey="6LdUvWkfAAAAAHA0M35cQMZPrM7s_hKkZEQgqc3B">
+      <div className="signIn-form-wrap">
+        <div className="form-top">
+          <a className="form-passive form-active" href="#">
+            <img src={studentImg} alt="" />
+            <p>student</p>
+          </a>
+          <a className="form-passive" href="#">
+            <img src={parentImg} alt="" />
+            <p>Parents</p>
+          </a>
+          <a className="form-passive" href="#">
+            <img src={tutortImg} alt="" />
+            <p>tutor</p>
+          </a>
+        </div>
+        <div className="name-inputs">
+          {/* --------input one ------------- */}
           <div>
-            <Field name="aboutUs">
-              {({ field, form, meta }) => (
-                <div className="input-wrap">
-                  <Select
-                    placeholder="Where did you hear about us?"
-                    className="target2"
-                    options={options}
-                    isClearable={true}
-                    onChange={(selectedOption) => {
-                      form.setFieldValue("aboutUs", selectedOption.value);
-                    }}
-                    // menuIsOpen={true}
+            <div className="input-wrap top">
+              <div className="signIn-input">
+                <div className="input-select-group">
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    placeholder="First Name"
+                    autoComplete="new-password"
+                    onChange={formik.handleChange}
+                    value={formik.values.firstName}
                   />
-                  <p className="error">
-                    <ErrorMessage name={field.name} />
-                  </p>
                 </div>
-              )}
-            </Field>
+                <img src={NameIcon} alt="" />
+              </div>
+              {formik.touched.firstName && formik.errors.firstName ? (
+                <span className="error">{formik.errors.firstName}</span>
+              ) : null}
+              {/*     {console.log("Formik", formik) } */}
+            </div>
           </div>
-          {/* --------signup button ------------- */}
+          {/* --------input tw0 ------------- */}
+          <div>
+            <div className="input-wrap top">
+              <div className="signIn-input">
+                <div className="input-select-group">
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    placeholder="Last Name"
+                    autoComplete="new-password"
+                    onChange={formik.handleChange}
+                    value={formik.values.lastName}
+                  />
+                </div>
+                <img src={NameIcon} alt="" />
+              </div>
+              {formik.touched.lastName && formik.errors.lastName ? (
+                <span className="error">{formik.errors.lastName}</span>
+              ) : null}
+              <div></div>
+            </div>
+          </div>
+        </div>
+        {/* --------input three ------------- */}
+        <div>
           <div className="input-wrap">
-            <button
-              href="#"
-              type="submit"
-              className="button-primary sign-up-btn"
-              // onSubmit={() => handleSubmit()}
-              // onClick={formik.handleSubmit}
-            >
-              sign up
-            </button>
+            <div className="signIn-input">
+              <div className="input-select-group">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Email Address"
+                  autoComplete="new-password"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                />
+              </div>
+              <img src={MilIcon} alt="" />
+            </div>
+            {formik.touched.email && formik.errors.email ? (
+              <span className="error">{formik.errors.email}</span>
+            ) : null}
           </div>
-          {/* --------terms and condition ------------- */}
-          <p className="terms">
-            By clicking “Sign up” you are agreeing to 'My Tutor Point Ltd'
-            <span> Terms & Conditions</span> and <span>Privacy Policy</span>.
-          </p>
-        </form>
-      )}
-    </Formik>
+        </div>
+        {/* --------input four ------------- */}
+        <div>
+          <div className="input-wrap">
+            <PhoneInput
+              placeholder="Enter phone number"
+              id="phone"
+              name="phone"
+              value={value}
+              // onChange={setValue}
+              className="react-phone signIn-input"
+              onChange={(selectedOption) => {
+                // form.setFieldValue("phone", selectedOption);
+                formik.values.phone = selectedOption;
+                return setValue(selectedOption);
+              }}
+            />
+            {formik.touched.phone && formik.errors.phone ? (
+              <span className="error">{formik.errors.phone}</span>
+            ) : null}
+            <div></div>
+          </div>
+        </div>
+        {/* --------input five ------------- */}
+        <div>
+          <div className="input-wrap">
+            <Select
+              id="aboutUs"
+              name="aboutUs"
+              placeholder="Where did you hear about us?"
+              className="target2"
+              options={options}
+              isClearable={true}
+              onChange={(selectedOption) => {
+                // form.setFieldValue("aboutUs", selectedOption.value);
+                formik.values.aboutUs = selectedOption.value;
+              }}
+            />
+            {formik.touched.aboutUs && formik.errors.aboutUs ? (
+              <span className="error">{formik.errors.aboutUs}</span>
+            ) : null}
+          </div>
+        </div>
+        {/* --------signup button ------------- */}
+        <div className="input-wrap">
+          <button
+            href="#"
+            type="submit"
+            className="button-primary sign-up-btn"
+            onClick={() => formik.handleSubmit()}
+          >
+            sign up
+          </button>
+        </div>
+        {/* --------terms and condition ------------- */}
+        <p className="terms">
+          By clicking “Sign up” you are agreeing to 'My Tutor Point Ltd'
+          <span> Terms & Conditions</span> and <span>Privacy Policy</span>.
+        </p>
+        {/*  
+   <Recaptcha
+   ref={(ref) => setRecaptcha(ref)}
+   sitekey="6LdUvWkfAAAAAHA0M35cQMZPrM7s_hKkZEQgqc3B"
+   onResolved={onResolved}
+   />
+  */}
+
+        <GoogleReCaptcha onVerify={(token) => handleReCaptchaVerify(token)} />
+      </div>
+    </GoogleReCaptchaProvider>
   );
 };
 

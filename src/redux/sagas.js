@@ -28,7 +28,10 @@ function* getFirstVideo() {
 
 function* postSignInData(action) {
   try {
-    console.log("action in postSignInData", action.payload);
+    console.log("action.payload", action);
+    let payload = action.payload;
+    const data = yield API.postSignInData(payload);
+    console.log("response data ", data);
   } catch (error) {
     console.log("error occoured at postSignInData saga action ", error);
   }
