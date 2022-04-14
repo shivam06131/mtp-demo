@@ -39,8 +39,12 @@ function* postSignInData(action) {
 }
 function* postLogInData(action) {
   try {
-    let payload = action.payload;
-    // console.log("login payload", payload);
+    let { remember, ...payload } = action.payload;
+    if (remember) {
+      localStorage.setItem("user_log_in_data", JSON.stringify(payload));
+    } else {
+      localStorage.removeItem("user_log_in_data");
+    }
 
     const data = yield axios.post(
       "https://api.tutorspoint.uk/api/login",

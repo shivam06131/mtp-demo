@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css";
 import "../../../signIn/signInSections/SignInRight/signInRight.css";
 import mailIcon from "../../assets/right/mail.png";
@@ -8,35 +8,47 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import Form from "react-bootstrap/Form";
 
 const LoginRight = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const errorMessage = useSelector((state) => state.login_error_data);
+  const [remember, setRemember] = useState(false);
 
+  //!calls
+  const errorMessage = useSelector((state) => state.login_error_data);
+  const loginSuccess = useSelector((state) => state.login_data);
+  let localData = localStorage.getItem("user_log_in_data");
+
+  console.log("loginSuccess", loginSuccess);
+
+  //!onComponentUpdate
+  useEffect(() => {
+    JSON.parse(localData);
+    formik.values.email = localData ? JSON.parse(localData).email : "";
+    formik.values.password = localData ? JSON.parse(localData).password : "";
+    localData && setRemember(true);
+  }, [localData]);
+
+  //!error validation
   if (errorMessage) {
-    console.log("errorMessage?.response?.data.message", errorMessage);
     var [message] = errorMessage;
   }
 
+  //!yup validation
   const validate = Yup.object({
     email: Yup.string()
       .email("Enter a valid email.")
       .required("Enter a valid email."),
     password: Yup.string().required("Enter your password."),
   });
-  // browser: "Chrome"
-  // device: "Windows"
-  // device_name: "10"
-  // device_type: "desktop"
-  // email: "email@eamil.com"
-  // password: "password"
+
+  //!formik setup
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
+
     onSubmit: (values) => {
       let login_data = {
         ...values,
@@ -44,13 +56,12 @@ const LoginRight = () => {
         device: "Windows",
         device_name: "10",
         device_type: "desktop",
+        remember,
       };
       dispatch({ type: "POST_LOG_IN_DATA", payload: login_data });
     },
     validationSchema: validate,
   });
-
-  // console.log("Formik", formik);
 
   return (
     <div className="login-right-wrap">
@@ -101,10 +112,14 @@ const LoginRight = () => {
         </div>
         <div className="login-forget-pass">
           <div className="remember-pass">
-            {/*  <Form>
-              <Form.Check type="checkbox" id="rememberMe" label="Remember Me" />
-            </Form> */}
-            <input type="checkbox" id="checkbox" name="" value="" />
+            <input
+              onChange={() => setRemember((prev) => !prev)}
+              type="checkbox"
+              id="checkbox"
+              name=""
+              checked={remember}
+              value=""
+            />
             <label htmlFor="checkbox">Remember Me</label>
           </div>
           <a href="#">forget password</a>
