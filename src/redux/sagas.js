@@ -1,3 +1,4 @@
+import axios from "axios";
 import { call, put, takeLatest } from "redux-saga/effects";
 import * as API from "../Api/index";
 function* fetchData(action) {
@@ -39,12 +40,21 @@ function* postSignInData(action) {
 function* postLogInData(action) {
   try {
     let payload = action.payload;
-    console.log("login payload", payload);
-    const data = yield API.postLogInData(payload);
+    // console.log("login payload", payload);
+
+    const data = yield axios.post(
+      "https://api.tutorspoint.uk/api/login",
+      payload
+    );
+
     localStorage.setItem("log_in_data", JSON.stringify(data));
     yield put({ type: "STORE_LOG_IN_DATA", payload: data });
   } catch (error) {
     console.log("error occoured at postSignInData saga action ", error);
+    yield put({
+      type: "STORE_LOG_IN_ERROR_DATA",
+      payload: error.response.data.message,
+    });
   }
 }
 

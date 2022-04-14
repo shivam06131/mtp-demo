@@ -29,15 +29,75 @@
 }
 .login-forget-pass {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  padding: 0px 20px;
 }
 .login-forget-pass a {
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 20px;
   color: #666666;
   text-decoration: none;
   padding-top: 6px;
+  cursor: pointer;
+  font-family: "solitaire-mvb-pro";
 }
+
 .login-forget-pass a:hover {
   color: #c6521e;
+}
+.remember-pass {
+  display: flex;
+  align-items: center;
+  padding-top: 8px;
+  position: relative;
+  padding-left: 12px;
+}
+
+.remember-pass input[type="checkbox"] {
+  visibility: hidden;
+}
+.remember-pass label {
+  position: relative;
+  cursor: pointer;
+  font-size: 14px;
+  color: #999;
+  font-weight: 300;
+  line-height: 20px;
+  max-height: 20px;
+  font-family: "solitaire-mvb-pro";
+}
+.remember-pass label::before {
+  content: "";
+  border: 1px solid #999;
+  position: absolute;
+  left: -27px;
+  top: 1px;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.28s ease;
+  border-radius: 0px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.remember-pass label::after {
+  content: "";
+  width: 10px;
+  height: 5px;
+  border-bottom: 2px solid #c6521e;
+  border-left: 2px solid #c6521e;
+  -webkit-transform: rotate(-45deg) scale(0);
+  transform: rotate(-45deg) scale(0);
+  transition: transform ease 0.25s;
+  position: absolute;
+  top: 6px;
+  left: -23px;
+  cursor: pointer;
+}
+.remember-pass input[type="checkbox"]:hover ~ label::before {
+  border-color: #c6521e;
+}
+.remember-pass input[type="checkbox"]:checked ~ label::after {
+  -webkit-transform: rotate(-45deg) scale(1);
+  transform: rotate(-45deg) scale(1);
 }

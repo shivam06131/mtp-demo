@@ -199,7 +199,7 @@ const SignInRight = () => {
                 // defaultCountry=
                 value={value}
                 // onChange={setValue}
-                className="react-phone "
+                className="react-phone"
                 onChange={(selectedOption) => {
                   // form.setFieldValue("phone", selectedOption);
                   formik.values.phone = selectedOption;

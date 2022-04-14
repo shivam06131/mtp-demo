@@ -7,11 +7,18 @@ import "../../../../layout/navbar/Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Form from "react-bootstrap/Form";
 
 const LoginRight = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const errorMessage = useSelector((state) => state.login_error_data);
+
+  if (errorMessage) {
+    console.log("errorMessage?.response?.data.message", errorMessage);
+    var [message] = errorMessage;
+  }
 
   const validate = Yup.object({
     email: Yup.string()
@@ -31,7 +38,6 @@ const LoginRight = () => {
       password: "",
     },
     onSubmit: (values) => {
-      console.log("Values", values);
       let login_data = {
         ...values,
         browser: "Chrome",
@@ -44,7 +50,7 @@ const LoginRight = () => {
     validationSchema: validate,
   });
 
-  console.log("Formik", formik);
+  // console.log("Formik", formik);
 
   return (
     <div className="login-right-wrap">
@@ -94,9 +100,16 @@ const LoginRight = () => {
           ) : null}
         </div>
         <div className="login-forget-pass">
+          <div className="remember-pass">
+            {/*  <Form>
+              <Form.Check type="checkbox" id="rememberMe" label="Remember Me" />
+            </Form> */}
+            <input type="checkbox" id="checkbox" name="" value="" />
+            <label htmlFor="checkbox">Remember Me</label>
+          </div>
           <a href="#">forget password</a>
         </div>
-        {/*   <p className="error">user not found!</p>*/}
+        {message && <p className="error">{message}</p>}
         {/*------------ button --------------------- */}
         <div className="input-wrap ">
           <button

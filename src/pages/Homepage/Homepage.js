@@ -21,8 +21,8 @@ const Homepage = () => {
   // const video2 = useSelector((state) => state.firstVideo);
 
   let videoData;
-  if (Array.isArray(video)) {
-    [videoData] = video;
+  if (Array.isArray(video?.video)) {
+    videoData = video?.video[0];
   }
   useEffect(() => {
     //client height = window height
@@ -50,7 +50,6 @@ const Homepage = () => {
     };
   }, []);
 
-  console.log("two", displaySearchTwo);
   useEffect(() => {
     window.addEventListener("scroll", () => {
       const scrollTop =

@@ -15,6 +15,9 @@ const dataReducer = (state = {}, action) => {
     case "STORE_LOG_IN_DATA":
       return (state = { ...state, login_data: [action.payload] });
 
+    case "STORE_LOG_IN_ERROR_DATA":
+      return (state = { ...state, login_error_data: [action.payload] });
+
     default:
       return state;
   }

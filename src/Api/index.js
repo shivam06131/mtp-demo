@@ -33,9 +33,15 @@ export const postSignInData = async (payload) => {
   return data;
 };
 export const postLogInData = async (payload) => {
-  const data = await axios.post(
-    "https://api.tutorspoint.uk/api/login",
-    payload
-  );
-  return data;
+  try {
+    const data = await axios.post(
+      "https://api.tutorspoint.uk/api/login",
+      payload
+    );
+    return data;
+  } catch (error) {
+    console.log("error in login api ", error.response.data.message);
+    // return error.response.data.message;
+    return error;
+  }
 };
