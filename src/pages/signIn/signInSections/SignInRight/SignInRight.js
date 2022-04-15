@@ -219,10 +219,10 @@ const SignInRight = () => {
             <Select
               id="aboutUs"
               name="aboutUs"
+              isClearable={true}
               placeholder="Where did you hear about us?"
               className="target2"
               options={options}
-              isClearable={true}
               onChange={(selectedOption) => {
                 // form.setFieldValue("aboutUs", selectedOption.value);
                 formik.values.aboutUs = selectedOption.value;
