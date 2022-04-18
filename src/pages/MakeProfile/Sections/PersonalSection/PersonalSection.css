@@ -93,11 +93,14 @@
   box-shadow: none;
 }
 .input-label {
-  font-size: 16px;
-  color: #666666;
-  line-height: 20px;
-  padding-bottom: 10px;
+  font-size: 16px !important;
+  color: #666666 !important;
+  line-height: 20px !important;
+  padding-bottom: 10px !important;
   margin-bottom: 0px !important;
+  padding-right: 3px !important;
+  font-weight: 200 !important;
+  font-family: "solitaire-mvb-pro" !important;
 }
 .input-wrap {
   display: flex;
@@ -150,31 +153,89 @@
 }
 
 .input-field input[type="radio"] {
-  visibility: hidden;
-}
-
-.radio-input label {
-  position: relative;
-}
-.radio-input label::before {
   position: absolute;
-  top: 45px;
-  content: "";
-  background-color: #f9f8f7;
-  border: 1px solid #d5d5d5;
-  border-radius: 100%;
-  width: 1.4em;
-  height: 1.4em;
-  transition: all 250ms ease;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  margin: 0;
 }
-.radio-input input[type="radio"]:checked + label::after {
+.radio-button .male-checkbox .form-check-label {
+  position: relative;
+  font-size: 14px;
+  color: #999999;
+  cursor: pointer;
+  padding-left: 30px;
+}
+.radio-button .male-checkbox .form-check-label::before {
   content: "";
+  border: 1px solid #d5d5d5;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 50%;
+}
+.radio-button .male-checkbox .form-check-label::after {
+  content: "";
+  position: absolute;
   width: 10px;
   height: 10px;
   left: 5px;
   top: 5px;
   background: #c6521e;
+  border-radius: 50%;
+  opacity: 0;
 }
+
+.radio-button
+  .male-checkbox
+  .form-check-input:checked
+  ~ .form-check-label::after {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* ----  */
+.radio-button2 .female-checkbox .form-check-label {
+  position: relative;
+  font-size: 14px;
+  color: #999999;
+  cursor: pointer;
+  padding-left: 30px;
+}
+.radio-button2 .female-checkbox .form-check-label::before {
+  content: "";
+  border: 1px solid #d5d5d5;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 50%;
+}
+.radio-button2 .female-checkbox .form-check-label::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: 5px;
+  top: 5px;
+  background: #c6521e;
+  opacity: 0;
+  border-radius: 50%;
+}
+
+.radio-button2
+  .female-checkbox
+  .form-check-input:checked
+  ~ .form-check-label::after {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.3s ease-in-out;
+}
+
 .small-field {
   min-width: 246px !important;
 }
@@ -186,6 +247,7 @@
   line-height: 30px;
   color: #333333;
   font-weight: 600;
+  padding-right: 3px;
 }
 .label-span-wrap img {
   width: 16px;
@@ -243,7 +305,7 @@
   padding-bottom: 10px;
 }
 .identification-row-gap {
-  padding-top: 30px !important;
+  padding-top: 35px !important;
 }
 .img-gap {
   padding-left: 10px;
@@ -360,4 +422,35 @@
 .add-button-wrap {
   display: flex;
   justify-content: flex-end;
+}
+.overlay-style {
+  min-width: 300px !important;
+}
+.overlay-style .tooltip-arrow {
+  visibility: hidden;
+}
+.overlay-style .tooltip-inner {
+  background-color: white !important;
+  border-radius: 0px;
+  min-width: 100%;
+  padding-left: 15px;
+  text-align: unset;
+}
+.overlay-style .tooltip-inner h6 {
+  color: black;
+  margin: 0px;
+  font-size: 12px;
+  padding-bottom: 5px;
+}
+.overlay-style .tooltip-inner p {
+  color: #c6521e;
+  margin: 0px;
+  font-size: 12px;
+}
+
+.radio-button-wrap {
+  display: flex;
+}
+.radio-button-wrap .radio-button .form-check {
+  padding-left: 0px !important;
 }

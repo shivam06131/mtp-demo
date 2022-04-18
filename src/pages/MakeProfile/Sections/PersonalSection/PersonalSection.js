@@ -21,6 +21,8 @@ import prevThree from "../../assets/Identification/img-prev-3.png";
 import prevFour from "../../assets/Identification/img-prev-4.png";
 
 import PhoneInput from "react-phone-number-input";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 const PersonalSection = () => {
   const [dateValue, setDateValue] = useState();
@@ -28,6 +30,7 @@ const PersonalSection = () => {
   const [src, setSrc] = useState("");
   const [value, setValue] = useState();
   const [remember, setRemember] = useState();
+  const [genderValue, setGenderValue] = useState();
 
   const getUploadParams = ({ meta }) => {
     return { url: "https://httpbin.org/post" };
@@ -42,6 +45,12 @@ const PersonalSection = () => {
   const handleSubmit = (files) => {
     console.log(files.map((f) => f.meta));
   };
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+    setGenderValue(e.target.value);
+  };
+  console.log("genderValue", genderValue);
 
   return (
     <div className="personal-sec-wrap">
@@ -85,8 +94,8 @@ const PersonalSection = () => {
                     {/* ------------box 2 ------------------- */}
                     <div className="input-wrap box-one">
                       <div className="input-field  small-field">
-                        <label for="huey" className="input-label">
-                          Gender*
+                        <label for="dob" className="input-label">
+                          Date of Birth*
                         </label>
                         <DatePicker
                           onChange={setDateValue}
@@ -98,16 +107,48 @@ const PersonalSection = () => {
                           calendarIcon={<CalenderIconComponent />}
                         />
                       </div>
-                      <div className="input-field radio-input  small-field">
-                        <label className="input-label">Gender*</label>
-                        <input
-                          type="radio"
-                          id="gender"
-                          name="gender"
-                          value="huey"
-                          checked
-                        />
+                      <div className="input-field  small-field">
+                        <label for="dob" className="input-label">
+                          Gender*
+                        </label>
+                        <Form.Group controlId="gender">
+                          <div className="radio-button-wrap">
+                            <div className="radio-button">
+                              <Form.Check
+                                id="male"
+                                type="radio"
+                                label="male"
+                                value="male"
+                                className="male-checkbox"
+                                onChange={handleChange}
+                                checked={genderValue === "male"}
+                              />
+                            </div>
+                            <div className="radio-button2">
+                              <Form.Check
+                                id="female"
+                                type="radio"
+                                label="female"
+                                value="female"
+                                className="female-checkbox"
+                                onChange={handleChange}
+                                checked={genderValue === "female"}
+                              />
+                            </div>
+                          </div>
+                        </Form.Group>
                       </div>
+                    </div>
+                    {/* ------------ full width input ------------------- */}
+                    <div className="input-field input-wrap">
+                      <Form>
+                        <Form.Group className="form-group">
+                          <Form.Label className="input-label">
+                            Email*
+                          </Form.Label>
+                          <Form.Control className="input-att" type="text" />
+                        </Form.Group>
+                      </Form>
                     </div>
                     {/* ------------ full width input ------------------- */}
                     <div className="input-field input-wrap">
@@ -116,7 +157,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             ID Number*
                           </Form.Label>
-                          <img src={infoIcon} alt="" />
+                          <OverlayTrigger
+                            placement="auto"
+                            delay={{ show: 50, hide: 50 }}
+                            overlay={renderTooltip}
+                          >
+                            <img src={infoIcon} alt="" />
+                          </OverlayTrigger>
                           <Form.Control className="input-att" type="text" />
                         </Form.Group>
                       </Form>
@@ -126,8 +173,17 @@ const PersonalSection = () => {
                     {/* ------------right side ------------------- */}
                     <div className="right-box">
                       <div className="label-span-wrap">
-                        <label htmlFor="firstName">Profile Photo*</label>
-                        <img src={infoIcon} alt="" />
+                        <label htmlFor="firstName" className="input-label">
+                          Profile Photo*
+                        </label>
+                        <OverlayTrigger
+                          placement="auto"
+                          delay={{ show: 50, hide: 50 }}
+                          overlay={renderTooltip}
+                          // show
+                        >
+                          <img src={infoIcon} alt="" />
+                        </OverlayTrigger>
                       </div>
                       <div className="avatar-wrap">
                         <Avatar
@@ -169,7 +225,13 @@ const PersonalSection = () => {
                   <Col className="column-one custom-gutter">
                     <div className="label-span-wrap">
                       <label htmlFor="firstName">Identification*</label>
-                      <img src={infoIcon} alt="" />
+                      <OverlayTrigger
+                        placement="auto"
+                        delay={{ show: 50, hide: 50 }}
+                        overlay={renderTooltip}
+                      >
+                        <img src={infoIcon} alt="" />
+                      </OverlayTrigger>
                     </div>
                     <Dropzone
                       getUploadParams={getUploadParams}
@@ -187,26 +249,16 @@ const PersonalSection = () => {
                   <Col className="custom-gutter">
                     <Row className="identification-row-gap custom-row">
                       <Col className="col-gap custom-gutter">
-                        <img src={prevOne} alt="" srcset="" />
+                        <img src={prevOne} alt="" />
 
-                        <img
-                          src={prevTwo}
-                          className="img-gap"
-                          alt=""
-                          srcset=""
-                        />
+                        <img src={prevTwo} className="img-gap" alt="" />
                       </Col>
                     </Row>
                     <Row className="custom-row">
                       <Col className="col-gap custom-gutter">
-                        <img src={prevThree} alt="" srcset="" />
+                        <img src={prevThree} alt="" />
 
-                        <img
-                          src={prevFour}
-                          className="img-gap"
-                          alt=""
-                          srcset=""
-                        />
+                        <img src={prevFour} className="img-gap" alt="" />
                       </Col>
                     </Row>
                   </Col>
@@ -447,11 +499,18 @@ const PersonalSection = () => {
   );
 };
 
+const renderTooltip = (props) => (
+  <Tooltip className="overlay-style" id="button-tooltip" {...props}>
+    <h6>Note:</h6>
+    <p>maximum 3 mb</p>
+    <p>smile and look at the camera</p>
+    <p>Your photo is centered and upright</p>
+    <p>maximum 3 mb</p>
+  </Tooltip>
+);
+
 const CalenderIconComponent = () => {
   return <img src={CalenderIcon} alt="" />;
-};
-const ProfileIconComponent = () => {
-  return <img src={profilePic} alt="" />;
 };
 
 export default PersonalSection;
