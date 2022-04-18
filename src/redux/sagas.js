@@ -30,7 +30,13 @@ function* getFirstVideo() {
 function* postSignInData(action) {
   try {
     let payload = action.payload;
-    const data = yield API.postSignInData(payload);
+    // const data = yield API.postSignInData(payload);
+    const data = yield axios.post(
+      "https://api.tutorspoint.uk/api/registration",
+      payload
+    );
+    // return data;
+    console.log("sigin data", data);
     localStorage.setItem("sign_in_data", JSON.stringify(data));
     yield put({ type: "STORE_SIGN_IN_DATA", payload: data });
   } catch (error) {
@@ -50,7 +56,6 @@ function* postLogInData(action) {
       "https://api.tutorspoint.uk/api/login",
       payload
     );
-
     localStorage.setItem("log_in_data", JSON.stringify(data));
     yield put({ type: "STORE_LOG_IN_DATA", payload: data });
   } catch (error) {

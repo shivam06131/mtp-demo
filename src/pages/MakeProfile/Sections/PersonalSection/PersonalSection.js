@@ -1,8 +1,9 @@
+import "./PersonalSection.css";
+import "../../../login/logInSections/loginRightSection/styles.css";
+
 import { useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import DatePicker from "react-date-picker";
-import "./PersonalSection.css";
-import "../../../login/logInSections/loginRightSection/styles.css";
 import CalenderIcon from "../../assets/personalSection/calendar.png";
 import infoIcon from "../../assets/personalSection/info_icon.png";
 import Avatar from "react-avatar-edit";
@@ -11,6 +12,7 @@ import profilePicPrev from "../../assets/personalSection/Profile Photo preview -
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useFormik } from "formik";
 
 import "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
@@ -38,7 +40,7 @@ const PersonalSection = () => {
 
   // called every time a file's `status` changes
   const handleChangeStatus = ({ meta, file }, status) => {
-    console.log(status, meta, file);
+    console.log("status ", status, "meta", meta, "file", file);
   };
 
   // receives array of files that are done uploading when submit button is clicked
@@ -49,8 +51,49 @@ const PersonalSection = () => {
   const handleChange = (e) => {
     console.log(e.target.value);
     setGenderValue(e.target.value);
+    formik.values.gender = e.target.value;
   };
-  console.log("genderValue", genderValue);
+
+  const formik = useFormik({
+    initialValues: {
+      first_name: "",
+      last_name: "",
+      dob: "",
+      gender: "",
+      email: "",
+      id_number: "",
+      profile_photo: "",
+      identification_photo: "",
+      house: "",
+      city: "",
+      postal: "",
+      street: "",
+      country: "",
+      mobile_number: "",
+      billing_house: "",
+      billing_city: "",
+      billing_postal: "",
+      billing_time_zone: "",
+      billing_street: "",
+      billing_country: "",
+      billing_mobile_number: "",
+      billing_currency: "",
+    },
+    onSubmit: (values) => {
+      console.log("submitted values make profile", values);
+    },
+  });
+  console.log("formik", formik);
+
+  const handleDateChange = (val) => {
+    setDateValue(val);
+    formik.values.dob = val;
+  };
+
+  const handleImageCrop = (prev) => {
+    setPreview(prev);
+    formik.values.profile_photo = prev;
+  };
 
   return (
     <div className="personal-sec-wrap">
@@ -67,16 +110,22 @@ const PersonalSection = () => {
                   <Col className="custom-gutter">
                     <h6 className="heading">Personal Details</h6>
                     {/* ------------left side ------------------- */}
-
                     {/* ------------box one ------------------- */}
-                    <div className="input-wrap box-one p-0">
+                    <div className="input-wrapper box-one p-0">
                       <div className="input-field  small-field">
                         <Form>
                           <Form.Group className="form-group">
                             <Form.Label className="input-label">
                               First Name*
                             </Form.Label>
-                            <Form.Control className="input-att" type="text" />
+                            <Form.Control
+                              className="input-att"
+                              type="text"
+                              id="first_name"
+                              name="first_name"
+                              onChange={formik.handleChange}
+                              value={formik.values.first_name}
+                            />
                           </Form.Group>
                         </Form>
                       </div>
@@ -86,29 +135,38 @@ const PersonalSection = () => {
                             <Form.Label className="input-label">
                               Last Name*
                             </Form.Label>
-                            <Form.Control className="input-att" type="text" />
+                            <Form.Control
+                              className="input-att"
+                              type="text"
+                              id="last_name"
+                              name="last_name"
+                              onChange={formik.handleChange}
+                              value={formik.values.last_name}
+                            />
                           </Form.Group>
                         </Form>
                       </div>
                     </div>
                     {/* ------------box 2 ------------------- */}
-                    <div className="input-wrap box-one">
+                    <div className="input-wrapper box-one">
                       <div className="input-field  small-field">
-                        <label for="dob" className="input-label">
+                        <label htmlFor="dob" className="input-label">
                           Date of Birth*
                         </label>
                         <DatePicker
-                          onChange={setDateValue}
+                          onChange={handleDateChange}
                           value={dateValue}
                           dayPlaceholder="DD"
                           monthPlaceholder="MM"
                           yearPlaceholder="YYYY"
                           format="dd/MM/yyyy"
+                          id="dob"
+                          name="dob"
                           calendarIcon={<CalenderIconComponent />}
                         />
                       </div>
                       <div className="input-field  small-field">
-                        <label for="dob" className="input-label">
+                        <label htmlFor="dob" className="input-label">
                           Gender*
                         </label>
                         <Form.Group controlId="gender">
@@ -140,18 +198,24 @@ const PersonalSection = () => {
                       </div>
                     </div>
                     {/* ------------ full width input ------------------- */}
-                    <div className="input-field input-wrap">
+                    <div className="input-field input-wrapper">
                       <Form>
                         <Form.Group className="form-group">
                           <Form.Label className="input-label">
                             Email*
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            name="email"
+                            onChange={formik.handleChange}
+                            value={formik.values.email}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
                     {/* ------------ full width input ------------------- */}
-                    <div className="input-field input-wrap">
+                    <div className="input-field input-wrapper">
                       <Form>
                         <Form.Group className="form-group">
                           <Form.Label className="input-label">
@@ -164,7 +228,13 @@ const PersonalSection = () => {
                           >
                             <img src={infoIcon} alt="" />
                           </OverlayTrigger>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            name="id_number"
+                            onChange={formik.handleChange}
+                            value={formik.values.id_number}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -190,7 +260,8 @@ const PersonalSection = () => {
                           className="input-avatar"
                           width={227}
                           height={208}
-                          onCrop={(prev) => setPreview(prev)}
+                          onCrop={(prev) => handleImageCrop(prev)}
+                          // onCrop={(prev) => setPreview(prev)}
                           onClose={() => setPreview(profilePicPrev)}
                           borderStyle={{
                             borderRadius: "0px",

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import studentImg from "../../assets/right-section/student.png";
 import parentImg from "../../assets/right-section/parents.png";
 import tutortImg from "../../assets/right-section/tutor.png";
@@ -10,7 +11,7 @@ import Select from "react-select";
 import PhoneInput from "react-phone-number-input";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   GoogleReCaptchaProvider,
@@ -22,9 +23,18 @@ import "../../../../layout/navbar/Navbar.css";
 import "./signInRight.css";
 
 const SignInRight = () => {
+  const login_token = localStorage.getItem("login_token");
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
   const [recaptchaValue, setRecaptchaValue] = useState(false);
+  const navigate = useNavigate();
+  const sigin_message = useSelector((state) => state.sign_in_data);
+
+  console.log("sigin_message", sigin_message && sigin_message[0].data.status);
+
+  useEffect(() => {
+    login_token && navigate("/makeProfile");
+  }, []);
 
   const handleReCaptchaVerify = async (token) => {
     if (!token) {
@@ -234,6 +244,8 @@ const SignInRight = () => {
           </div>
         </div>
         {/* --------signup button ------------- */}
+        {sigin_message && <p>{sigin_message[0].data.status} </p>}
+        {/* --------signup button ------------- */}
         <div className="input-wrap">
           <button
             href="#"
@@ -256,7 +268,6 @@ const SignInRight = () => {
    onResolved={onResolved}
    />
   */}
-
         <GoogleReCaptcha onVerify={(token) => handleReCaptchaVerify(token)} />
       </div>
     </GoogleReCaptchaProvider>

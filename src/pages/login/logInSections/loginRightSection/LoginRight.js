@@ -17,9 +17,18 @@ const LoginRight = () => {
   //!calls
   const errorMessage = useSelector((state) => state.login_error_data);
   const loginSuccess = useSelector((state) => state.login_data);
-  let localData = localStorage.getItem("user_log_in_data");
+  const localData = localStorage.getItem("user_log_in_data");
+  const login_token = localStorage.getItem("login_token");
 
-  console.log("loginSuccess", loginSuccess);
+  if (loginSuccess || login_token) {
+    loginSuccess &&
+      localStorage.setItem(
+        "login_token",
+        JSON.stringify(loginSuccess[0]?.data?.token)
+      );
+    // console.log(loginSuccess);
+    navigate("/makeProfile");
+  }
 
   //!onComponentUpdate
   useEffect(() => {
