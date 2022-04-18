@@ -2,6 +2,7 @@ import { useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import DatePicker from "react-date-picker";
 import "./PersonalSection.css";
+import "../../../login/logInSections/loginRightSection/styles.css";
 import CalenderIcon from "../../assets/personalSection/calendar.png";
 import infoIcon from "../../assets/personalSection/info_icon.png";
 import Avatar from "react-avatar-edit";
@@ -26,6 +27,7 @@ const PersonalSection = () => {
   const [preview, setPreview] = useState(profilePicPrev);
   const [src, setSrc] = useState("");
   const [value, setValue] = useState();
+  const [remember, setRemember] = useState();
 
   const getUploadParams = ({ meta }) => {
     return { url: "https://httpbin.org/post" };
@@ -53,7 +55,7 @@ const PersonalSection = () => {
               {/*---------------personal section -------------  */}
               <div className="personal-wrap underline">
                 <Row className="custom-row">
-                  <Col>
+                  <Col className="custom-gutter">
                     <h6 className="heading">Personal Details</h6>
                     {/* ------------left side ------------------- */}
 
@@ -120,7 +122,7 @@ const PersonalSection = () => {
                       </Form>
                     </div>
                   </Col>
-                  <Col>
+                  <Col className="custom-gutter">
                     {/* ------------right side ------------------- */}
                     <div className="right-box">
                       <div className="label-span-wrap">
@@ -164,7 +166,7 @@ const PersonalSection = () => {
               {/*---------------Identification section -------------  */}
               <div className="identification underline">
                 <Row className="custom-row">
-                  <Col className="column-one">
+                  <Col className="column-one custom-gutter">
                     <div className="label-span-wrap">
                       <label htmlFor="firstName">Identification*</label>
                       <img src={infoIcon} alt="" />
@@ -182,9 +184,9 @@ const PersonalSection = () => {
                       }
                     />
                   </Col>
-                  <Col>
-                    <Row className="identification-row-gap">
-                      <Col className="col-gap ">
+                  <Col className="custom-gutter">
+                    <Row className="identification-row-gap custom-row">
+                      <Col className="col-gap custom-gutter">
                         <img src={prevOne} alt="" srcset="" />
 
                         <img
@@ -196,7 +198,7 @@ const PersonalSection = () => {
                       </Col>
                     </Row>
                     <Row className="custom-row">
-                      <Col className="col-gap">
+                      <Col className="col-gap custom-gutter">
                         <img src={prevThree} alt="" srcset="" />
 
                         <img
@@ -211,35 +213,13 @@ const PersonalSection = () => {
                 </Row>
               </div>
               {/*---------------Contact Details section -------------  */}
-              <div className="contact">
+              <div className="contact underline">
                 <div className="label-span-wrap">
                   <label htmlFor="firstName">Contact Details</label>
                 </div>
-                <Row class="row">
-                  <Col>
+                <Row className="custom-row row">
+                  <Col className="custom-gutter">
                     {/*---------------input 1 -------------  */}
-                    <div className="input-field  contact-input-gap">
-                      <Form>
-                        <Form.Group className="form-group">
-                          <Form.Label className="input-label">
-                            City / Town
-                          </Form.Label>
-                          <Form.Control className="input-att" type="text" />
-                        </Form.Group>
-                      </Form>
-                    </div>
-                    {/*---------------input 2 -------------  */}
-                    <div className="input-field contact-input-gap">
-                      <Form>
-                        <Form.Group className="form-group ">
-                          <Form.Label className="input-label">
-                            Postal / Zip Code / PO Box
-                          </Form.Label>
-                          <Form.Control className="input-att" type="text" />
-                        </Form.Group>
-                      </Form>
-                    </div>
-                    {/*---------------input 3 -------------  */}
                     <div className="input-field  contact-input-gap">
                       <Form>
                         <Form.Group className="form-group">
@@ -250,10 +230,32 @@ const PersonalSection = () => {
                         </Form.Group>
                       </Form>
                     </div>
+                    {/*---------------input 2 -------------  */}
+                    <div className="input-field contact-input-gap">
+                      <Form>
+                        <Form.Group className="form-group ">
+                          <Form.Label className="input-label">
+                            City / Town
+                          </Form.Label>
+                          <Form.Control className="input-att" type="text" />
+                        </Form.Group>
+                      </Form>
+                    </div>
+                    {/*---------------input 3 -------------  */}
+                    <div className="input-field  contact-input-gap">
+                      <Form>
+                        <Form.Group className="form-group">
+                          <Form.Label className="input-label">
+                            Postal / Zip Code / PO Box
+                          </Form.Label>
+                          <Form.Control className="input-att" type="text" />
+                        </Form.Group>
+                      </Form>
+                    </div>
                     {/*--------------- -------------  */}
                   </Col>
-                  <Col className="col-gaps">
-                    {/*---------------input 1 -------------  */}
+                  <Col className="col-gaps custom-gutter">
+                    {/*---------------input 4  -------------  */}
                     <div className="input-field  contact-input-gap">
                       <Form>
                         <Form.Group className="form-group">
@@ -264,7 +266,7 @@ const PersonalSection = () => {
                         </Form.Group>
                       </Form>
                     </div>
-                    {/*---------------input 2 -------------  */}
+                    {/*---------------input 5 -------------  */}
                     <div className="input-field  contact-input-gap">
                       <Form>
                         <Form.Group className="form-group">
@@ -275,7 +277,7 @@ const PersonalSection = () => {
                         </Form.Group>
                       </Form>
                     </div>
-                    {/*---------------input 3 -------------  */}
+                    {/*---------------input 6 -------------  */}
                     <div className="input-field contact-input-gap">
                       <label className="input-label" htmlFor="pohone">
                         Mobile Number
@@ -301,7 +303,142 @@ const PersonalSection = () => {
                   </Col>
                 </Row>
               </div>
-              {/*---------------Contact Details section -------------  */}
+              {/*---------------address section -------------  */}
+              <div className="address">
+                <div className="label-span-wrap">
+                  <label htmlFor="firstName">Billing Address</label>
+                  <div className="remember-pass rem-pass-address">
+                    <input
+                      onChange={() => setRemember((prev) => !prev)}
+                      type="checkbox"
+                      id="checkbox"
+                      name=""
+                      checked={remember}
+                      value=""
+                    />
+                    <label className="checkbox-label" htmlFor="checkbox">
+                      *Same as above
+                    </label>
+                  </div>
+                </div>
+                {/*   -----------------row --------------------*/}
+                <Row className="custom-row row">
+                  <Col className="custom-gutter">
+                    {/*---------------input 1 -------------  */}
+                    <div className="input-field  contact-input-gap">
+                      <Form>
+                        <Form.Group className="form-group">
+                          <Form.Label className="input-label">
+                            House / Apartment Number
+                          </Form.Label>
+                          <Form.Control className="input-att" type="text" />
+                        </Form.Group>
+                      </Form>
+                    </div>
+                    {/*---------------input 2 -------------  */}
+                    <div className="input-field contact-input-gap">
+                      <Form>
+                        <Form.Group className="form-group ">
+                          <Form.Label className="input-label">
+                            City / Town
+                          </Form.Label>
+                          <Form.Control className="input-att" type="text" />
+                        </Form.Group>
+                      </Form>
+                    </div>
+                    {/*---------------input 3 -------------  */}
+                    <div className="input-field  contact-input-gap">
+                      <Form>
+                        <Form.Group className="form-group">
+                          <Form.Label className="input-label">
+                            Postal / Zip Code / PO Box
+                          </Form.Label>
+                          <Form.Control className="input-att" type="text" />
+                        </Form.Group>
+                      </Form>
+                    </div>
+                    {/*---------------input 4 -------------  */}
+                    <div className="input-field  contact-input-gap">
+                      <Form>
+                        <Form.Group className="form-group">
+                          <Form.Label className="input-label">
+                            Set your Time Zone*
+                          </Form.Label>
+                          <Form.Control className="input-att" type="text" />
+                        </Form.Group>
+                      </Form>
+                    </div>
+                    {/*--------------- -------------  */}
+                  </Col>
+
+                  <Col className="col-gaps custom-gutter">
+                    {/*---------------input 5  -------------  */}
+                    <div className="input-field  contact-input-gap">
+                      <Form>
+                        <Form.Group className="form-group">
+                          <Form.Label className="input-label">
+                            Street / Road Name
+                          </Form.Label>
+                          <Form.Control className="input-att" type="text" />
+                        </Form.Group>
+                      </Form>
+                    </div>
+                    {/*---------------input 6 -------------  */}
+                    <div className="input-field  contact-input-gap">
+                      <Form>
+                        <Form.Group className="form-group">
+                          <Form.Label className="input-label">
+                            Country*
+                          </Form.Label>
+                          <Form.Control className="input-att" type="text" />
+                        </Form.Group>
+                      </Form>
+                    </div>
+                    {/*---------------input 7 -------------  */}
+                    <div className="input-field contact-input-gap">
+                      <label className="input-label" htmlFor="pohone">
+                        Mobile Number
+                      </label>
+                      <div className="custom-phone">
+                        <PhoneInput
+                          placeholder="Enter phone number"
+                          id="phone"
+                          name="phone"
+                          value={value}
+                          className="react-phone"
+                          onChange={(selectedOption) => {
+                            return setValue(selectedOption);
+                          }}
+                        />
+                      </div>
+                    </div>
+                    {/*---------------input 8 -------------  */}
+                    <div className="input-field  contact-input-gap">
+                      <Form>
+                        <Form.Group className="form-group">
+                          <Form.Label className="input-label">
+                            Your currency to receive payments is set as*
+                          </Form.Label>
+                          <Form.Control className="input-att" type="text" />
+                        </Form.Group>
+                      </Form>
+                    </div>
+                    {/*---------------input 7 -------------  */}
+                    {/*--------------- -------------  */}
+                  </Col>
+                </Row>
+                <p className="contact-input-gap info">
+                  *These fields cannot be changed once profile is set-up. If you
+                  need to change these details, please contact us at
+                  <span>useraccounts@mytutorpoint.com</span> or{" "}
+                  <span> click here</span>
+                </p>
+                <div className="add-button-wrap">
+                  <button className="button-primary custom-property">
+                    Continue
+                  </button>
+                </div>
+              </div>
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
