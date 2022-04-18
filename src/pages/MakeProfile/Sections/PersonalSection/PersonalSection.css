@@ -3,15 +3,18 @@
 }
 .personal-section {
   display: flex;
-  position: relative;
   /* padding: 45px; */
 }
-.personal-section::after {
+.personal-wrap {
+  position: relative;
+  padding-bottom: 40px;
+}
+.underline::after {
   width: 100%;
   content: "";
   border-top: 1px solid #999999;
   position: absolute;
-  bottom: -45px;
+  bottom: 0px;
 }
 
 .acc-header .accordion-button {
@@ -80,6 +83,11 @@
   padding-left: 17px !important;
   border-radius: 0px !important;
 }
+.input-field .form-group input {
+  font-size: 14px;
+  color: #999999;
+  line-height: 19px;
+}
 .input-field .form-group input[type="text"]:focus,
 .input-field .form-group [type="text"].form-control:focus {
   box-shadow: none;
@@ -135,7 +143,7 @@
   display: none;
 }
 .box-one {
-  min-width: 522px;
+  max-width: 522px;
 }
 .p-0 {
   padding-top: 0px !important;
@@ -180,7 +188,8 @@
 }
 
 .right-box {
-  padding-left: 50px;
+  /* padding-left: 10px; */
+  padding-top: 35px;
 }
 .avatar-wrap {
   display: flex;
@@ -200,5 +209,103 @@
 /* ---------------------------identification------------------------ */
 
 .identification {
-  padding-top: 78px;
+  padding-top: 35px;
+  padding-bottom: 40px;
+  position: relative;
+}
+.column-one .dzu-dropzone {
+  min-height: 200px;
+  overflow: unset !important;
+  border: 1px dashed #999999;
+  border-radius: 0px;
+  margin: 0px;
+  margin-top: 15px;
+  max-width: 522px;
+}
+.drag-info {
+  font-size: 15px;
+  line-height: 20px;
+  color: #999999;
+  text-align: center;
+  font-weight: normal;
+}
+.drag-info > span {
+  color: #c6521e;
+}
+.col-gap {
+  /* margin-left: 10px !important; */
+  padding-bottom: 10px;
+}
+.identification-row-gap {
+  padding-top: 30px !important;
+}
+.img-gap {
+  padding-left: 10px;
+}
+
+/* ---------------------------Contact Details section------------------------ */
+
+.contact {
+  padding-top: 35px;
+}
+.contact-input-gap {
+  padding-top: 15px;
+}
+/* .col {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+} */
+.col-gaps {
+  /* padding-left: 30px !important; */
+}
+
+.custom-row {
+  margin-left: -25px;
+  margin-right: -25px;
+}
+.custom-gutter {
+  padding-left: -25px;
+  padding-right: -25px;
+}
+.custom-phone {
+  min-width: 522px;
+  border: 0px;
+  border-radius: 0px;
+  background-color: #f9f8f7;
+  min-height: 40px;
+}
+.custom-phone > div {
+  min-height: 40px;
+}
+.custom-phone > div > div .PhoneInputCountryIcon {
+  display: flex;
+  background-color: #f9f8f7;
+  align-items: center;
+  /* max-height: 20px; */
+}
+/* .custom-phone > div > div .PhoneInputCountryIcon .PhoneInputCountryIconImg {
+  width: 20px;
+  background: white;
+} */
+.custom-phone > div > input {
+  min-width: calc(100% - 40px);
+  border: none;
+  padding-left: 10px;
+  outline: none;
+
+  font-size: 14px;
+  color: #999999;
+  line-height: 19px;
+}
+.custom-phone > div > input :focus {
+  outline: none;
+  border: none;
+}
+/* .custom-phone > div > div > div .PhoneInputCountryIconImg {
+  background: white;
+} */
+.react-phone.PhoneInput .PhoneInputCountry .PhoneInputCountryIcon {
+  width: 20px;
+  background: white;
+  padding-left: 4px;
 }
