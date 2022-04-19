@@ -56,7 +56,7 @@ function* postLogInData(action) {
       "https://api.tutorspoint.uk/api/login",
       payload
     );
-    localStorage.setItem("log_in_data", JSON.stringify(data));
+    localStorage.setItem("log_in_data", JSON.stringify(data.data.user));
     yield put({ type: "STORE_LOG_IN_DATA", payload: data });
   } catch (error) {
     console.log("error occoured at postSignInData saga action ", error);

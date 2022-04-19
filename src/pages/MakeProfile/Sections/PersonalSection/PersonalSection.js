@@ -1,7 +1,7 @@
 import "./PersonalSection.css";
 import "../../../login/logInSections/loginRightSection/styles.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import DatePicker from "react-date-picker";
 import CalenderIcon from "../../assets/personalSection/calendar.png";
@@ -33,15 +33,22 @@ const PersonalSection = () => {
   const [value, setValue] = useState();
   const [remember, setRemember] = useState();
   const [genderValue, setGenderValue] = useState();
-  const [sameAsAbove, setSameAsAbove] = useState(false);
+  const [sameAsAbove, setSameAsAbove] = useState();
+
+  let login_data = localStorage.getItem("log_in_data");
+  login_data = JSON.parse(login_data);
+
+  useEffect(() => {
+    setValue(login_data.user_profile.mobile);
+  }, []);
 
   const formik = useFormik({
     initialValues: {
-      first_name: "",
-      last_name: "",
+      first_name: login_data ? login_data.first_name : "",
+      last_name: login_data ? login_data.last_name : "",
       dob: "",
       gender: "",
-      email: "",
+      email: login_data ? login_data.email : "",
       id_number: "",
       profile_photo: "",
       identification_photo: "",
@@ -50,7 +57,7 @@ const PersonalSection = () => {
       postal: "",
       street: "",
       country: "",
-      mobile_number: "",
+      mobile_number: login_data ? login_data.user_profile.mobile : "",
       billing_house: "",
       billing_city: "",
       billing_postal: "",
@@ -64,6 +71,36 @@ const PersonalSection = () => {
       console.log("submitted values make profile", values);
     },
   });
+
+  //adding same as above data
+  useEffect(() => {
+    if (sameAsAbove) {
+      formik.setFieldValue("billing_house", formik.values.house);
+      formik.setFieldValue("billing_city", formik.values.city);
+      formik.setFieldValue("billing_postal", formik.values.postal);
+      formik.setFieldValue("billing_street", formik.values.street);
+      formik.setFieldValue("billing_country", formik.values.country);
+      formik.setFieldValue(
+        "billing_mobile_number",
+        formik.values.mobile_number
+      );
+    }
+  }, [formik.values, sameAsAbove]);
+
+  //removing same as above data
+  useEffect(() => {
+    if (sameAsAbove === false) {
+      formik.setFieldValue("billing_house", "");
+      formik.setFieldValue("billing_city", "");
+      formik.setFieldValue("billing_postal", "");
+      formik.setFieldValue("billing_street", "");
+      formik.setFieldValue("billing_country", "");
+      formik.setFieldValue(
+        "billing_mobile_number",
+        formik.values.billing_mobile_number
+      );
+    }
+  }, [sameAsAbove]);
 
   //! function defination
   const handleDateChange = (val) => {
@@ -101,6 +138,7 @@ const PersonalSection = () => {
     formik.values.profile_photo = prev;
   };
 
+  console.log("formik", formik);
   return (
     <div className="personal-sec-wrap">
       <div className="container">
@@ -131,6 +169,7 @@ const PersonalSection = () => {
                               name="first_name"
                               onChange={formik.handleChange}
                               value={formik.values.first_name}
+                              disabled
                             />
                           </Form.Group>
                         </Form>
@@ -148,6 +187,7 @@ const PersonalSection = () => {
                               name="last_name"
                               onChange={formik.handleChange}
                               value={formik.values.last_name}
+                              disabled
                             />
                           </Form.Group>
                         </Form>
@@ -216,6 +256,7 @@ const PersonalSection = () => {
                             name="email"
                             onChange={formik.handleChange}
                             value={formik.values.email}
+                            disabled
                           />
                         </Form.Group>
                       </Form>
@@ -447,7 +488,13 @@ const PersonalSection = () => {
                       <label className="input-label" htmlFor="pohone">
                         Mobile Number
                       </label>
-                      <div className="custom-phone">
+                      <div
+                        // className="custom-phone"
+                        className={`custom-phone ${
+                          login_data && "disabled-phone"
+                        }`}
+                        // style={{ backgroundColor: login_data && "#d6d6d6" }}
+                      >
                         <PhoneInput
                           placeholder="Enter phone number"
                           id="phone"
@@ -456,10 +503,11 @@ const PersonalSection = () => {
                           value={value}
                           // onChange={setValue}
                           className="react-phone"
+                          disabled={login_data && true}
                           onChange={(selectedOption) => {
                             // form.setFieldValue("phone", selectedOption);
                             // formik.values.phone = selectedOption;
-                            formik.values.PhoneInput = selectedOption;
+                            formik.values.mobile_number = selectedOption;
                             return setValue(selectedOption);
                           }}
                         />
@@ -601,13 +649,18 @@ const PersonalSection = () => {
                       <label className="input-label" htmlFor="pohone">
                         Mobile Number
                       </label>
-                      <div className="custom-phone">
+                      <div
+                        className={`custom-phone ${
+                          login_data && "disabled-phone"
+                        }`}
+                      >
                         <PhoneInput
                           placeholder="Enter phone number"
                           id="phone"
                           name="phone"
                           value={value}
                           className="react-phone"
+                          disabled={login_data && true}
                           onChange={(selectedOption) => {
                             formik.values.billing_mobile_number =
                               selectedOption;
@@ -644,7 +697,10 @@ const PersonalSection = () => {
                   <span> click here</span>
                 </p>
                 <div className="add-button-wrap">
-                  <button className="button-primary custom-property">
+                  <button
+                    className="button-primary custom-property"
+                    onClick={() => formik.handleSubmit()}
+                  >
                     Continue
                   </button>
                 </div>

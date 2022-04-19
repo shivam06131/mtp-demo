@@ -4,8 +4,6 @@ const MakeProfile = () => {
   return (
     <div>
       <PersonalSection />
-      <PersonalSection />
-      <PersonalSection />
     </div>
   );
 };

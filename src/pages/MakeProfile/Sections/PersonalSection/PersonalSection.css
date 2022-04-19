@@ -83,6 +83,10 @@
   padding-left: 17px !important;
   border-radius: 0px !important;
 }
+.input-att.form-control:disabled {
+  background-color: #d6d6d6;
+  opacity: 1;
+}
 .input-field .form-group input {
   font-size: 14px;
   color: #999999;
@@ -365,9 +369,23 @@
   outline: none;
   border: none;
 }
-/* .custom-phone > div > div > div .PhoneInputCountryIconImg {
-  background: white;
+
+/* ------------- disabled button ----------------  */
+
+.disabled-phone > div .PhoneInputInput {
+  background-color: #d6d6d6 !important;
+}
+.disabled-phone > div > div .PhoneInputCountrySelect {
+  background-color: #d6d6d6 !important;
+}
+.disabled-phone > div > div .PhoneInputCountryIcon {
+  background-color: #d6d6d6 !important;
+}
+
+/* .disabled-phone > div > div .PhoneInputCountryIcon {
+  background-color: #d6d6d6;
 } */
+
 .react-phone.PhoneInput .PhoneInputCountry .PhoneInputCountryIcon {
   width: 24px;
   background: white;
