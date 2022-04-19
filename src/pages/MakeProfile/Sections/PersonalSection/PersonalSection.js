@@ -33,26 +33,7 @@ const PersonalSection = () => {
   const [value, setValue] = useState();
   const [remember, setRemember] = useState();
   const [genderValue, setGenderValue] = useState();
-
-  const getUploadParams = ({ meta }) => {
-    return { url: "https://httpbin.org/post" };
-  };
-
-  // called every time a file's `status` changes
-  const handleChangeStatus = ({ meta, file }, status) => {
-    console.log("status ", status, "meta", meta, "file", file);
-  };
-
-  // receives array of files that are done uploading when submit button is clicked
-  const handleSubmit = (files) => {
-    console.log(files.map((f) => f.meta));
-  };
-
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    setGenderValue(e.target.value);
-    formik.values.gender = e.target.value;
-  };
+  const [sameAsAbove, setSameAsAbove] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -83,11 +64,36 @@ const PersonalSection = () => {
       console.log("submitted values make profile", values);
     },
   });
-  console.log("formik", formik);
 
+  //! function defination
   const handleDateChange = (val) => {
     setDateValue(val);
     formik.values.dob = val;
+  };
+
+  const getUploadParams = ({ meta }) => {
+    return { url: "https://httpbin.org/post" };
+  };
+
+  // called every time a file's `status` changes
+  const handleChangeStatus = ({ meta, file }, status) => {
+    if (status === "done") {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        formik.values.identification_photo = reader.result;
+      };
+    }
+  };
+
+  // receives array of files that are done uploading when submit button is clicked
+  const handleSubmit = (files) => {
+    // console.log(files.map((f) => f.meta));
+  };
+
+  const handleChange = (e) => {
+    setGenderValue(e.target.value);
+    formik.values.gender = e.target.value;
   };
 
   const handleImageCrop = (prev) => {
@@ -308,7 +314,11 @@ const PersonalSection = () => {
                       getUploadParams={getUploadParams}
                       onChangeStatus={handleChangeStatus}
                       onSubmit={handleSubmit}
+                      // submitButtonContent=''
+                      multiple={false}
+                      maxSizeBytes="3145728"
                       accept="image/*,audio/*,video/*"
+                      inputWithFilesContent="Add File"
                       inputContent={
                         <p className="drag-info">
                           Drag & drop identification file here to upload <br />
@@ -349,7 +359,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             House / Apartment Number
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="house"
+                            value={formik.values.house}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -360,7 +376,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             City / Town
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="city"
+                            value={formik.values.city}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -371,7 +393,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             Postal / Zip Code / PO Box
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="postal"
+                            value={formik.values.postal}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -385,7 +413,15 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             Street / Road Name
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="street"
+                            value={formik.values.street}
+                            onChange={(e) =>
+                              formik.setFieldValue("street", e.target.value)
+                            }
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -396,7 +432,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             Country*
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="country"
+                            value={formik.values.country}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -417,6 +459,7 @@ const PersonalSection = () => {
                           onChange={(selectedOption) => {
                             // form.setFieldValue("phone", selectedOption);
                             // formik.values.phone = selectedOption;
+                            formik.values.PhoneInput = selectedOption;
                             return setValue(selectedOption);
                           }}
                         />
@@ -432,7 +475,7 @@ const PersonalSection = () => {
                   <label htmlFor="firstName">Billing Address</label>
                   <div className="remember-pass rem-pass-address">
                     <input
-                      onChange={() => setRemember((prev) => !prev)}
+                      onChange={() => setSameAsAbove((prev) => !prev)}
                       type="checkbox"
                       id="checkbox"
                       name=""
@@ -454,7 +497,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             House / Apartment Number
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="billing_house"
+                            value={formik.values.billing_house}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -465,7 +514,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             City / Town
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="billing_city"
+                            value={formik.values.billing_city}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -476,7 +531,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             Postal / Zip Code / PO Box
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="billing_postal"
+                            value={formik.values.billing_postal}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -487,7 +548,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             Set your Time Zone*
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="billing_time_zone"
+                            value={formik.values.billing_time_zone}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -502,7 +569,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             Street / Road Name
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="billing_street"
+                            value={formik.values.billing_street}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -513,7 +586,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             Country*
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="billing_country"
+                            value={formik.values.billing_country}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
@@ -530,6 +609,8 @@ const PersonalSection = () => {
                           value={value}
                           className="react-phone"
                           onChange={(selectedOption) => {
+                            formik.values.billing_mobile_number =
+                              selectedOption;
                             return setValue(selectedOption);
                           }}
                         />
@@ -542,7 +623,13 @@ const PersonalSection = () => {
                           <Form.Label className="input-label">
                             Your currency to receive payments is set as*
                           </Form.Label>
-                          <Form.Control className="input-att" type="text" />
+                          <Form.Control
+                            className="input-att"
+                            type="text"
+                            id="billing_currency"
+                            value={formik.values.billing_currency}
+                            onChange={formik.handleChange}
+                          />
                         </Form.Group>
                       </Form>
                     </div>
