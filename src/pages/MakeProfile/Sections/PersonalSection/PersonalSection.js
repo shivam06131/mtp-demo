@@ -13,6 +13,8 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useFormik } from "formik";
+import { getGeo } from "geoplugin";
+import TimezoneSelect from "react-timezone-select";
 
 import "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
@@ -25,6 +27,7 @@ import prevFour from "../../assets/Identification/img-prev-4.png";
 import PhoneInput from "react-phone-number-input";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import { useNavigate } from "react-router-dom";
 
 const PersonalSection = () => {
   const [dateValue, setDateValue] = useState();
@@ -34,12 +37,32 @@ const PersonalSection = () => {
   const [remember, setRemember] = useState();
   const [genderValue, setGenderValue] = useState();
   const [sameAsAbove, setSameAsAbove] = useState();
+  const [selectedTimezone, setSelectedTimezone] = useState({});
+  const navigate = useNavigate();
 
   let login_data = localStorage.getItem("log_in_data");
   login_data = JSON.parse(login_data);
+  const login_token = localStorage.getItem("login_token");
+
+  useEffect(() => {
+    !login_token && navigate("/");
+  }, []);
 
   useEffect(() => {
     setValue(login_data.user_profile.mobile);
+    // setValue("+" + login_data.user_profile.mobile);
+    //! Get geolocation of a user's browser.
+    getGeo()
+      .then((response) => {
+        formik.setFieldValue("country", response.countryName);
+        formik.setFieldValue("city", response.city);
+        formik.setFieldValue("billing_country", response.countryName);
+        formik.setFieldValue("billing_city", response.city);
+        formik.setFieldValue("billing_currency", response.currencyCode);
+        formik.setFieldValue("billing_time_zone", response.timezone);
+        setSelectedTimezone(response.timezone);
+      })
+      .catch((error) => console.log("getGeo error ", error));
   }, []);
 
   const formik = useFormik({
@@ -91,10 +114,10 @@ const PersonalSection = () => {
   useEffect(() => {
     if (sameAsAbove === false) {
       formik.setFieldValue("billing_house", "");
-      formik.setFieldValue("billing_city", "");
+      // formik.setFieldValue("billing_city", "");
       formik.setFieldValue("billing_postal", "");
       formik.setFieldValue("billing_street", "");
-      formik.setFieldValue("billing_country", "");
+      // formik.setFieldValue("billing_country", "");
       formik.setFieldValue(
         "billing_mobile_number",
         formik.values.billing_mobile_number
@@ -138,7 +161,6 @@ const PersonalSection = () => {
     formik.values.profile_photo = prev;
   };
 
-  console.log("formik", formik);
   return (
     <div className="personal-sec-wrap">
       <div className="container">
@@ -421,6 +443,7 @@ const PersonalSection = () => {
                             className="input-att"
                             type="text"
                             id="city"
+                            disabled
                             value={formik.values.city}
                             onChange={formik.handleChange}
                           />
@@ -477,6 +500,7 @@ const PersonalSection = () => {
                             className="input-att"
                             type="text"
                             id="country"
+                            disabled
                             value={formik.values.country}
                             onChange={formik.handleChange}
                           />
@@ -485,25 +509,16 @@ const PersonalSection = () => {
                     </div>
                     {/*---------------input 6 -------------  */}
                     <div className="input-field contact-input-gap">
-                      <label className="input-label" htmlFor="pohone">
+                      <label className="input-label" htmlFor="phone">
                         Mobile Number
                       </label>
-                      <div
-                        // className="custom-phone"
-                        className={`custom-phone ${
-                          login_data && "disabled-phone"
-                        }`}
-                        // style={{ backgroundColor: login_data && "#d6d6d6" }}
-                      >
+                      <div className="custom-phone">
                         <PhoneInput
                           placeholder="Enter phone number"
                           id="phone"
                           name="phone"
-                          // defaultCountry=
                           value={value}
-                          // onChange={setValue}
                           className="react-phone"
-                          disabled={login_data && true}
                           onChange={(selectedOption) => {
                             // form.setFieldValue("phone", selectedOption);
                             // formik.values.phone = selectedOption;
@@ -567,6 +582,7 @@ const PersonalSection = () => {
                             type="text"
                             id="billing_city"
                             value={formik.values.billing_city}
+                            disabled
                             onChange={formik.handleChange}
                           />
                         </Form.Group>
@@ -590,7 +606,7 @@ const PersonalSection = () => {
                       </Form>
                     </div>
                     {/*---------------input 4 -------------  */}
-                    <div className="input-field  contact-input-gap">
+                    {/*  <div className="input-field  contact-input-gap">
                       <Form>
                         <Form.Group className="form-group">
                           <Form.Label className="input-label">
@@ -605,6 +621,17 @@ const PersonalSection = () => {
                           />
                         </Form.Group>
                       </Form>
+                    </div>*/}
+                    <div className="input-field  contact-input-gap">
+                      <label htmlFor="timezone" className="input-label">
+                        Set your Time Zone*
+                      </label>
+                      <TimezoneSelect
+                        // menuIsOpen={true}
+                        className="timezone-select"
+                        value={selectedTimezone}
+                        onChange={setSelectedTimezone}
+                      />
                     </div>
                     {/*--------------- -------------  */}
                   </Col>
@@ -639,6 +666,7 @@ const PersonalSection = () => {
                             type="text"
                             id="billing_country"
                             value={formik.values.billing_country}
+                            disabled
                             onChange={formik.handleChange}
                           />
                         </Form.Group>
@@ -649,18 +677,13 @@ const PersonalSection = () => {
                       <label className="input-label" htmlFor="pohone">
                         Mobile Number
                       </label>
-                      <div
-                        className={`custom-phone ${
-                          login_data && "disabled-phone"
-                        }`}
-                      >
+                      <div className="custom-phone">
                         <PhoneInput
                           placeholder="Enter phone number"
                           id="phone"
                           name="phone"
                           value={value}
                           className="react-phone"
-                          disabled={login_data && true}
                           onChange={(selectedOption) => {
                             formik.values.billing_mobile_number =
                               selectedOption;
@@ -680,14 +703,14 @@ const PersonalSection = () => {
                             className="input-att"
                             type="text"
                             id="billing_currency"
+                            disabled
                             value={formik.values.billing_currency}
                             onChange={formik.handleChange}
                           />
                         </Form.Group>
                       </Form>
                     </div>
-                    {/*---------------input 7 -------------  */}
-                    {/*--------------- -------------  */}
+                    {/*----------------------------  */}
                   </Col>
                 </Row>
                 <p className="contact-input-gap info">

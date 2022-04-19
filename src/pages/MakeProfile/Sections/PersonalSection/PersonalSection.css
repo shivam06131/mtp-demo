@@ -91,6 +91,7 @@
   font-size: 14px;
   color: #999999;
   line-height: 19px;
+  font-family: "solitaire-mvb-pro" !important;
 }
 .input-field .form-group input[type="text"]:focus,
 .input-field .form-group [type="text"].form-control:focus {
@@ -170,6 +171,7 @@
   color: #999999;
   cursor: pointer;
   padding-left: 30px;
+  font-family: "solitaire-mvb-pro";
 }
 .radio-button .male-checkbox .form-check-label::before {
   content: "";
@@ -209,6 +211,7 @@
   color: #999999;
   cursor: pointer;
   padding-left: 30px;
+  font-family: "solitaire-mvb-pro";
 }
 .radio-button2 .female-checkbox .form-check-label::before {
   content: "";
@@ -270,6 +273,12 @@
 .avatar-wrap > div > div {
   overflow: hidden !important;
   position: relative;
+}
+.avatar-wrap > div > div label {
+  font-size: 14px;
+  color: #999999;
+  line-height: 19px;
+  font-family: "solitaire-mvb-pro" !important;
 }
 .crop-img {
   height: 150px;
@@ -364,6 +373,7 @@
   font-size: 14px;
   color: #999999;
   line-height: 19px;
+  font-family: "solitaire-mvb-pro" !important;
 }
 .custom-phone > div > input :focus {
   outline: none;
@@ -371,16 +381,6 @@
 }
 
 /* ------------- disabled button ----------------  */
-
-.disabled-phone > div .PhoneInputInput {
-  background-color: #d6d6d6 !important;
-}
-.disabled-phone > div > div .PhoneInputCountrySelect {
-  background-color: #d6d6d6 !important;
-}
-.disabled-phone > div > div .PhoneInputCountryIcon {
-  background-color: #d6d6d6 !important;
-}
 
 /* .disabled-phone > div > div .PhoneInputCountryIcon {
   background-color: #d6d6d6;
@@ -472,4 +472,64 @@
 }
 .radio-button-wrap .radio-button .form-check {
   padding-left: 0px !important;
+}
+.timezone-select .css-1s2u09g-control {
+  border-radius: 0px !important;
+  min-height: 40px !important;
+  border: 0px !important;
+}
+.timezone-select .css-1s2u09g-control .css-17adf03-Sa .css-1usy4l0-Sa {
+  font-size: 14px !important;
+  color: #999999 !important;
+  line-height: 19px !important;
+  /* font-weight: 200 !important; */
+  font-family: "solitaire-mvb-pro" !important;
+}
+
+.timezone-select .css-1pahdxg-control {
+  border-radius: 0px !important;
+  min-height: 40px !important;
+  border: 0px !important;
+  box-shadow: none !important;
+}
+.timezone-select .css-26l3qy-menu {
+  border-radius: 0px;
+  border: 0px;
+}
+.timezone-select .css-26l3qy-menu .css-dwfvof-Sa .css-1n7v3ny-option {
+  background-color: #f4efe6 !important;
+}
+.timezone-select .css-26l3qy-menu .css-dwfvof-Sa .css-9gakcf-option {
+  background-color: #c6521e !important;
+}
+
+.timezone-select .css-1s2u09g-control .css-17adf03-Sa .css-qc6sy-singleValue {
+  font-size: 14px !important;
+  color: #999999 !important;
+  line-height: 19px !important;
+  font-family: "solitaire-mvb-pro" !important;
+}
+.timezone-select .css-1s2u09g-control .css-17adf03-Sa .css-qd6sy-singleValue {
+  font-size: 14px !important;
+  color: #999999 !important;
+  line-height: 19px !important;
+  font-family: "solitaire-mvb-pro" !important;
+}
+.timezone-select .css-26l3qy-menu .css-dwfvof-Sa .css-yt9ioa-option {
+  font-size: 14px !important;
+  color: #999999 !important;
+  line-height: 19px !important;
+  font-family: "solitaire-mvb-pro" !important;
+}
+.timezone-select .css-26l3qy-menu .css-dwfvof-Sa .css-1n7v3ny-option {
+  font-size: 14px !important;
+  color: #999999 !important;
+  line-height: 19px !important;
+  font-family: "solitaire-mvb-pro" !important;
+}
+.timezone-select .css-1pahdxg-control .css-17adf03-Sa .css-qc6sy-singleValue {
+  font-size: 14px !important;
+  color: #999999 !important;
+  line-height: 19px !important;
+  font-family: "solitaire-mvb-pro" !important;
 }

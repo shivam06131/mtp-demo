@@ -9,7 +9,7 @@ import MakeProfile from "./pages/MakeProfile/MakeProfile";
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" exact element={<Layout />}>
         <Route exact path="/" element={<Homepage />} />
         <Route path="/signIn" exact element={<SignIn />} />
         <Route path="/login" exact element={<Login />} />
