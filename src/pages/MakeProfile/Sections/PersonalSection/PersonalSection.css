@@ -97,6 +97,10 @@
 .input-field .form-group [type="text"].form-control:focus {
   box-shadow: none;
 }
+.input-field .form-group input[type="number"]:focus,
+.input-field .form-group [type="text"].form-control:focus {
+  box-shadow: none;
+}
 .input-label {
   font-size: 16px !important;
   color: #666666 !important;
@@ -171,6 +175,7 @@
   color: #999999;
   cursor: pointer;
   padding-left: 30px;
+  line-height: 35px;
   font-family: "solitaire-mvb-pro";
 }
 .radio-button .male-checkbox .form-check-label::before {
@@ -179,7 +184,7 @@
   height: 20px;
   width: 20px;
   position: absolute;
-  top: 0px;
+  top: 8px;
   left: 0px;
   border-radius: 50%;
 }
@@ -189,7 +194,7 @@
   width: 10px;
   height: 10px;
   left: 5px;
-  top: 5px;
+  top: 12.5px;
   background: #c6521e;
   border-radius: 50%;
   opacity: 0;
@@ -211,6 +216,7 @@
   color: #999999;
   cursor: pointer;
   padding-left: 30px;
+  line-height: 35px;
   font-family: "solitaire-mvb-pro";
 }
 .radio-button2 .female-checkbox .form-check-label::before {
@@ -219,7 +225,7 @@
   height: 20px;
   width: 20px;
   position: absolute;
-  top: 0px;
+  top: 8px;
   left: 0px;
   border-radius: 50%;
 }
@@ -229,7 +235,7 @@
   width: 10px;
   height: 10px;
   left: 5px;
-  top: 5px;
+  top: 12.5px;
   background: #c6521e;
   opacity: 0;
   border-radius: 50%;
@@ -532,4 +538,13 @@
   color: #999999 !important;
   line-height: 19px !important;
   font-family: "solitaire-mvb-pro" !important;
+}
+.timezone-select
+  .css-1s2u09g-control
+  .css-89lswr-Sa
+  .css-1okebmr-indicatorSeparator {
+  visibility: hidden;
+}
+.make-profile-er {
+  padding-left: 0px !important;
 }

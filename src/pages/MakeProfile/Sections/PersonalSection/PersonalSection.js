@@ -15,6 +15,7 @@ import Col from "react-bootstrap/Col";
 import { useFormik } from "formik";
 import { getGeo } from "geoplugin";
 import TimezoneSelect from "react-timezone-select";
+import * as Yup from "yup";
 
 import "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
@@ -43,6 +44,41 @@ const PersonalSection = () => {
   let login_data = localStorage.getItem("log_in_data");
   login_data = JSON.parse(login_data);
   const login_token = localStorage.getItem("login_token");
+
+  const validate = Yup.object({
+    first_name: Yup.string().required("Enter your First Name"),
+    last_name: Yup.string().required("Enter your Last Name"),
+    dob: Yup.string().required("Enter your Date of Birth"),
+    gender: Yup.string().required("Enter your Gender"),
+    email: Yup.string()
+      .required("Enter a valid email.")
+      .email("Enter a valid email."),
+    id_number: Yup.number(" Enter a valid Id Number.").required(
+      "Enter a valid Id Number."
+    ),
+    profile_photo: Yup.string().required("Choose a profile photo."),
+    identification_photo: Yup.string().required(
+      "Identification Photo is Required"
+    ),
+    house: Yup.string().required("Enter house number."),
+    city: Yup.string().required("Enter Valid City Name."),
+    postal: Yup.number().required("Enter postal or zip code or PO Box."),
+    street: Yup.string().required("Enter street or road name."),
+    country: Yup.string().required("Enter valid Country name."),
+    mobile_number: Yup.string().required("Enter a valid mobile number."),
+    billing_house: Yup.string().required("Enter house number."),
+    billing_city: Yup.string().required("Enter Valid City Name."),
+    billing_postal: Yup.number().required(
+      "Enter postal or zip code or PO Box."
+    ),
+    billing_time_zone: Yup.string().required("Enter postal valid time-zone."),
+    billing_street: Yup.string().required("Enter street or road name."),
+    billing_country: Yup.string().required("Enter valid Country name."),
+    billing_mobile_number: Yup.string().required(
+      "Enter a valid mobile number."
+    ),
+    billing_currency: Yup.string().required("Enter a valid currency."),
+  });
 
   useEffect(() => {
     !login_token && navigate("/");
@@ -90,10 +126,13 @@ const PersonalSection = () => {
       billing_mobile_number: "",
       billing_currency: "",
     },
+    validationSchema: validate,
     onSubmit: (values) => {
       console.log("submitted values make profile", values);
     },
   });
+
+  console.log("formik", formik);
 
   //adding same as above data
   useEffect(() => {
@@ -232,6 +271,11 @@ const PersonalSection = () => {
                           name="dob"
                           calendarIcon={<CalenderIconComponent />}
                         />
+                        {formik.touched.dob && formik.errors.dob ? (
+                          <span className="error make-profile-er">
+                            {formik.errors.dob}
+                          </span>
+                        ) : null}
                       </div>
                       <div className="input-field  small-field">
                         <label htmlFor="dob" className="input-label">
@@ -263,6 +307,11 @@ const PersonalSection = () => {
                             </div>
                           </div>
                         </Form.Group>
+                        {formik.touched.gender && formik.errors.gender ? (
+                          <span className="error make-profile-er">
+                            {formik.errors.gender}
+                          </span>
+                        ) : null}
                       </div>
                     </div>
                     {/* ------------ full width input ------------------- */}
@@ -299,13 +348,18 @@ const PersonalSection = () => {
                           </OverlayTrigger>
                           <Form.Control
                             className="input-att"
-                            type="text"
+                            type="number"
                             name="id_number"
                             onChange={formik.handleChange}
                             value={formik.values.id_number}
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.id_number && formik.errors.id_number ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.id_number}
+                        </span>
+                      ) : null}
                     </div>
                   </Col>
                   <Col className="custom-gutter">
@@ -355,6 +409,12 @@ const PersonalSection = () => {
                           alt="Preview"
                         />
                       </div>
+                      {formik.touched.profile_photo &&
+                      formik.errors.profile_photo ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.profile_photo}
+                        </span>
+                      ) : null}
                     </div>
                   </Col>
                 </Row>
@@ -389,6 +449,12 @@ const PersonalSection = () => {
                         </p>
                       }
                     />
+                    {formik.touched.identification_photo &&
+                    formik.errors.identification_photo ? (
+                      <span className="error make-profile-er">
+                        {formik.errors.identification_photo}
+                      </span>
+                    ) : null}
                   </Col>
                   <Col className="custom-gutter">
                     <Row className="identification-row-gap custom-row">
@@ -431,6 +497,11 @@ const PersonalSection = () => {
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.house && formik.errors.house ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.house}
+                        </span>
+                      ) : null}
                     </div>
                     {/*---------------input 2 -------------  */}
                     <div className="input-field contact-input-gap">
@@ -449,6 +520,11 @@ const PersonalSection = () => {
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.city && formik.errors.city ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.city}
+                        </span>
+                      ) : null}
                     </div>
                     {/*---------------input 3 -------------  */}
                     <div className="input-field  contact-input-gap">
@@ -459,13 +535,18 @@ const PersonalSection = () => {
                           </Form.Label>
                           <Form.Control
                             className="input-att"
-                            type="text"
+                            type="number"
                             id="postal"
                             value={formik.values.postal}
                             onChange={formik.handleChange}
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.postal && formik.errors.postal ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.postal}
+                        </span>
+                      ) : null}
                     </div>
                     {/*--------------- -------------  */}
                   </Col>
@@ -488,6 +569,11 @@ const PersonalSection = () => {
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.street && formik.errors.street ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.street}
+                        </span>
+                      ) : null}
                     </div>
                     {/*---------------input 5 -------------  */}
                     <div className="input-field  contact-input-gap">
@@ -506,6 +592,11 @@ const PersonalSection = () => {
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.country && formik.errors.country ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.country}
+                        </span>
+                      ) : null}
                     </div>
                     {/*---------------input 6 -------------  */}
                     <div className="input-field contact-input-gap">
@@ -520,13 +611,17 @@ const PersonalSection = () => {
                           value={value}
                           className="react-phone"
                           onChange={(selectedOption) => {
-                            // form.setFieldValue("phone", selectedOption);
-                            // formik.values.phone = selectedOption;
                             formik.values.mobile_number = selectedOption;
                             return setValue(selectedOption);
                           }}
                         />
                       </div>
+                      {formik.touched.mobile_number &&
+                      formik.errors.mobile_number ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.mobile_number}
+                        </span>
+                      ) : null}
                     </div>
                     {/*--------------- -------------  */}
                   </Col>
@@ -569,6 +664,12 @@ const PersonalSection = () => {
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.billing_house &&
+                      formik.errors.billing_house ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.billing_house}
+                        </span>
+                      ) : null}
                     </div>
                     {/*---------------input 2 -------------  */}
                     <div className="input-field contact-input-gap">
@@ -587,6 +688,12 @@ const PersonalSection = () => {
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.billing_city &&
+                      formik.errors.billing_city ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.billing_city}
+                        </span>
+                      ) : null}
                     </div>
                     {/*---------------input 3 -------------  */}
                     <div className="input-field  contact-input-gap">
@@ -597,13 +704,19 @@ const PersonalSection = () => {
                           </Form.Label>
                           <Form.Control
                             className="input-att"
-                            type="text"
+                            type="number"
                             id="billing_postal"
                             value={formik.values.billing_postal}
                             onChange={formik.handleChange}
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.billing_postal &&
+                      formik.errors.billing_postal ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.billing_postal}
+                        </span>
+                      ) : null}
                     </div>
                     {/*---------------input 4 -------------  */}
                     {/*  <div className="input-field  contact-input-gap">
@@ -633,6 +746,12 @@ const PersonalSection = () => {
                         onChange={setSelectedTimezone}
                       />
                     </div>
+                    {formik.touched.billing_time_zone &&
+                    formik.errors.billing_time_zone ? (
+                      <span className="error make-profile-er">
+                        {formik.errors.billing_time_zone}
+                      </span>
+                    ) : null}
                     {/*--------------- -------------  */}
                   </Col>
 
@@ -653,6 +772,12 @@ const PersonalSection = () => {
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.billing_street &&
+                      formik.errors.billing_street ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.billing_street}
+                        </span>
+                      ) : null}
                     </div>
                     {/*---------------input 6 -------------  */}
                     <div className="input-field  contact-input-gap">
@@ -671,6 +796,12 @@ const PersonalSection = () => {
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.billing_country &&
+                      formik.errors.billing_country ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.billing_country}
+                        </span>
+                      ) : null}
                     </div>
                     {/*---------------input 7 -------------  */}
                     <div className="input-field contact-input-gap">
@@ -691,6 +822,12 @@ const PersonalSection = () => {
                           }}
                         />
                       </div>
+                      {formik.touched.billing_mobile_number &&
+                      formik.errors.billing_mobile_number ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.billing_mobile_number}
+                        </span>
+                      ) : null}
                     </div>
                     {/*---------------input 8 -------------  */}
                     <div className="input-field  contact-input-gap">
@@ -709,6 +846,12 @@ const PersonalSection = () => {
                           />
                         </Form.Group>
                       </Form>
+                      {formik.touched.billing_currency &&
+                      formik.errors.billing_currency ? (
+                        <span className="error make-profile-er">
+                          {formik.errors.billing_currency}
+                        </span>
+                      ) : null}
                     </div>
                     {/*----------------------------  */}
                   </Col>
