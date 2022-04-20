@@ -29,17 +29,21 @@ import PhoneInput from "react-phone-number-input";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const PersonalSection = () => {
   const [dateValue, setDateValue] = useState();
   const [preview, setPreview] = useState(profilePicPrev);
   const [src, setSrc] = useState("");
   const [value, setValue] = useState();
-  const [remember, setRemember] = useState();
+  const [billingMobile, setBillingMobile] = useState();
+  // const [remember, setRemember] = useState();
   const [genderValue, setGenderValue] = useState();
   const [sameAsAbove, setSameAsAbove] = useState();
   const [selectedTimezone, setSelectedTimezone] = useState({});
+  const [ip, setIp] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   let login_data = localStorage.getItem("log_in_data");
   login_data = JSON.parse(login_data);
@@ -48,7 +52,7 @@ const PersonalSection = () => {
   const validate = Yup.object({
     first_name: Yup.string().required("Enter your First Name"),
     last_name: Yup.string().required("Enter your Last Name"),
-    dob: Yup.string().required("Enter your Date of Birth"),
+    dob: Yup.string().required("Enter your Date of Birth").nullable(),
     gender: Yup.string().required("Enter your Gender"),
     email: Yup.string()
       .required("Enter a valid email.")
@@ -66,16 +70,18 @@ const PersonalSection = () => {
     street: Yup.string().required("Enter street or road name."),
     country: Yup.string().required("Enter valid Country name."),
     mobile_number: Yup.string().required("Enter a valid mobile number."),
-    billing_house: Yup.string().required("Enter house number."),
-    billing_city: Yup.string().required("Enter Valid City Name."),
+    billing_house: Yup.string().required("Enter Billing house number."),
+    billing_city: Yup.string().required("Enter Valid Billing City Name."),
     billing_postal: Yup.number().required(
-      "Enter postal or zip code or PO Box."
+      "Enter Billing postal or zip code or PO Box."
     ),
-    billing_time_zone: Yup.string().required("Enter postal valid time-zone."),
-    billing_street: Yup.string().required("Enter street or road name."),
-    billing_country: Yup.string().required("Enter valid Country name."),
+    billing_time_zone: Yup.string().required(
+      "Enter Billing postal valid time-zone."
+    ),
+    billing_street: Yup.string().required("Enter Billing street or road name."),
+    billing_country: Yup.string().required("Enter Billing valid Country name."),
     billing_mobile_number: Yup.string().required(
-      "Enter a valid mobile number."
+      "Enter a valid Billing mobile number."
     ),
     billing_currency: Yup.string().required("Enter a valid currency."),
   });
@@ -97,6 +103,7 @@ const PersonalSection = () => {
         formik.setFieldValue("billing_currency", response.currencyCode);
         formik.setFieldValue("billing_time_zone", response.timezone);
         setSelectedTimezone(response.timezone);
+        setIp(response.request);
       })
       .catch((error) => console.log("getGeo error ", error));
   }, []);
@@ -127,12 +134,63 @@ const PersonalSection = () => {
       billing_currency: "",
     },
     validationSchema: validate,
+
+    // billing_city: "Vadodara"
+    // billing_country: "India"
+    // billing_house_no: "12"
+    // billing_mobile: "+919999999999"
+    // billing_postal: "388120"
+    // billing_street: "satkrutu complex"
+    // city: "Vadodara"
+    // country: "India"
+    // currency: "INR"
+    // dob: "1998-05-13T18:30:00.000Z"
+    // email: "shivam@krishaweb.us"
+    // first_name: "shivam"
+    // gender: "male"
+    // house_no: "12"
+    // id_number: "1234"
+    // identification
+    // identification_2
+    // ip: "120.72.91.26"
+    // last_name: "singh"
+    // mobile: "+919999999999"
+    // ip: "120.72.91.26"
+    // last_name: "singh"
+    // mobile: "+919999999999"
+
     onSubmit: (values) => {
-      console.log("submitted values make profile", values);
+      let make_profile_detail = {
+        first_name: values.first_name,
+        last_name: values.last_name,
+        gender: values.gender,
+        email: values.email,
+        id_number: String(values.id_numbe),
+        photo: values.profile_photo,
+        identification: values.identification_photo,
+        identification_2: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA",
+
+        house_no: values.house,
+        street: values.street,
+        city: values.city,
+        country: values.country,
+        postal: String(values.postal),
+        mobile: values.mobile_number,
+        same_address: sameAsAbove,
+        billing_house_no: values.billing_house,
+        billing_street: values.billing_street,
+        billing_city: values.billing_city,
+        billing_country: values.billing_country,
+        billing_postal: String(values.billing_postal),
+        billing_mobile: values.billing_mobile_number,
+        timezone: values.billing_time_zone,
+        currency: values.billing_currency,
+        ip,
+      };
+      // console.log("val", make_profile_detail);
+      dispatch({ type: "MAKE_PROFILE", make_profile_detail });
     },
   });
-
-  console.log("formik", formik);
 
   //adding same as above data
   useEffect(() => {
@@ -146,6 +204,7 @@ const PersonalSection = () => {
         "billing_mobile_number",
         formik.values.mobile_number
       );
+      setBillingMobile(formik.values.mobile_number);
     }
   }, [formik.values, sameAsAbove]);
 
@@ -161,13 +220,15 @@ const PersonalSection = () => {
         "billing_mobile_number",
         formik.values.billing_mobile_number
       );
+      setBillingMobile("");
     }
   }, [sameAsAbove]);
 
   //! function defination
   const handleDateChange = (val) => {
     setDateValue(val);
-    formik.values.dob = val;
+    val = String(val);
+    formik.setFieldValue("dob", val);
   };
 
   const getUploadParams = ({ meta }) => {
@@ -176,12 +237,17 @@ const PersonalSection = () => {
 
   // called every time a file's `status` changes
   const handleChangeStatus = ({ meta, file }, status) => {
+    console.log("status", status);
     if (status === "done") {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        formik.values.identification_photo = reader.result;
+        formik.setFieldValue("identification_photo", reader.result);
+        // formik.values.identification_photo = reader.result;
       };
+    }
+    if (status === "removed") {
+      formik.setFieldValue("identification_photo", "");
     }
   };
 
@@ -190,14 +256,21 @@ const PersonalSection = () => {
     // console.log(files.map((f) => f.meta));
   };
 
-  const handleChange = (e) => {
+  const handleGenderChange = (e) => {
     setGenderValue(e.target.value);
-    formik.values.gender = e.target.value;
+    // formik.values.gender = e.target.value;
+    formik.setFieldValue("gender", e.target.value);
   };
 
   const handleImageCrop = (prev) => {
     setPreview(prev);
-    formik.values.profile_photo = prev;
+    formik.setFieldValue("profile_photo", prev);
+    // formik.values.profile_photo = prev;
+  };
+
+  const handleImageClose = () => {
+    setPreview(profilePicPrev);
+    formik.setFieldValue("profile_photo", "");
   };
 
   return (
@@ -290,7 +363,7 @@ const PersonalSection = () => {
                                 label="male"
                                 value="male"
                                 className="male-checkbox"
-                                onChange={handleChange}
+                                onChange={handleGenderChange}
                                 checked={genderValue === "male"}
                               />
                             </div>
@@ -301,7 +374,7 @@ const PersonalSection = () => {
                                 label="female"
                                 value="female"
                                 className="female-checkbox"
-                                onChange={handleChange}
+                                onChange={handleGenderChange}
                                 checked={genderValue === "female"}
                               />
                             </div>
@@ -385,7 +458,8 @@ const PersonalSection = () => {
                           height={208}
                           onCrop={(prev) => handleImageCrop(prev)}
                           // onCrop={(prev) => setPreview(prev)}
-                          onClose={() => setPreview(profilePicPrev)}
+                          onClose={() => handleImageClose()}
+                          // onClose={() => setPreview(profilePicPrev)}
                           borderStyle={{
                             borderRadius: "0px",
                             border: "1px dashed #999999",
@@ -637,7 +711,7 @@ const PersonalSection = () => {
                       type="checkbox"
                       id="checkbox"
                       name=""
-                      checked={remember}
+                      // checked={remember}
                       value=""
                     />
                     <label className="checkbox-label" htmlFor="checkbox">
@@ -813,12 +887,14 @@ const PersonalSection = () => {
                           placeholder="Enter phone number"
                           id="phone"
                           name="phone"
-                          value={value}
+                          value={billingMobile}
                           className="react-phone"
                           onChange={(selectedOption) => {
-                            formik.values.billing_mobile_number =
-                              selectedOption;
-                            return setValue(selectedOption);
+                            formik.setFieldValue(
+                              "billing_mobile_number",
+                              selectedOption
+                            );
+                            return setBillingMobile(selectedOption);
                           }}
                         />
                       </div>

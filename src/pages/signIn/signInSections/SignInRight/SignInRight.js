@@ -104,7 +104,7 @@ const SignInRight = () => {
           hear_from_other: "",
           referral_code: "",
           // is_recaptcha_verified: recaptchaValue,
-          role: "student",
+          role: "tutor",
         },
       });
     },

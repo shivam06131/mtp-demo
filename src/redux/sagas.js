@@ -67,12 +67,36 @@ function* postLogInData(action) {
   }
 }
 
+function* postMakeProfileData(action) {
+  try {
+    console.log("action.payload", action);
+    let token = localStorage.getItem("login_token");
+    // console.log("token", token);
+    let data = yield axios.post(
+      "https://api.tutorspoint.uk/api/teacher/update-personal-information",
+      action.make_profile_detail,
+      {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Access-Control-Allow-Origin": "*",
+          "content-type": "text/json",
+          allow: "*",
+        },
+      }
+    );
+    console.log("data received makeprofile request", data);
+  } catch (error) {
+    console.log("error occoured at postMakeProfileData in saga.js");
+  }
+}
+
 function* mySaga() {
   yield takeLatest("USER_FETCH_REQUESTED", fetchData);
   yield takeLatest("GET_VIDEO", getVideo);
   yield takeLatest("GET_VIDEO_ONE", getFirstVideo);
   yield takeLatest("POST_SIGN_IN_DATA", postSignInData);
   yield takeLatest("POST_LOG_IN_DATA", postLogInData);
+  yield takeLatest("MAKE_PROFILE", postMakeProfileData);
 }
 
 export default mySaga;
