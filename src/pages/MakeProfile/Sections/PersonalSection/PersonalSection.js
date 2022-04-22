@@ -79,7 +79,7 @@ const PersonalSection = () => {
     }
   }, [formData]);
 
-  console.log("formData", formData);
+  // console.log("formData", formData);
 
   let login_data = localStorage.getItem("log_in_data");
   login_data = JSON.parse(login_data);
@@ -106,19 +106,22 @@ const PersonalSection = () => {
     street: Yup.string().required("Enter street or road name."),
     country: Yup.string().required("Enter valid Country name."),
     mobile_number: Yup.string().required("Enter a valid mobile number."),
-    billing_house: Yup.string().required("Enter Billing house number."),
+    billing_house:
+      !sameAsAbove && Yup.string().required("Enter Billing house number."),
     billing_city: Yup.string().required("Enter Valid Billing City Name."),
-    billing_postal: Yup.number().required(
-      "Enter Billing postal or zip code or PO Box."
-    ),
+    billing_postal:
+      !sameAsAbove &&
+      Yup.number().required("Enter Billing postal or zip code or PO Box."),
     billing_time_zone: Yup.string().required(
       "Enter Billing postal valid time-zone."
     ),
-    billing_street: Yup.string().required("Enter Billing street or road name."),
+    billing_street:
+      !sameAsAbove &&
+      Yup.string().required("Enter Billing street or road name."),
     billing_country: Yup.string().required("Enter Billing valid Country name."),
-    billing_mobile_number: Yup.string().required(
-      "Enter a valid Billing mobile number."
-    ),
+    billing_mobile_number:
+      !sameAsAbove &&
+      Yup.string().required("Enter a valid Billing mobile number."),
     billing_currency: Yup.string().required("Enter a valid currency."),
   });
 
@@ -127,6 +130,7 @@ const PersonalSection = () => {
     dispatch({ type: "GET_PERSONAL_INFORMATION" });
   }, []);
 
+  //! setting up fields with geo location input
   useEffect(() => {
     setValue(login_data.user_profile.mobile);
     // setValue("+" + login_data.user_profile.mobile);
@@ -190,36 +194,41 @@ const PersonalSection = () => {
         postal: String(values.postal),
         mobile: values.mobile_number,
         same_address: sameAsAbove,
-        billing_house_no: values.billing_house,
-        billing_street: values.billing_street,
-        billing_city: values.billing_city,
-        billing_country: values.billing_country,
-        billing_postal: String(values.billing_postal),
-        billing_mobile: values.billing_mobile_number,
+        billing_house_no: sameAsAbove ? value.house : values.billing_house,
+        billing_street: sameAsAbove ? value.street : values.billing_street,
+        billing_city: sameAsAbove ? value.city : values.billing_city,
+        billing_country: sameAsAbove ? value.country : values.billing_country,
+        billing_postal: sameAsAbove
+          ? value.postal
+          : String(values.billing_postal),
+        billing_mobile: sameAsAbove
+          ? value.mobile
+          : values.billing_mobile_number,
         timezone: values.billing_time_zone,
         currency: values.billing_currency,
         ip,
       };
-      // console.log("val", make_profile_detail);
+      console.log("val", make_profile_detail);
       dispatch({ type: "MAKE_PROFILE", make_profile_detail });
     },
   });
 
+  //! code reduced
   //adding same as above data
-  useEffect(() => {
-    if (sameAsAbove) {
-      formik.setFieldValue("billing_house", formik.values.house);
-      formik.setFieldValue("billing_city", formik.values.city);
-      formik.setFieldValue("billing_postal", formik.values.postal);
-      formik.setFieldValue("billing_street", formik.values.street);
-      formik.setFieldValue("billing_country", formik.values.country);
-      formik.setFieldValue(
-        "billing_mobile_number",
-        formik.values.mobile_number
-      );
-      setBillingMobile(formik.values.mobile_number);
-    }
-  }, [formik.values, sameAsAbove]);
+  // useEffect(() => {
+  //   if (sameAsAbove) {
+  //     formik.setFieldValue("billing_house", formik.values.house);
+  //     formik.setFieldValue("billing_city", formik.values.city);
+  //     formik.setFieldValue("billing_postal", formik.values.postal);
+  //     formik.setFieldValue("billing_street", formik.values.street);
+  //     formik.setFieldValue("billing_country", formik.values.country);
+  //     formik.setFieldValue(
+  //       "billing_mobile_number",
+  //       formik.values.mobile_number
+  //     );
+  //     setBillingMobile(formik.values.mobile_number);
+  //   }
+  // }, [formik.values, sameAsAbove]);
 
   //removing same as above data
   useEffect(() => {
@@ -285,6 +294,8 @@ const PersonalSection = () => {
     setPreview(profilePicPrev);
     formik.setFieldValue("profile_photo", "");
   };
+
+  // console.log("formik", formik);
 
   return (
     <div>
@@ -722,14 +733,23 @@ const PersonalSection = () => {
                     className="input-att"
                     type="text"
                     id="billing_house"
-                    value={formik.values.billing_house}
+                    value={
+                      sameAsAbove
+                        ? formik.values.house
+                        : formik.values.billing_house
+                    }
                     onChange={formik.handleChange}
                   />
                 </Form.Group>
               </Form>
-              {formik.touched.billing_house && formik.errors.billing_house ? (
+              {sameAsAbove ? (
+                formik.touched.house && formik.errors.house
+              ) : formik.touched.billing_house &&
+                formik.errors.billing_house ? (
                 <span className="error make-profile-er">
-                  {formik.errors.billing_house}
+                  {sameAsAbove
+                    ? formik.errors.house
+                    : formik.errors.billing_house}
                 </span>
               ) : null}
             </div>
@@ -765,34 +785,28 @@ const PersonalSection = () => {
                     className="input-att"
                     type="number"
                     id="billing_postal"
-                    value={formik.values.billing_postal}
+                    value={
+                      sameAsAbove
+                        ? formik.values.postal
+                        : formik.values.billing_postal
+                    }
+                    // value={formik.values.billing_postal}
                     onChange={formik.handleChange}
                   />
                 </Form.Group>
               </Form>
-              {formik.touched.billing_postal && formik.errors.billing_postal ? (
+              {sameAsAbove ? (
+                formik.touched.postal && formik.errors.postal
+              ) : formik.touched.billing_postal &&
+                formik.errors.billing_postal ? (
                 <span className="error make-profile-er">
-                  {formik.errors.billing_postal}
+                  {sameAsAbove
+                    ? formik.errors.postal
+                    : formik.errors.billing_postal}
                 </span>
               ) : null}
             </div>
             {/*---------------input 4 -------------  */}
-            {/*  <div className="input-field  contact-input-gap">
-                      <Form>
-                        <Form.Group className="form-group">
-                          <Form.Label className="input-label">
-                            Set your Time Zone*
-                          </Form.Label>
-                          <Form.Control
-                            className="input-att"
-                            type="text"
-                            id="billing_time_zone"
-                            value={formik.values.billing_time_zone}
-                            onChange={formik.handleChange}
-                          />
-                        </Form.Group>
-                      </Form>
-                    </div>*/}
             <div className="input-field  contact-input-gap">
               <label htmlFor="timezone" className="input-label">
                 Set your Time Zone*
@@ -825,14 +839,24 @@ const PersonalSection = () => {
                     className="input-att"
                     type="text"
                     id="billing_street"
-                    value={formik.values.billing_street}
+                    // value={formik.values.billing_street}
+                    value={
+                      sameAsAbove
+                        ? formik.values.street
+                        : formik.values.billing_street
+                    }
                     onChange={formik.handleChange}
                   />
                 </Form.Group>
               </Form>
-              {formik.touched.billing_street && formik.errors.billing_street ? (
+              {sameAsAbove ? (
+                formik.touched.street && formik.errors.street
+              ) : formik.touched.billing_street &&
+                formik.errors.billing_street ? (
                 <span className="error make-profile-er">
-                  {formik.errors.billing_street}
+                  {sameAsAbove
+                    ? formik.errors.street
+                    : formik.errors.billing_street}
                 </span>
               ) : null}
             </div>
@@ -860,7 +884,7 @@ const PersonalSection = () => {
             </div>
             {/*---------------input 7 -------------  */}
             <div className="input-field contact-input-gap">
-              <label className="input-label" htmlFor="pohone">
+              <label className="input-label" htmlFor="phone">
                 Mobile Number
               </label>
               <div className="custom-phone">
@@ -868,21 +892,32 @@ const PersonalSection = () => {
                   placeholder="Enter phone number"
                   id="phone"
                   name="phone"
-                  value={billingMobile}
+                  // value={billingMobile}
+                  value={
+                    sameAsAbove
+                      ? formik.values.mobile_number
+                      : formik.values.billingMobile
+                  }
                   className="react-phone"
                   onChange={(selectedOption) => {
                     formik.setFieldValue(
                       "billing_mobile_number",
                       selectedOption
                     );
-                    return setBillingMobile(selectedOption);
+                    if (sameAsAbove) {
+                      return setBillingMobile(formik.values.mobile_number);
+                    } else {
+                      return setBillingMobile(selectedOption);
+                    }
                   }}
                 />
               </div>
               {formik.touched.billing_mobile_number &&
               formik.errors.billing_mobile_number ? (
                 <span className="error make-profile-er">
-                  {formik.errors.billing_mobile_number}
+                  {sameAsAbove
+                    ? formik.errors.mobile_number
+                    : formik.errors.billing_mobile_number}
                 </span>
               ) : null}
             </div>
@@ -921,6 +956,7 @@ const PersonalSection = () => {
         <div className="add-button-wrap">
           <button
             className="button-primary custom-property"
+            type="submit"
             onClick={() => formik.handleSubmit()}
           >
             Continue

@@ -72,6 +72,7 @@ function* postMakeProfileData(action) {
     console.log("action.payload", action);
     let token = localStorage.getItem("login_token");
     // console.log("token", token);
+    console.log("action data", action);
     let data = yield axios.post(
       "https://api.tutorspoint.uk/api/teacher/update-personal-information",
       action.make_profile_detail,
@@ -84,6 +85,7 @@ function* postMakeProfileData(action) {
         },
       }
     );
+    console.log("action recived data", data);
     // yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
   } catch (error) {
     console.log("error occoured at postMakeProfileData in saga.js");
