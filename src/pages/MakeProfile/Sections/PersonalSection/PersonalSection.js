@@ -29,7 +29,7 @@ import PhoneInput from "react-phone-number-input";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const PersonalSection = () => {
   const [dateValue, setDateValue] = useState();
@@ -41,9 +41,45 @@ const PersonalSection = () => {
   const [genderValue, setGenderValue] = useState();
   const [sameAsAbove, setSameAsAbove] = useState();
   const [selectedTimezone, setSelectedTimezone] = useState({});
+  const [formData, setFormData] = useState();
   const [ip, setIp] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userData = useSelector((state) => state.teacher_personal_data);
+
+  useEffect(() => {
+    userData && setFormData(userData[0]?.data?.personal_information);
+  }, [userData]);
+
+  //filling the form values
+  useEffect(() => {
+    if (formData) {
+      formData?.dob && setDateValue(new Date(formData.dob));
+      formData?.gender && setGenderValue(formData.gender);
+      formData?.gender && formik.setFieldValue(formData.gender);
+      formData?.id_number &&
+        formik.setFieldValue("id_number", formData.id_number);
+      formData.photo && formik.setFieldValue("profile_photo", formData.photo);
+      formData.photo && setPreview(formData.photo);
+
+      formData.house_no && formik.setFieldValue("house", formData.house_no);
+      // formData.city && formik.setFieldValue("city", formData.city);
+      formData.postal && formik.setFieldValue("postal", formData.postal);
+      formData.street && formik.setFieldValue("street", formData.street);
+      formData.same_address &&
+        setSameAsAbove(formData.same_address) &&
+        formik.setFieldValue("billing_house", formData.billing_house_no) &&
+        formik.setFieldValue("billing_postal", formData.billing_postal) &&
+        formik.setFieldValue("billing_street", formData.billing_street) &&
+        formik.setFieldValue(
+          "billing_mobile_number",
+          formData.billing_mobile
+        ) &&
+        setBillingMobile(formData.billing_mobile);
+    }
+  }, [formData]);
+
+  console.log("formData", formData);
 
   let login_data = localStorage.getItem("log_in_data");
   login_data = JSON.parse(login_data);
@@ -142,7 +178,7 @@ const PersonalSection = () => {
         last_name: values.last_name,
         gender: values.gender,
         email: values.email,
-        id_number: String(values.id_numbe),
+        id_number: String(values.id_number),
         photo: values.profile_photo,
         identification: values.identification_photo,
         identification_2: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA",
@@ -664,7 +700,8 @@ const PersonalSection = () => {
               id="checkbox"
               name=""
               // checked={remember}
-              value=""
+              // value={sameAsAbove}
+              checked={sameAsAbove}
             />
             <label className="checkbox-label" htmlFor="checkbox">
               *Same as above
