@@ -37,7 +37,7 @@ const Homepage = () => {
             document.getElementById("search").offsetTop -
               document.documentElement.clientHeight +
               77 &&
-          scrollTop < document.getElementById("tutor-search").offsetTop
+          scrollTop < document.getElementById("tutor-search").offsetTop - 150
         ) {
           setDisplay(true);
         } else {
@@ -54,7 +54,12 @@ const Homepage = () => {
     window.addEventListener("scroll", () => {
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
-      if (scrollTop > document.getElementById("tutor-search").offsetTop) {
+      console.log(
+        "scrollTop , offset",
+        scrollTop,
+        document.getElementById("tutor-search").offsetTop
+      );
+      if (scrollTop > document.getElementById("tutor-search").offsetTop - 150) {
         setDisplaySearchTwo(true);
       } else {
         setDisplaySearchTwo(false);
@@ -64,6 +69,8 @@ const Homepage = () => {
       window.removeEventListener("scroll", () => {});
     };
   }, []);
+
+  console.log("one , two", display, displaySearchTwo);
 
   //video
   useEffect(() => {

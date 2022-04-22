@@ -24,7 +24,11 @@ const SearchTutor = ({ display, displaySearchTwo }) => {
       </div>
       {/*   ---------- search tutor ------------*/}
 
-      <div className="container">
+      <div
+        // style={{ paddingTop: displaySearchTwo && "55px!important" }}
+        // className="container"
+        className={`container + " " + ${displaySearchTwo && "spacing-top"}`}
+      >
         <div
           className="search search-tutor search-stick-bottom"
           style={{

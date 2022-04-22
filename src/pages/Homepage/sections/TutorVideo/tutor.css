@@ -37,6 +37,9 @@
   /* transition: 500ms ease-out; */
   width: 100% !important;
 }
+.spacing-top {
+  padding-top: 55px !important;
+}
 
 .btn-holder {
   padding-top: 15px;

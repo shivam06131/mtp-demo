@@ -25,6 +25,7 @@
   font-size: 16px;
   line-height: 21px;
   position: relative;
+  text-transform: uppercase;
 }
 .acc-header .accordion-button:not(.collapsed) {
   color: #ffffff;
@@ -32,6 +33,7 @@
   line-height: 21px;
   height: 44px;
   background-color: #c6521e;
+  text-transform: uppercase;
 }
 .acc-header .accordion-button:focus {
   border: none !important;
@@ -94,6 +96,10 @@
   font-family: "solitaire-mvb-pro" !important;
 }
 .input-field .form-group input[type="text"]:focus,
+.input-field .form-group [type="text"].form-control:focus {
+  box-shadow: none;
+}
+.input-field .form-group textarea[type="textarea"]:focus,
 .input-field .form-group [type="text"].form-control:focus {
   box-shadow: none;
 }
@@ -547,4 +553,7 @@
 }
 .make-profile-er {
   padding-left: 0px !important;
+}
+.item-space {
+  margin-top: 30px !important;
 }

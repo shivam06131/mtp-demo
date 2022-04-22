@@ -84,9 +84,32 @@ function* postMakeProfileData(action) {
         },
       }
     );
-    console.log("data received makeprofile request", data);
+    // yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
   } catch (error) {
     console.log("error occoured at postMakeProfileData in saga.js");
+  }
+}
+
+function* getPersonalInfo() {
+  try {
+    let token = localStorage.getItem("login_token");
+    let data = yield axios.get(
+      "https://api.tutorspoint.uk/api/teacher/get-personal-information",
+      {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          "Access-Control-Allow-Origin": "*",
+          "content-type": "text/json",
+          allow: "*",
+        },
+      }
+    );
+    console.log("personal information ad", data);
+    yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
+    yield put({ type: "GET_PERSONAL_DATA_LOADER", payload: false });
+  } catch (error) {
+    yield put({ type: "GET_PERSONAL_DATA_LOADER", payload: true });
+    console.log("error occoured at getPersonalInfo in sagas.js");
   }
 }
 
@@ -97,6 +120,7 @@ function* mySaga() {
   yield takeLatest("POST_SIGN_IN_DATA", postSignInData);
   yield takeLatest("POST_LOG_IN_DATA", postLogInData);
   yield takeLatest("MAKE_PROFILE", postMakeProfileData);
+  yield takeLatest("GET_PERSONAL_INFORMATION", getPersonalInfo);
 }
 
 export default mySaga;
