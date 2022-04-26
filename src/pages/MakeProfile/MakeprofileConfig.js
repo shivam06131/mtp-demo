@@ -1,9 +1,10 @@
 import MakeProfile from "./MakeProfile";
 
-const MakeProfile = {
-  component: MakeProfile,
+const MakeProfileConfig = {
+  component: <MakeProfile />,
   path: "/makeProfile",
   exact: true,
+  auth: true,
 };
 
-export default MakeProfile;
+export default MakeProfileConfig;

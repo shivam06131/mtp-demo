@@ -1,9 +1,10 @@
 import Login from "./LogIn";
 
 const LoginConfig = {
-  component: Login,
+  component: <Login />,
   path: "/login",
   exact: true,
+  auth: false,
 };
 
 export default LoginConfig;
