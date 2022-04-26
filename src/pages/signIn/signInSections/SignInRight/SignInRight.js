@@ -32,9 +32,9 @@ const SignInRight = () => {
 
   console.log("sigin_message", sigin_message && sigin_message[0].data.status);
 
-  useEffect(() => {
-    login_token && navigate("/makeProfile");
-  }, []);
+  // useEffect(() => {
+  //   login_token && navigate("/makeProfile");
+  // }, []);
 
   const handleReCaptchaVerify = async (token) => {
     if (!token) {

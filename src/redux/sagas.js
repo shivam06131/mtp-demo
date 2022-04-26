@@ -88,7 +88,7 @@ function* postMakeProfileData(action) {
     console.log("action recived data", data);
     // yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
   } catch (error) {
-    console.log("error occoured at postMakeProfileData in saga.js");
+    console.log("error occured at postMakeProfileData in saga.js");
   }
 }
 

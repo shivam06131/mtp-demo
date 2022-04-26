@@ -38,8 +38,8 @@ const PersonalSection = () => {
   const [value, setValue] = useState();
   const [billingMobile, setBillingMobile] = useState();
   // const [remember, setRemember] = useState();
-  const [genderValue, setGenderValue] = useState();
-  const [sameAsAbove, setSameAsAbove] = useState();
+  const [genderValue, setGenderValue] = useState("");
+  const [sameAsAbove, setSameAsAbove] = useState("");
   const [selectedTimezone, setSelectedTimezone] = useState({});
   const [formData, setFormData] = useState();
   const [ip, setIp] = useState();
@@ -53,10 +53,11 @@ const PersonalSection = () => {
 
   //filling the form values
   useEffect(() => {
+    console.log("setFormData", formData);
     if (formData) {
       formData?.dob && setDateValue(new Date(formData.dob));
       formData?.gender && setGenderValue(formData.gender);
-      formData?.gender && formik.setFieldValue(formData.gender);
+      formData?.gender && formik.setFieldValue("gender", formData.gender);
       formData?.id_number &&
         formik.setFieldValue("id_number", formData.id_number);
       formData.photo && formik.setFieldValue("profile_photo", formData.photo);
@@ -66,10 +67,13 @@ const PersonalSection = () => {
       // formData.city && formik.setFieldValue("city", formData.city);
       formData.postal && formik.setFieldValue("postal", formData.postal);
       formData.street && formik.setFieldValue("street", formData.street);
+      formData.identification_photo &&
+        formik.setFieldValue("identification_photo", formData.identification);
       formData.same_address &&
         setSameAsAbove(formData.same_address) &&
+        formik.setFieldValue("same_address", formData.same_address) &&
         formik.setFieldValue("billing_house", formData.billing_house_no) &&
-        formik.setFieldValue("billing_postal", formData.billing_postal) &&
+        formik.setFieldVale("billing_postal", formData.billing_postal) &&
         formik.setFieldValue("billing_street", formData.billing_street) &&
         formik.setFieldValue(
           "billing_mobile_number",
@@ -160,6 +164,7 @@ const PersonalSection = () => {
       profile_photo: "",
       identification_photo: "",
       house: "",
+      same_address: "",
       city: "",
       postal: "",
       street: "",
@@ -265,6 +270,7 @@ const PersonalSection = () => {
       reader.readAsDataURL(file);
       reader.onload = () => {
         formik.setFieldValue("identification_photo", reader.result);
+        console.log("reader.result ", reader.result);
         // formik.values.identification_photo = reader.result;
       };
     }
@@ -516,7 +522,7 @@ const PersonalSection = () => {
               onChangeStatus={handleChangeStatus}
               onSubmit={handleSubmit}
               // submitButtonContent=''
-              multiple={false}
+              multiple={true}
               maxSizeBytes="3145728"
               accept="image/*,audio/*,video/*"
               inputWithFilesContent="Add File"
@@ -712,6 +718,7 @@ const PersonalSection = () => {
               name=""
               // checked={remember}
               // value={sameAsAbove}
+              // value="sameAsAbove"
               checked={sameAsAbove}
             />
             <label className="checkbox-label" htmlFor="checkbox">
