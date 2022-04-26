@@ -1,5 +1,6 @@
 import { Accordion } from "react-bootstrap";
 // import AboutMe from "./Sections/AboutMe/AboutMe";
+import AboutMe from "./Sections/AboutMe/AboutMe";
 import PersonalSection from "./Sections/PersonalSection/PersonalSection";
 import "./Sections/PersonalSection/PersonalSection.css";
 
@@ -58,14 +59,14 @@ const MakeProfile = () => {
                 </Accordion.Body>
               </Accordion.Item>
               {/*--------------------------item 2 ---------- */}
-              {/*<Accordion.Item eventKey="1" className="acc-item item-space">
+              <Accordion.Item eventKey="1" className="acc-item item-space">
                 <Accordion.Header className="acc-header">
                   About Me
                 </Accordion.Header>
                 <Accordion.Body className="acc-body ">
                   <AboutMe />
                 </Accordion.Body>
-              </Accordion.Item>*/}
+              </Accordion.Item>
             </Accordion>
           </div>
         </div>
