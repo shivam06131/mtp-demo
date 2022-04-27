@@ -34,6 +34,7 @@ import { ClipLoader, GridLoader } from "react-spinners";
 import { render } from "@testing-library/react";
 
 import CloseIcon from "../../assets/Identification/close.png";
+import IdentificationSection from "../IdentificationSection/IdentificationSection";
 
 const PersonalSection = () => {
   const [dateValue, setDateValue] = useState();
@@ -575,78 +576,7 @@ const PersonalSection = () => {
         </Row>
       </div>
       {/*---------------Identification section -------------  */}
-      <div className="identification underline">
-        <Row className="custom-row">
-          <Col className="column-one custom-gutter">
-            <div className="label-span-wrap">
-              <label htmlFor="firstName">Identification*</label>
-              <OverlayTrigger
-                placement="auto"
-                delay={{ show: 50, hide: 50 }}
-                overlay={renderTooltip}
-              >
-                <img src={infoIcon} alt="" />
-              </OverlayTrigger>
-            </div>
-            <Dropzone
-              getUploadParams={getUploadParams}
-              onChangeStatus={handleChangeStatus}
-              onSubmit={handleSubmit}
-              // submitButtonContent=''
-              multiple={true}
-              maxSizeBytes="3145728"
-              classNames="dropzoneDisabled"
-              accept="image/*,audio/*,video/*"
-              inputWithFilesContent="Add File"
-              inputContent={
-                <p className="drag-info">
-                  Drag & drop identification file here to upload <br />
-                  or <br /> <span>Choose a file</span> to upload
-                </p>
-              }
-            />
-            {formik.touched.identification && formik.errors.identification ? (
-              <span className="error make-profile-er">
-                {formik.errors.identification}
-              </span>
-            ) : null}
-            {image?.length !== 0 &&
-              image?.map((item, index) => {
-                let arr = item.split("profile/");
-                return (
-                  <div key={item.arr}>
-                    <span className="error make-profile-er">{arr[2]}</span>{" "}
-                    <img
-                      onClick={() =>
-                        setImg(image.filter((item, ind) => ind !== index))
-                      }
-                      src={CloseIcon}
-                      alt=""
-                      className="close-img"
-                    />
-                    <br></br>
-                  </div>
-                );
-              })}
-          </Col>
-          <Col className="custom-gutter">
-            <Row className="identification-row-gap custom-row">
-              <Col className="col-gap custom-gutter">
-                <img src={prevOne} alt="" />
-
-                <img src={prevTwo} className="img-gap" alt="" />
-              </Col>
-            </Row>
-            <Row className="custom-row">
-              <Col className="col-gap custom-gutter">
-                <img src={prevThree} alt="" />
-
-                <img src={prevFour} className="img-gap" alt="" />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </div>
+      <IdentificationSection formik={formik} image={image} setImg={setImg} />
       {/*---------------Contact Details section -------------  */}
       <div className="contact underline">
         <div className="label-span-wrap">
