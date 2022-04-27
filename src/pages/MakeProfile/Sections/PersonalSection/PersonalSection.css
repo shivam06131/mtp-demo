@@ -557,3 +557,7 @@
 .item-space {
   margin-top: 30px !important;
 }
+.close-img {
+  height: 21px;
+  margin-left: 5px;
+}

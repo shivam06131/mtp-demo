@@ -4,7 +4,7 @@ import routes from "./Routes";
 
 const AppRoutes = (props) => {
   const login_token = localStorage.getItem("login_token");
-  console.log("props ads", props);
+  // console.log("props ads", props);
 
   return (
     <>

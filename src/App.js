@@ -6,7 +6,7 @@ import AppRoutes from "./routes/AppRoutes";
 import routes from "./routes/Routes";
 
 const App = () => {
-  console.log("routes len", routes.length);
+  // console.log("routes len", routes.length);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

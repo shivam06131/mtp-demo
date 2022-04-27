@@ -30,7 +30,10 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { GridLoader } from "react-spinners";
+import { ClipLoader, GridLoader } from "react-spinners";
+import { render } from "@testing-library/react";
+
+import CloseIcon from "../../assets/Identification/close.png";
 
 const PersonalSection = () => {
   const [dateValue, setDateValue] = useState();
@@ -44,6 +47,8 @@ const PersonalSection = () => {
   const [formData, setFormData] = useState();
   const [ip, setIp] = useState();
   const [loading, setLoading] = useState(true);
+  const [image, setImg] = useState([]);
+  const [identificationImage, setIdentificationImage] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.teacher_personal_data);
@@ -57,9 +62,11 @@ const PersonalSection = () => {
 
   //!filling the form values
   useEffect(() => {
-    console.log("setFormData", formData);
+    // console.log("setFormData", formData);
     if (formData) {
-      formData?.dob && setDateValue(new Date(formData.dob));
+      formData?.dob &&
+        formik.setFieldValue("dob", String(formData.dob)) &&
+        setDateValue(new Date(formData.dob));
       formData?.gender && setGenderValue(formData.gender);
       formData?.gender && formik.setFieldValue("gender", formData.gender);
       formData?.id_number &&
@@ -71,8 +78,13 @@ const PersonalSection = () => {
       // formData.city && formik.setFieldValue("city", formData.city);
       formData.postal && formik.setFieldValue("postal", formData.postal);
       formData.street && formik.setFieldValue("street", formData.street);
-      formData.identification_photo &&
-        formik.setFieldValue("identification_photo", formData.identification);
+      formData.identification &&
+        formik.setFieldValue("identification_photo", formData.identification) &&
+        !image.includes(formData.identification || formData.identification_2) &&
+        setImg([...image, formData.identification, formData.identification_2]);
+      // formData.identification_2 &&
+      //   formik.setFieldValue("identification_2", formData.identification_2) &&
+      //   setImg([...image, formData.identification_2]);
       formData.same_address &&
         setSameAsAbove(formData.same_address) &&
         formik.setFieldValue("same_address", formData.same_address) &&
@@ -171,6 +183,7 @@ const PersonalSection = () => {
       id_number: "",
       profile_photo: "",
       identification_photo: "",
+      identification_2: "",
       house: "",
       same_address: "",
       city: "",
@@ -199,8 +212,12 @@ const PersonalSection = () => {
         dob: dateValue,
         id_number: String(values.id_number),
         photo: values.profile_photo,
-        identification: values.identification_photo,
-        identification_2: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA",
+        // identification: values.identification[0],
+        // identification_2: values.identification[1],
+        identification: identificationImage[0],
+        identification_2: identificationImage[1],
+        // identification: values.identification_photo,
+        // identification_2: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA",
 
         house_no: values.house,
         street: values.street,
@@ -252,28 +269,51 @@ const PersonalSection = () => {
   };
 
   const getUploadParams = ({ meta }) => {
+    // console.log("getUploadParams meta", meta);
     return { url: "https://httpbin.org/post" };
   };
 
   // called every time a file's `status` changes
   const handleChangeStatus = ({ meta, file }, status) => {
-    console.log("status", status);
+    // !image.includes(meta.name) && setImg([...image, meta.name]);
     if (status === "done") {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        formik.setFieldValue("identification_photo", reader.result);
-        console.log("reader.result ", reader.result);
+        // !identificationImage.includes(reader.result) &&
+        setIdentificationImage([...identificationImage, reader.result]);
+
+        // !image.includes(meta.name) && setImg([...image, reader.result]);
+
+        // formik.setFieldValue("identification", [
+        //   ...formik.values.identification,
+        //   reader.result,
+        // ]);
+
+        // console.log("identificationImage", identificationImage);
+        // formik.setFieldValue("identification_photo", reader.result);
+
+        // identificationImage.length === 2 &&
+        // formik.setFieldVale("identification", identificationImage[0]);
+        // formik.setFieldVale("identification_2", identificationImage[1]);
+
+        // console.log("formik inside", formik.values);
       };
     }
+    // console.log("image ", image);
     if (status === "removed") {
       formik.setFieldValue("identification_photo", "");
     }
   };
 
+  console.log("identificationImage outside", identificationImage);
+
   // receives array of files that are done uploading when submit button is clicked
   const handleSubmit = (files) => {
-    // console.log(files.map((f) => f.meta));
+    // console.log(
+    //   "handlesubmit files ",
+    //   files.map((f) => f.meta)
+    // );
   };
 
   const handleGenderChange = (e) => {
@@ -309,13 +349,15 @@ const PersonalSection = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          opacity: "0.7",
         }}
       >
-        <GridLoader color={"#c6521e"} size={50} />;
+        <ClipLoader color={"#c6521e"} size={50} />
       </div>
     );
   }
-
+  // console.log("image", image);
+  // console.log("formik", formik);
   return (
     <div>
       {/*---------------personal section -------------  */}
@@ -537,6 +579,7 @@ const PersonalSection = () => {
               // submitButtonContent=''
               multiple={true}
               maxSizeBytes="3145728"
+              classNames="dropzoneDisabled"
               accept="image/*,audio/*,video/*"
               inputWithFilesContent="Add File"
               inputContent={
@@ -552,6 +595,24 @@ const PersonalSection = () => {
                 {formik.errors.identification_photo}
               </span>
             ) : null}
+            {image?.length !== 0 &&
+              image?.map((item, index) => {
+                let arr = item.split("profile/");
+                return (
+                  <div key={item.arr}>
+                    <span className="error make-profile-er">{arr[2]}</span>{" "}
+                    <img
+                      onClick={() =>
+                        setImg(image.filter((item, ind) => ind !== index))
+                      }
+                      src={CloseIcon}
+                      alt=""
+                      className="close-img"
+                    />
+                    <br></br>
+                  </div>
+                );
+              })}
           </Col>
           <Col className="custom-gutter">
             <Row className="identification-row-gap custom-row">
