@@ -54,6 +54,7 @@ const PersonalSection = () => {
   //!filling the form values
   useEffect(() => {
     if (formData) {
+      console.log("formData", formData);
       formData?.dob &&
         formik.setFieldValue("dob", String(formData.dob)) &&
         setDateValue(new Date(formData.dob));
@@ -71,7 +72,11 @@ const PersonalSection = () => {
       formData.identification &&
         formik.setFieldValue("identification", formData.identification) &&
         formik.setFieldValue("identification_2", formData.identification_2) &&
-        !image.includes(formData.identification || formData.identification_2) &&
+        formik.setFieldValue("identification_arr", [
+          formData.identification,
+          formData.identification_2,
+        ]);
+      !image.includes(formData.identification || formData.identification_2) &&
         setImg([...image, formData.identification, formData.identification_2]);
       formData.same_address &&
         setSameAsAbove(formData.same_address) &&
@@ -86,8 +91,6 @@ const PersonalSection = () => {
         setBillingMobile(formData.billing_mobile);
     }
   }, [formData]);
-
-  // console.log("formData", formData);
 
   //!localStorage
   let login_data = localStorage.getItem("log_in_data");
@@ -107,9 +110,6 @@ const PersonalSection = () => {
       "Enter a valid Id Number."
     ),
     profile_photo: Yup.string().required("Choose a profile photo."),
-    // identification_photo: Yup.string().required(
-    //   "Identification Photo is Required"
-    // ),
     identification: Yup.string().required("Identification Photo is Required"),
     // identification_2: Yup.string().required("Identification Photo is Required"),
     house: Yup.string().required("Enter house number."),
@@ -256,7 +256,6 @@ const PersonalSection = () => {
   };
 
   const getUploadParams = ({ meta }) => {
-    // console.log("getUploadParams meta", meta);
     return { url: "https://httpbin.org/post" };
   };
 
@@ -286,19 +285,9 @@ const PersonalSection = () => {
       };
     }
 
-    console.log("image", image);
-
     if (status === "removed") {
       formik.setFieldValue("identification_photo", "");
     }
-  };
-
-  // receives array of files that are done uploading when submit button is clicked
-  const handleSubmit = (files) => {
-    // console.log(
-    //   "handlesubmit files ",
-    //   files.map((f) => f.meta)
-    // );
   };
 
   const handleGenderChange = (e) => {
