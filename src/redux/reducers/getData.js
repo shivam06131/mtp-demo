@@ -23,6 +23,10 @@ const dataReducer = (state = {}, action) => {
 
     case "GET_PERSONAL_DATA_LOADER":
       return (state = { ...state, personal_data_loader: action.payload });
+
+    case "STORE_PERSONAL_INFO_LOADER":
+      return (state = { ...state, personal_info_loader: action.payload });
+
     default:
       return state;
   }

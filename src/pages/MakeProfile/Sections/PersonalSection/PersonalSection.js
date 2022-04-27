@@ -30,6 +30,7 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { GridLoader } from "react-spinners";
 
 const PersonalSection = () => {
   const [dateValue, setDateValue] = useState();
@@ -37,21 +38,24 @@ const PersonalSection = () => {
   const [src, setSrc] = useState("");
   const [value, setValue] = useState();
   const [billingMobile, setBillingMobile] = useState();
-  // const [remember, setRemember] = useState();
   const [genderValue, setGenderValue] = useState("");
   const [sameAsAbove, setSameAsAbove] = useState("");
   const [selectedTimezone, setSelectedTimezone] = useState({});
   const [formData, setFormData] = useState();
   const [ip, setIp] = useState();
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.teacher_personal_data);
 
   useEffect(() => {
-    userData && setFormData(userData[0]?.data?.personal_information);
+    async function fun() {
+      userData && (await setFormData(userData[0]?.data?.personal_information));
+    }
+    fun();
   }, [userData]);
 
-  //filling the form values
+  //!filling the form values
   useEffect(() => {
     console.log("setFormData", formData);
     if (formData) {
@@ -85,10 +89,12 @@ const PersonalSection = () => {
 
   // console.log("formData", formData);
 
+  //!localStorage
   let login_data = localStorage.getItem("log_in_data");
   login_data = JSON.parse(login_data);
   const login_token = localStorage.getItem("login_token");
 
+  //! yup validation
   const validate = Yup.object({
     first_name: Yup.string().required("Enter your First Name"),
     last_name: Yup.string().required("Enter your Last Name"),
@@ -132,6 +138,7 @@ const PersonalSection = () => {
   useEffect(() => {
     !login_token && navigate("/");
     dispatch({ type: "GET_PERSONAL_INFORMATION" });
+    // dispatch({ type: "PERSONAL_INFO_LOADER", payload: true });
   }, []);
 
   //! setting up fields with geo location input
@@ -153,6 +160,7 @@ const PersonalSection = () => {
       .catch((error) => console.log("getGeo error ", error));
   }, []);
 
+  //! formik object
   const formik = useFormik({
     initialValues: {
       first_name: login_data ? login_data.first_name : "",
@@ -181,12 +189,14 @@ const PersonalSection = () => {
     },
     validationSchema: validate,
 
+    //! formik onsubmit
     onSubmit: (values) => {
       let make_profile_detail = {
         first_name: values.first_name,
         last_name: values.last_name,
         gender: values.gender,
         email: values.email,
+        dob: dateValue,
         id_number: String(values.id_number),
         photo: values.profile_photo,
         identification: values.identification_photo,
@@ -218,24 +228,7 @@ const PersonalSection = () => {
     },
   });
 
-  //! code reduced
-  //adding same as above data
-  // useEffect(() => {
-  //   if (sameAsAbove) {
-  //     formik.setFieldValue("billing_house", formik.values.house);
-  //     formik.setFieldValue("billing_city", formik.values.city);
-  //     formik.setFieldValue("billing_postal", formik.values.postal);
-  //     formik.setFieldValue("billing_street", formik.values.street);
-  //     formik.setFieldValue("billing_country", formik.values.country);
-  //     formik.setFieldValue(
-  //       "billing_mobile_number",
-  //       formik.values.mobile_number
-  //     );
-  //     setBillingMobile(formik.values.mobile_number);
-  //   }
-  // }, [formik.values, sameAsAbove]);
-
-  //removing same as above data
+  //! removing same as above data
   useEffect(() => {
     if (sameAsAbove === false) {
       formik.setFieldValue("billing_house", "");
@@ -271,7 +264,6 @@ const PersonalSection = () => {
       reader.onload = () => {
         formik.setFieldValue("identification_photo", reader.result);
         console.log("reader.result ", reader.result);
-        // formik.values.identification_photo = reader.result;
       };
     }
     if (status === "removed") {
@@ -293,7 +285,6 @@ const PersonalSection = () => {
   const handleImageCrop = (prev) => {
     setPreview(prev);
     formik.setFieldValue("profile_photo", prev);
-    // formik.values.profile_photo = prev;
   };
 
   const handleImageClose = () => {
@@ -301,7 +292,29 @@ const PersonalSection = () => {
     formik.setFieldValue("profile_photo", "");
   };
 
-  // console.log("formik", formik);
+  //! loading state
+  const loading_data = useSelector((state) => state.personal_info_loader);
+  useEffect(() => {
+    loading_data === false && setLoading(false);
+  }, [loading_data]);
+
+  //! rendering loader
+  if (loading) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          width: "100%",
+          backgroundColor: "#f4efe6",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <GridLoader color={"#c6521e"} size={50} />;
+      </div>
+    );
+  }
 
   return (
     <div>

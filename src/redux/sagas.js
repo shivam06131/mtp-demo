@@ -95,6 +95,7 @@ function* postMakeProfileData(action) {
 function* getPersonalInfo() {
   try {
     let token = localStorage.getItem("login_token");
+    yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: true });
     let data = yield axios.get(
       "https://api.tutorspoint.uk/api/teacher/get-personal-information",
       {
@@ -106,13 +107,17 @@ function* getPersonalInfo() {
         },
       }
     );
-    console.log("personal information ad", data);
     yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
-    yield put({ type: "GET_PERSONAL_DATA_LOADER", payload: false });
+    yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: false });
   } catch (error) {
     yield put({ type: "GET_PERSONAL_DATA_LOADER", payload: true });
     console.log("error occoured at getPersonalInfo in sagas.js");
   }
+}
+
+function* setPersonalInfoLoader(action) {
+  console.log("action", action);
+  yield put({ type: "STORE_PERSONAL_INFO_LOADER" });
 }
 
 function* mySaga() {
@@ -123,6 +128,7 @@ function* mySaga() {
   yield takeLatest("POST_LOG_IN_DATA", postLogInData);
   yield takeLatest("MAKE_PROFILE", postMakeProfileData);
   yield takeLatest("GET_PERSONAL_INFORMATION", getPersonalInfo);
+  yield takeLatest("PERSONAL_INFO_LOADER", setPersonalInfoLoader);
 }
 
 export default mySaga;

@@ -116,7 +116,7 @@ const AboutMe = () => {
                 upload video
               </button>
               <div className="video-img-wrap">
-                <img src={VideoIcon} alt="" srcset="" />
+                <img src={VideoIcon} alt="" />
               </div>
               <p className="video-description">Horizontal Video Only</p>
             </div>
