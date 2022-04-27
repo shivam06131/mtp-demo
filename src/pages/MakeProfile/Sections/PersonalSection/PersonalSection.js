@@ -79,9 +79,15 @@ const PersonalSection = () => {
       formData.postal && formik.setFieldValue("postal", formData.postal);
       formData.street && formik.setFieldValue("street", formData.street);
       formData.identification &&
-        formik.setFieldValue("identification_photo", formData.identification) &&
+        formik.setFieldValue("identification", formData.identification) &&
+        formik.setFieldValue("identification_2", formData.identification_2) &&
         !image.includes(formData.identification || formData.identification_2) &&
         setImg([...image, formData.identification, formData.identification_2]);
+      // formData.identification &&
+      //   formik.setFieldValue("identification_photo", formData.identification) &&
+      //   !image.includes(formData.identification || formData.identification_2) &&
+      //   setImg([...image, formData.identification, formData.identification_2]);
+
       // formData.identification_2 &&
       //   formik.setFieldValue("identification_2", formData.identification_2) &&
       //   setImg([...image, formData.identification_2]);
@@ -119,9 +125,11 @@ const PersonalSection = () => {
       "Enter a valid Id Number."
     ),
     profile_photo: Yup.string().required("Choose a profile photo."),
-    identification_photo: Yup.string().required(
-      "Identification Photo is Required"
-    ),
+    // identification_photo: Yup.string().required(
+    //   "Identification Photo is Required"
+    // ),
+    identification: Yup.string().required("Identification Photo is Required"),
+    // identification_2: Yup.string().required("Identification Photo is Required"),
     house: Yup.string().required("Enter house number."),
     city: Yup.string().required("Enter Valid City Name."),
     postal: Yup.number().required("Enter postal or zip code or PO Box."),
@@ -182,7 +190,9 @@ const PersonalSection = () => {
       email: login_data ? login_data.email : "",
       id_number: "",
       profile_photo: "",
+      identification_arr: [],
       identification_photo: "",
+      identification: "",
       identification_2: "",
       house: "",
       same_address: "",
@@ -212,10 +222,11 @@ const PersonalSection = () => {
         dob: dateValue,
         id_number: String(values.id_number),
         photo: values.profile_photo,
-        // identification: values.identification[0],
-        // identification_2: values.identification[1],
-        identification: identificationImage[0],
-        identification_2: identificationImage[1],
+        identification: formik.values.identification_arr[0],
+        identification_2: formik.values.identification_arr[1],
+
+        // identification: identificationImage[0],
+        // identification_2: identificationImage[1],
         // identification: values.identification_photo,
         // identification_2: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA",
 
@@ -280,15 +291,22 @@ const PersonalSection = () => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        // !identificationImage.includes(reader.result) &&
         setIdentificationImage([...identificationImage, reader.result]);
 
-        // !image.includes(meta.name) && setImg([...image, reader.result]);
+        formik.setFieldValue("identification_arr", [
+          ...formik.values.identification_arr,
+          reader.result,
+        ]);
+        // setImg([...image, reader.result]);
 
-        // formik.setFieldValue("identification", [
-        //   ...formik.values.identification,
-        //   reader.result,
-        // ]);
+        formik.setFieldValue(
+          "identification",
+          formik.values.identification_arr[0]
+        );
+        formik.setFieldValue(
+          "identification_2",
+          formik.values.identification_arr[1]
+        );
 
         // console.log("identificationImage", identificationImage);
         // formik.setFieldValue("identification_photo", reader.result);
@@ -296,17 +314,15 @@ const PersonalSection = () => {
         // identificationImage.length === 2 &&
         // formik.setFieldVale("identification", identificationImage[0]);
         // formik.setFieldVale("identification_2", identificationImage[1]);
-
-        // console.log("formik inside", formik.values);
       };
     }
-    // console.log("image ", image);
+
+    console.log("image", image);
+
     if (status === "removed") {
       formik.setFieldValue("identification_photo", "");
     }
   };
-
-  console.log("identificationImage outside", identificationImage);
 
   // receives array of files that are done uploading when submit button is clicked
   const handleSubmit = (files) => {
@@ -357,7 +373,7 @@ const PersonalSection = () => {
     );
   }
   // console.log("image", image);
-  // console.log("formik", formik);
+  console.log("formik", formik);
   return (
     <div>
       {/*---------------personal section -------------  */}
@@ -589,10 +605,9 @@ const PersonalSection = () => {
                 </p>
               }
             />
-            {formik.touched.identification_photo &&
-            formik.errors.identification_photo ? (
+            {formik.touched.identification && formik.errors.identification ? (
               <span className="error make-profile-er">
-                {formik.errors.identification_photo}
+                {formik.errors.identification}
               </span>
             ) : null}
             {image?.length !== 0 &&
