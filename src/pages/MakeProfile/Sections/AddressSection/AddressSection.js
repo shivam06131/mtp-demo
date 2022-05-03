@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import TimezoneSelect from "react-timezone-select";
 import PhoneInput from "react-phone-number-input";
+import { useSelector } from "react-redux";
 
 const AddressSection = ({
   setSameAsAbove,
@@ -11,6 +12,9 @@ const AddressSection = ({
   setSelectedTimezone,
   selectedTimezone,
 }) => {
+  const teacher_data_updated = useSelector(
+    (state) => state.teacher_data_updated
+  );
   return (
     <div className="address">
       <div className="label-span-wrap">
@@ -203,7 +207,7 @@ const AddressSection = ({
                 value={
                   sameAsAbove
                     ? formik.values.mobile_number
-                    : formik.values.billingMobile
+                    : formik.values.billing_mobile_number
                 }
                 className="react-phone"
                 onChange={(selectedOption) => {
@@ -266,6 +270,18 @@ const AddressSection = ({
           Continue
         </button>
       </div>
+      {teacher_data_updated && (
+        <p
+          style={{
+            backgroundColor: "lightGreen",
+            width: "30%",
+            padding: "5px 15px",
+            borderRadius: "5px",
+          }}
+        >
+          data was updated successfully
+        </p>
+      )}
     </div>
   );
 };

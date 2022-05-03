@@ -51,7 +51,6 @@ function* postLogInData(action) {
     } else {
       localStorage.removeItem("user_log_in_data");
     }
-
     const data = yield axios.post(
       "https://api.tutorspoint.uk/api/login",
       payload
@@ -85,6 +84,7 @@ function* postMakeProfileData(action) {
         },
       }
     );
+    yield put({ type: "TEACHER_DATA_UPDATE" });
     console.log("action recived data", data);
     // yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
   } catch (error) {

@@ -78,12 +78,16 @@ const PersonalSection = () => {
         ]);
       !image.includes(formData.identification || formData.identification_2) &&
         setImg([...image, formData.identification, formData.identification_2]);
-      formData.same_address &&
-        setSameAsAbove(formData.same_address) &&
-        formik.setFieldValue("same_address", formData.same_address) &&
-        formik.setFieldValue("billing_house", formData.billing_house_no) &&
-        formik.setFieldVale("billing_postal", formData.billing_postal) &&
-        formik.setFieldValue("billing_street", formData.billing_street) &&
+      formData.same_address && setSameAsAbove(formData.same_address);
+
+      //if same as above is false
+      formData.billing_house_no &&
+        formik.setFieldValue("billing_house", formData.billing_house_no);
+      formData.billing_postal &&
+        formik.setFieldValue("billing_postal", formData.billing_postal);
+      formData.billing_street &&
+        formik.setFieldValue("billing_street", formData.billing_street);
+      formData.billing_mobile &&
         formik.setFieldValue(
           "billing_mobile_number",
           formData.billing_mobile
@@ -253,41 +257,6 @@ const PersonalSection = () => {
     setDateValue(val);
     val = String(val);
     formik.setFieldValue("dob", val);
-  };
-
-  const getUploadParams = ({ meta }) => {
-    return { url: "https://httpbin.org/post" };
-  };
-
-  // called every time a file's `status` changes
-  const handleChangeStatus = ({ meta, file }, status) => {
-    // !image.includes(meta.name) && setImg([...image, meta.name]);
-    if (status === "done") {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        setIdentificationImage([...identificationImage, reader.result]);
-
-        formik.setFieldValue("identification_arr", [
-          ...formik.values.identification_arr,
-          reader.result,
-        ]);
-        // setImg([...image, reader.result]);
-
-        formik.setFieldValue(
-          "identification",
-          formik.values.identification_arr[0]
-        );
-        formik.setFieldValue(
-          "identification_2",
-          formik.values.identification_arr[1]
-        );
-      };
-    }
-
-    if (status === "removed") {
-      formik.setFieldValue("identification_photo", "");
-    }
   };
 
   const handleGenderChange = (e) => {

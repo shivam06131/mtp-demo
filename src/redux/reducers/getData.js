@@ -27,6 +27,9 @@ const dataReducer = (state = {}, action) => {
     case "STORE_PERSONAL_INFO_LOADER":
       return (state = { ...state, personal_info_loader: action.payload });
 
+    case "TEACHER_DATA_UPDATE":
+      return (state = { ...state, teacher_data_updated: true });
+
     default:
       return state;
   }
