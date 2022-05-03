@@ -8,9 +8,9 @@ const AppRoutes = (props) => {
 
   return (
     <>
-      {routes.map((item) => {
+      {routes.map((item, index) => {
         return (
-          <React.Fragment key={item.path}>
+          <React.Fragment key={index}>
             {item.auth ? (
               <Routes>
                 <Route

@@ -54,11 +54,7 @@ const Homepage = () => {
     window.addEventListener("scroll", () => {
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
-      console.log(
-        "scrollTop , offset",
-        scrollTop,
-        document.getElementById("tutor-search").offsetTop
-      );
+
       if (scrollTop > document.getElementById("tutor-search").offsetTop - 150) {
         setDisplaySearchTwo(true);
       } else {
@@ -69,8 +65,6 @@ const Homepage = () => {
       window.removeEventListener("scroll", () => {});
     };
   }, []);
-
-  console.log("one , two", display, displaySearchTwo);
 
   //video
   useEffect(() => {

@@ -23,14 +23,10 @@ import "../../../../layout/navbar/Navbar.css";
 import "./signInRight.css";
 
 const SignInRight = () => {
-  const login_token = localStorage.getItem("login_token");
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
   const [recaptchaValue, setRecaptchaValue] = useState(false);
-  const navigate = useNavigate();
   const sigin_message = useSelector((state) => state.sign_in_data);
-
-  console.log("sigin_message", sigin_message && sigin_message[0].data.status);
 
   // useEffect(() => {
   //   login_token && navigate("/makeProfile");
@@ -43,7 +39,7 @@ const SignInRight = () => {
       setRecaptchaValue(true);
     }
   };
-  console.log("values", value);
+
   const options = [
     { value: "facebook", label: "facebook" },
     { value: "instagram", label: "instagram" },

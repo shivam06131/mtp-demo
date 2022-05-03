@@ -67,7 +67,7 @@ const IdentificationSection = ({ formik, image, setImg }) => {
             onChangeStatus={handleChangeStatus}
             multiple={true}
             maxSizeBytes="3145728"
-            classNames="dropzoneDisabled"
+            // disabled={formik?.values?.house ? true : false}
             accept="image/*,audio/*,video/*"
             inputWithFilesContent="Add File"
             inputContent={
@@ -84,10 +84,13 @@ const IdentificationSection = ({ formik, image, setImg }) => {
           ) : null}
           {image?.length !== 0 &&
             image?.map((item, index) => {
-              let arr = item.split("profile/");
+              let arr = item?.split("profile/");
+              if (item === null) {
+                return null;
+              }
               return (
-                <div key={item.arr}>
-                  <span className="error make-profile-er">{arr[2]}</span>{" "}
+                <div key={index}>
+                  <span className="error make-profile-er">{arr && arr[2]}</span>{" "}
                   <img
                     onClick={() =>
                       setImg(image.filter((item, ind) => ind !== index))

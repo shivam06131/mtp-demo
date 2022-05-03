@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accordion } from "react-bootstrap";
 import "./aboutMe.css";
 import "../PersonalSection/PersonalSection.css";
@@ -9,8 +9,30 @@ import infoIcon from "../../assets/personalSection/info_icon.png";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import VideoIcon from "../../assets/aboutMe/face.png";
+import Select from "react-select";
+import { useFormik } from "formik";
 
 const AboutMe = () => {
+  const [taglineCount, setTaglineCount] = useState(50);
+  const options = [
+    { value: "facebook", label: "facebook" },
+    { value: "instagram", label: "instagram" },
+    { value: "other", label: "other" },
+  ];
+  const formik = useFormik({
+    initialValues: {
+      tagline: "",
+      select: "",
+      biography: "",
+      video_biography: "",
+    },
+    onSubmit: (values) => {
+      console.log("Values", values);
+    },
+  });
+
+  // console.log("formik", formik.values);
+
   return (
     <div>
       <h6 className="heading">Tag Line</h6>
@@ -28,16 +50,28 @@ const AboutMe = () => {
                   <Form.Control
                     className="input-att form-control"
                     type="text"
-                    id="tag_line"
-                    name="tag_line"
-                    // onChange={formik.handleChange}
-                    // value={formik.values.first_name}
+                    id="tagline"
+                    name="tagline"
+                    disabled={formik.values.select ? true : false}
+                    onChange={(e) => {
+                      // formik.values.tagline = e.target.value;
+                      console.log(
+                        "formik.values.tagline.length",
+                        formik.values.tagline.length
+                      );
+                      formik.setFieldValue("tagline", e.target.value);
+                      let word = e.target.value;
+                      console.log("word", word);
+                      setTaglineCount(50 - word.length);
+                      // formik.handleChange;
+                    }}
+                    value={formik.values.tagline}
                   />
                 </Form.Group>
               </Form>
             </div>
             <p className="about-sub-requirements space-top">
-              Maximum 50 characters.
+              Maximum {taglineCount} characters.
             </p>
             <p className="about-sub-requirements">
               Your tagline should be a catchy summary promoting yourself.
@@ -50,13 +84,19 @@ const AboutMe = () => {
               <Form>
                 <Form.Group className="form-group">
                   <Form.Label className="input-label">Select</Form.Label>
-                  <Form.Control
-                    className="input-att form-control"
-                    type="text"
-                    id="first_name"
-                    name="first_name"
-                    // onChange={formik.handleChange}
-                    // value={formik.values.first_name}
+                  <Select
+                    id="aboutUs"
+                    name="aboutUs"
+                    isClearable={true}
+                    placeholder="Select..."
+                    className="select-new target2"
+                    isDisabled={formik.values.tagline.length > 0 ? true : false}
+                    options={options}
+                    // menuIsOpen={true}
+                    onChange={(selectedOption) => {
+                      formik.setFieldValue("select", selectedOption.value);
+                      // formik.values.select = selectedOption.value;
+                    }}
                   />
                 </Form.Group>
               </Form>
@@ -83,7 +123,7 @@ const AboutMe = () => {
               <Form>
                 <Form.Group className="form-group">
                   <Form.Control
-                    className="input-att form-control"
+                    className="txt-area input-att form-control "
                     type="textarea"
                     as="textarea"
                     rows={3}

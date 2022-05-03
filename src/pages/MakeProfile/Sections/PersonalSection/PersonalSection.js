@@ -31,15 +31,17 @@ const PersonalSection = () => {
   const [preview, setPreview] = useState(profilePicPrev);
   const [src, setSrc] = useState("");
   const [value, setValue] = useState();
+  const [ip, setIp] = useState();
+  const [selectedTimezone, setSelectedTimezone] = useState({});
+
   const [billingMobile, setBillingMobile] = useState();
   const [genderValue, setGenderValue] = useState("");
   const [sameAsAbove, setSameAsAbove] = useState("");
-  const [selectedTimezone, setSelectedTimezone] = useState({});
   const [formData, setFormData] = useState();
-  const [ip, setIp] = useState();
   const [loading, setLoading] = useState(true);
   const [image, setImg] = useState([]);
-  const [identificationImage, setIdentificationImage] = useState([]);
+
+  //! imported function
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.teacher_personal_data);
@@ -54,7 +56,6 @@ const PersonalSection = () => {
   //!filling the form values
   useEffect(() => {
     if (formData) {
-      console.log("formData", formData);
       formData?.dob &&
         formik.setFieldValue("dob", String(formData.dob)) &&
         setDateValue(new Date(formData.dob));
@@ -150,7 +151,6 @@ const PersonalSection = () => {
   //! setting up fields with geo location input
   useEffect(() => {
     setValue(login_data.user_profile.mobile);
-    // setValue("+" + login_data.user_profile.mobile);
     //! Get geolocation of a user's browser.
     getGeo()
       .then((response) => {

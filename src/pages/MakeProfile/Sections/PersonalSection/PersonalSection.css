@@ -19,7 +19,8 @@
 
 .acc-header .accordion-button {
   height: 44px;
-  background-color: #c6521e;
+  /* background-color: #c6521e; */
+  background-color: #d6d6d6;
   border-radius: 0px !important;
   color: #ffffff;
   font-size: 16px;
@@ -32,7 +33,7 @@
   font-size: 16px;
   line-height: 21px;
   height: 44px;
-  background-color: #c6521e;
+  background-color: #d6d6d6;
   text-transform: uppercase;
 }
 .acc-header .accordion-button:focus {
@@ -560,4 +561,16 @@
 .close-img {
   height: 21px;
   margin-left: 5px;
+}
+.change-background .acc-header .accordion-button:not(.collapsed) {
+  background-color: #c6521e !important;
+}
+.change-background .acc-header .accordion-button {
+  background-color: #c6521e !important;
+}
+.active-acc .acc-header .accordion-button:not(.collapsed) {
+  background-color: #c6521e !important;
+}
+.active-acc .acc-header .accordion-button {
+  background-color: #c6521e !important;
 }

@@ -85,6 +85,8 @@ function* postMakeProfileData(action) {
       }
     );
     yield put({ type: "TEACHER_DATA_UPDATE" });
+    yield put({ type: "UPDATE_ACCORDION_STATUS", payload: "about_section" });
+    yield put({ type: "OPEN_NEXT_ACCORDION", payload: "about_section" });
     console.log("action recived data", data);
     // yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
   } catch (error) {
@@ -109,6 +111,7 @@ function* getPersonalInfo() {
     );
     yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
     yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: false });
+    yield put({ type: "UPDATE_ACCORDION_STATUS", payload: "about_section" });
   } catch (error) {
     yield put({ type: "GET_PERSONAL_DATA_LOADER", payload: true });
     console.log("error occoured at getPersonalInfo in sagas.js");

@@ -1,4 +1,4 @@
-const dataReducer = (state = {}, action) => {
+const dataReducer = (state = { acc_status: [] }, action) => {
   switch (action.type) {
     // case "DATA_RECEIVED":
     //   return (state = [action.payload]);
@@ -29,6 +29,12 @@ const dataReducer = (state = {}, action) => {
 
     case "TEACHER_DATA_UPDATE":
       return (state = { ...state, teacher_data_updated: true });
+
+    case "UPDATE_ACCORDION_STATUS":
+      return { ...state, acc_status: [...state.acc_status, action.payload] };
+
+    case "OPEN_NEXT_ACCORDION":
+      return { ...state, open_next_accordion: action.payload };
 
     default:
       return state;

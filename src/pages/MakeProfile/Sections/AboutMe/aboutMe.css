@@ -55,3 +55,30 @@
 .paste-vid-label-spacing {
   padding-top: 6px;
 }
+.select-new.css-b62m3t-container .css-1s2u09g-control {
+  border-radius: 0px !important;
+  min-height: 40px !important;
+}
+
+.select-new.css-b62m3t-container .css-1pahdxg-control {
+  border-radius: 0px !important;
+  min-height: 40px !important;
+}
+.select-new.css-b62m3t-container .css-26l3qy-menu {
+  border-radius: 0px;
+}
+.form-group .txt-area {
+  resize: none;
+  min-height: 200px !important;
+}
+.form-group .select-new .css-1insrsq-control {
+  background-color: #d6d6d6;
+  border-radius: 0px;
+}
+.form-group
+  .select-new
+  .css-1insrsq-control
+  .css-1hb7zxy-IndicatorsContainer
+  .css-109onse-indicatorSeparator {
+  display: none;
+}
