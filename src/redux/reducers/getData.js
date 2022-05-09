@@ -44,6 +44,11 @@ const dataReducer = (state = { acc_status: [] }, action) => {
     case "OPEN_NEXT_ACCORDION":
       return { ...state, open_next_accordion: action.payload };
 
+    case "UPDATE_ABOUT_ME_INFO":
+      return { ...state, about_me_info: action.payload };
+
+    case "STORE_ABOUT_ME":
+      return { ...state, about_me_data: action.payload };
     default:
       return state;
   }

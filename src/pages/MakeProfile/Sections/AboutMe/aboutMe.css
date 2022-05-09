@@ -27,14 +27,16 @@
 }
 .full-row {
   min-width: 100%;
+  position: relative;
 }
 
 /* ------------------ video-biography -section ----------- */
 
-.video-graphy {
+.video-grapy {
   padding: 35px 0px;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .video-description {
   font-size: 12px;
@@ -55,6 +57,7 @@
 }
 .paste-vid-label-spacing {
   padding-top: 6px;
+  padding-bottom: 16px;
 }
 .select-new.css-b62m3t-container .css-1s2u09g-control {
   border-radius: 0px !important;
@@ -156,4 +159,15 @@ input[type="text"]:disabled {
 }
 .txt-area {
   color: #999999 !important;
+}
+.about-middle {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  top: 40%;
+  width: 45px !important;
+  color: #999999;
+}
+.row-relative {
+  position: relative;
 }

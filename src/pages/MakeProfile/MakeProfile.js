@@ -31,7 +31,6 @@ const MakeProfile = () => {
     // !currentAccordion.includes(lastOpened) && setCurrentAccordion(lastOpened);
     setAccordionStatus(JSON.parse(localStorage.getItem("accordionStatus")));
   }, []);
-  console.log("accordionStatus", accordionStatus);
 
   useEffect(() => {
     let local_accordionStatus_data = localStorage.getItem("accordionStatus");
@@ -60,8 +59,6 @@ const MakeProfile = () => {
     setCurrentAccordion((prev) => (prev !== current ? current : ""));
     localStorage.setItem("current_accordion", current);
   };
-
-  console.log("currentAccordion", currentAccordion);
 
   return (
     <div>

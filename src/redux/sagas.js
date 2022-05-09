@@ -1,6 +1,18 @@
 import axios from "axios";
 import { call, put, takeLatest } from "redux-saga/effects";
 import * as API from "../Api/index";
+
+let token = localStorage.getItem("login_token");
+const instance = axios.create({
+  baseURL: "https://api.tutorspoint.uk/api",
+  headers: {
+    Authorization: `Bearer ${JSON.parse(token)}`,
+    "Access-Control-Allow-Origin": "*",
+    "content-type": "text/json",
+    allow: "*",
+  },
+});
+
 function* fetchData(action) {
   try {
     const data = yield call(API.getData);
@@ -117,17 +129,19 @@ function* getPersonalInfo() {
   try {
     let token = localStorage.getItem("login_token");
     yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: true });
-    let data = yield axios.get(
-      "https://api.tutorspoint.uk/api/teacher/get-personal-information",
-      {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-          "Access-Control-Allow-Origin": "*",
-          "content-type": "text/json",
-          allow: "*",
-        },
-      }
-    );
+    let data = yield instance.get("/teacher/get-personal-information");
+
+    // let data = yield axios.get(
+    //   "https://api.tutorspoint.uk/api/teacher/get-personal-information",
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${JSON.parse(token)}`,
+    //       "Access-Control-Allow-Origin": "*",
+    //       "content-type": "text/json",
+    //       allow: "*",
+    //     },
+    //   }
+    // );
     yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
     yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: false });
     yield put({ type: "UPDATE_ACCORDION_STATUS", payload: "about_section" });
@@ -142,6 +156,24 @@ function* setPersonalInfoLoader(action) {
   yield put({ type: "STORE_PERSONAL_INFO_LOADER" });
 }
 
+function* updateAboutMe(action) {
+  try {
+    let data = yield instance.post("/teacher/update-about-me", action.payload);
+    yield put({ type: "UPDATE_ABOUT_ME_INFO", data });
+  } catch (error) {
+    console.log("error at updateAboutMe in saga.js", error);
+  }
+}
+
+function* getAboutMe() {
+  try {
+    let data = yield instance.get("/teacher/get-about-me");
+    yield put({ type: "STORE_ABOUT_ME", payload: data });
+  } catch (error) {
+    console.log("error at getAboutMe ", error);
+  }
+}
+
 function* mySaga() {
   yield takeLatest("USER_FETCH_REQUESTED", fetchData);
   yield takeLatest("GET_VIDEO", getVideo);
@@ -151,6 +183,8 @@ function* mySaga() {
   yield takeLatest("MAKE_PROFILE", postMakeProfileData);
   yield takeLatest("GET_PERSONAL_INFORMATION", getPersonalInfo);
   yield takeLatest("PERSONAL_INFO_LOADER", setPersonalInfoLoader);
+  yield takeLatest("UPDATE_ABOUT_ME", updateAboutMe);
+  yield takeLatest("GET_ABOUT_ME", getAboutMe);
 }
 
 export default mySaga;
