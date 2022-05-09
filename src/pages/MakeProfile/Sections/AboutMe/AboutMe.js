@@ -18,10 +18,36 @@ import { useDispatch, useSelector } from "react-redux";
 const AboutMe = () => {
   const [taglineCount, setTaglineCount] = useState(50);
   const [textFieldCount, setTextFieldCount] = useState(700);
+  const [selectValue, setSelectValue] = useState("");
+  const [aboutMe, setAboutMe] = useState("");
+
   const dispatch = useDispatch();
   const about_me_data = useSelector((state) => state.about_me_data);
 
-  console.log("about_me_data", about_me_data);
+  useEffect(() => {
+    about_me_data && setAboutMe(about_me_data.data.about_me);
+  }, [about_me_data]);
+
+  useEffect(() => {
+    console.log("filling data", aboutMe);
+    aboutMe &&
+      formik.setFieldValue(
+        "tagline",
+        aboutMe.own_tagline === null ? "" : aboutMe.own_tagline
+      ) &&
+      formik.setFieldValue(
+        "select",
+        aboutMe.tagline === null ? "" : aboutMe.tagline
+      ) &&
+      setSelectValue(aboutMe.tagline) &&
+      formik.setFieldValue("biography", aboutMe.biography) &&
+      formik.setFieldValue("video_biography", aboutMe.video_biography) &&
+      formik.setFieldValue(
+        "video_link",
+        aboutMe.video_biography_url === null ? "" : aboutMe.video_biography_url
+      );
+  }, [aboutMe]);
+  console.log("about me", aboutMe);
 
   useEffect(() => {
     dispatch({ type: "GET_ABOUT_ME" });
@@ -53,6 +79,7 @@ const AboutMe = () => {
     ["tagline", "select"]
   );
 
+  // console.log("aboutMe", aboutMe);
   const formik = useFormik({
     initialValues: {
       tagline: "",
@@ -77,6 +104,8 @@ const AboutMe = () => {
     },
     validationSchema: schema,
   });
+
+  console.log("formik ", formik);
 
   return (
     <div>
@@ -137,16 +166,18 @@ const AboutMe = () => {
                     id="aboutUs"
                     name="aboutUs"
                     isClearable
-                    placeholder="Select..."
                     className="select-new target2"
                     isDisabled={
                       formik.values.tagline?.length > 0 ? true : false
                     }
+                    value={formik.values.select}
                     options={options}
                     // menuIsOpen={true}
                     onChange={(selectedOption) => {
+                      setSelectValue(selectedOption?.value);
                       formik.setFieldValue("select", selectedOption?.value);
                     }}
+                    placeholder="Select..."
                   />
                 </Form.Group>
               </Form>
@@ -284,7 +315,7 @@ const AboutMe = () => {
                     className="custom-input-wrap"
                     style={{
                       backgroundColor:
-                        formik.values.video_biography.length > 0
+                        formik.values.video_biography?.length > 0
                           ? "#d3d3d3"
                           : "",
                     }}
@@ -297,7 +328,7 @@ const AboutMe = () => {
                       id=""
                       value={formik.values.video_link}
                       disabled={
-                        formik.values.video_biography.length > 0 ? true : false
+                        formik.values.video_biography?.length > 0 ? true : false
                       }
                       onChange={(e) => {
                         formik.setFieldValue("video_link", e.target.value);
