@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Accordion } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import AboutMe from "./Sections/AboutMe/AboutMe";
 import AboutMe from "./Sections/AboutMe/AboutMe";
 import PersonalSection from "./Sections/PersonalSection/PersonalSection";
@@ -11,32 +11,49 @@ const MakeProfile = () => {
   const [currentAccordion, setCurrentAccordion] = useState("personal_section");
   const acc_status = useSelector((state) => state.acc_status);
   const open_next_accordion = useSelector((state) => state.open_next_accordion);
-  // const [lastOpened, setLastOpened] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch({ type: "UPDATE_ACCORDION_STATUS", payload: "personal_section" });
+    dispatch({ type: "GET_PERSONAL_INFORMATION" });
+
     let lastOpened = localStorage.getItem("current_accordion");
-    console.log("lastOpened === undefined", lastOpened);
+
     !lastOpened &&
       localStorage.setItem("current_accordion", "personal_section");
 
     lastOpened = localStorage.getItem("current_accordion");
-    setCurrentAccordion(lastOpened);
+
+    !currentAccordion.includes(lastOpened) && setCurrentAccordion(lastOpened);
+    setAccordionStatus(JSON.parse(localStorage.getItem("accordionStatus")));
+    // console.log(
+    //   "accordionStatus afdsafd",
+    //   JSON.parse(localStorage.getItem("accordionStatus"))
+    // )
   }, []);
 
   useEffect(() => {
-    acc_status &&
-      !accordionStatus.includes(acc_status) &&
-      setAccordionStatus([...accordionStatus, acc_status].flat(2));
+    let local_accordionStatus_data = localStorage.getItem("accordionStatus");
+
+    !local_accordionStatus_data?.includes(acc_status) &&
+      localStorage.setItem(
+        "accordionStatus",
+        JSON.stringify(
+          [...accordionStatus, ...acc_status].flat(2).filter((item, index) => {
+            return accordionStatus.indexOf(item) !== index;
+          })
+        )
+      );
+    !accordionStatus.includes(...acc_status) && setAccordionStatus(acc_status);
   }, [acc_status]);
+
+  // console.log("accordionStatus", accordionStatus);
 
   useEffect(() => {
     open_next_accordion && setCurrentAccordion(open_next_accordion);
     open_next_accordion &&
       localStorage.setItem("current_accordion", open_next_accordion);
   }, [open_next_accordion]);
-
-  // console.log("accordionStatus", accordionStatus);
-  // console.log("open_next_accordion", open_next_accordion);
 
   const handleCurrentAccordion = (current) => {
     setCurrentAccordion((prev) => (prev !== current ? current : ""));
@@ -60,7 +77,7 @@ const MakeProfile = () => {
               <Accordion.Header
                 className="acc-header"
                 onClick={(e) => {
-                  if (accordionStatus.includes("personal_section")) {
+                  if (acc_status?.includes("personal_section")) {
                     handleCurrentAccordion("personal_section");
                   }
                 }}
@@ -75,16 +92,17 @@ const MakeProfile = () => {
             <Accordion.Item
               eventKey="about_section"
               className={`acc-item item-space  ${
-                accordionStatus.includes("about_section") && "change-background"
+                (acc_status?.includes("about_section") || currentAccordion) &&
+                "change-background"
               }`}
-              disabled={!accordionStatus.includes("about_section")}
+              disabled={!acc_status?.includes("about_section")}
             >
               <Accordion.Header
                 className="acc-header"
                 onClick={(e) => {
                   console.log("clicked");
                   e.stopPropagation();
-                  if (accordionStatus.includes("about_section")) {
+                  if (acc_status?.includes("about_section")) {
                     handleCurrentAccordion("about_section");
                   }
                 }}
@@ -99,16 +117,16 @@ const MakeProfile = () => {
             <Accordion.Item
               eventKey="third_section"
               className={`acc-item item-space  ${
-                accordionStatus.includes("third_section") && "change-background"
+                acc_status?.includes("third_section") && "change-background"
               }`}
-              disabled={!accordionStatus.includes("third_section")}
+              disabled={!acc_status?.includes("third_section")}
             >
               <Accordion.Header
                 className="acc-header"
                 onClick={(e) => {
                   console.log("clicked");
                   e.stopPropagation();
-                  if (accordionStatus.includes("third_section")) {
+                  if (acc_status?.includes("third_section")) {
                     setCurrentAccordion((prev) =>
                       prev !== "third_section" ? "third_section" : ""
                     );

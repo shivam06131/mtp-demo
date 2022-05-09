@@ -31,7 +31,12 @@ const dataReducer = (state = { acc_status: [] }, action) => {
       return (state = { ...state, teacher_data_updated: true });
 
     case "UPDATE_ACCORDION_STATUS":
-      return { ...state, acc_status: [...state.acc_status, action.payload] };
+      return (state = {
+        ...state,
+        acc_status: !state.acc_status.includes(action.payload)
+          ? [...state.acc_status, action.payload]
+          : [...state.acc_status],
+      });
 
     case "OPEN_NEXT_ACCORDION":
       return { ...state, open_next_accordion: action.payload };

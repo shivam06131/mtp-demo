@@ -84,10 +84,14 @@ function* postMakeProfileData(action) {
         },
       }
     );
+    console.log("post request was successfull");
     yield put({ type: "TEACHER_DATA_UPDATE" });
+    console.log("done one");
     yield put({ type: "UPDATE_ACCORDION_STATUS", payload: "about_section" });
+    console.log("done two");
     yield put({ type: "OPEN_NEXT_ACCORDION", payload: "about_section" });
-    console.log("action recived data", data);
+    console.log("done three");
+    // console.log("action recived data", data);
     // yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
   } catch (error) {
     console.log("error occured at postMakeProfileData in saga.js");

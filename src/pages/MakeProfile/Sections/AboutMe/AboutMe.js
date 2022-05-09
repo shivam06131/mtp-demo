@@ -11,9 +11,11 @@ import Tooltip from "react-bootstrap/Tooltip";
 import VideoIcon from "../../assets/aboutMe/face.png";
 import Select from "react-select";
 import { useFormik } from "formik";
+import Dropzone from "react-dropzone-uploader";
 
 const AboutMe = () => {
   const [taglineCount, setTaglineCount] = useState(50);
+  const [textFieldCount, setTextFieldCount] = useState(700);
   const options = [
     { value: "facebook", label: "facebook" },
     { value: "instagram", label: "instagram" },
@@ -31,7 +33,9 @@ const AboutMe = () => {
     },
   });
 
-  // console.log("formik", formik.values);
+  const handleChangeStatus = () => {
+    console.log("handleChangeStatus triggered in aboutme");
+  };
 
   return (
     <div>
@@ -54,14 +58,8 @@ const AboutMe = () => {
                     name="tagline"
                     disabled={formik.values.select ? true : false}
                     onChange={(e) => {
-                      // formik.values.tagline = e.target.value;
-                      console.log(
-                        "formik.values.tagline.length",
-                        formik.values.tagline.length
-                      );
                       formik.setFieldValue("tagline", e.target.value);
                       let word = e.target.value;
-                      console.log("word", word);
                       setTaglineCount(50 - word.length);
                       // formik.handleChange;
                     }}
@@ -87,15 +85,14 @@ const AboutMe = () => {
                   <Select
                     id="aboutUs"
                     name="aboutUs"
-                    isClearable={true}
+                    isClearable
                     placeholder="Select..."
                     className="select-new target2"
                     isDisabled={formik.values.tagline.length > 0 ? true : false}
                     options={options}
                     // menuIsOpen={true}
                     onChange={(selectedOption) => {
-                      formik.setFieldValue("select", selectedOption.value);
-                      // formik.values.select = selectedOption.value;
+                      formik.setFieldValue("select", selectedOption?.value);
                     }}
                   />
                 </Form.Group>
@@ -120,14 +117,25 @@ const AboutMe = () => {
           <Col className="custom-gutter">
             <div className="input-field input-wrapper full-row">
               {/* --------------------- text area input -------------*/}
-              <Form>
+              <Form className="remaining-text-wrap">
                 <Form.Group className="form-group">
                   <Form.Control
+                    id="aboutUs"
+                    name="aboutUs"
                     className="txt-area input-att form-control "
                     type="textarea"
                     as="textarea"
                     rows={3}
+                    value={formik.values.biography}
+                    onChange={(e) => {
+                      formik.setFieldValue("biography", e.target.value);
+                      let word = e.target.value;
+                      setTextFieldCount(700 - word.length);
+                    }}
                   />
+                  <p className="remaining-text">
+                    {textFieldCount} characters remaining
+                  </p>
                 </Form.Group>
               </Form>
             </div>
@@ -155,6 +163,19 @@ const AboutMe = () => {
               <button className="button-primary custom-property">
                 upload video
               </button>
+              {/*     <div>
+                <Dropzone
+                  PreviewComponent={null}
+                  // SubmitButtonComponent={null}
+                  onChangeStatus={handleChangeStatus}
+                  multiple={true}
+                  // InputComponent={null}
+                  maxSizeBytes="3145728"
+                  accept="image/*,audio/*,video/*"
+                  inputWithFilesContent="Add File"
+                  inputContent={<p className="drag-info">Upload Video</p>}
+                />
+              </div>*/}
               <div className="video-img-wrap">
                 <img src={VideoIcon} alt="" />
               </div>

@@ -71,6 +71,7 @@
   resize: none;
   min-height: 200px !important;
 }
+
 .form-group .select-new .css-1insrsq-control {
   background-color: #d6d6d6;
   border-radius: 0px;
@@ -82,3 +83,50 @@
   .css-109onse-indicatorSeparator {
   display: none;
 }
+.remaining-text-wrap {
+  position: relative;
+}
+.remaining-text {
+  position: absolute;
+  padding: 0px 8px 3px 0px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #999;
+  right: 0px;
+  bottom: 0px;
+  margin: 0px;
+}
+.bio-low-wrap .dzu-dropzone {
+  letter-spacing: 0.6px;
+  color: #ffffff !important;
+  text-transform: uppercase;
+  opacity: 1;
+  background-color: #c6521e;
+  padding: 9px 27px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-top-right-radius: 37px;
+  border-bottom-right-radius: 37px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  font-family: "solitaire-mvb-pro";
+  overflow: hidden;
+  width: 147px;
+  min-height: 34px;
+}
+.bio-low-wrap .dzu-dropzone .drag-info {
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+  margin: 0px;
+}
+/* .bio-low-wrap .dzu-dropzone .dzu-previewContainer {
+  display: none;
+}
+.bio-low-wrap .dzu-dropzone .dzu-inputLabelWithFiles {
+  display: none;
+} */
