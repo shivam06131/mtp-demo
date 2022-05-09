@@ -13,12 +13,15 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Dropzone from "react-dropzone-uploader";
 import chainImage from "../../assets/aboutMe/chain.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const AboutMe = () => {
   const [taglineCount, setTaglineCount] = useState(50);
   const [textFieldCount, setTextFieldCount] = useState(700);
   const dispatch = useDispatch();
+  const about_me_data = useSelector((state) => state.about_me_data);
+
+  console.log("about_me_data", about_me_data);
 
   useEffect(() => {
     dispatch({ type: "GET_ABOUT_ME" });
