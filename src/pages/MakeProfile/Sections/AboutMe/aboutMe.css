@@ -3,6 +3,7 @@
   line-height: 18px;
   color: #999999;
   margin-bottom: 0px;
+  font-weight: 500;
 }
 .space-top {
   padding-top: 6px;
@@ -92,6 +93,7 @@
   font-size: 12px;
   line-height: 18px;
   color: #999;
+  font-weight: 500;
   right: 0px;
   bottom: 0px;
   margin: 0px;
@@ -130,3 +132,28 @@
 .bio-low-wrap .dzu-dropzone .dzu-inputLabelWithFiles {
   display: none;
 } */
+.hidden-input {
+  display: none;
+}
+.custom-input-wrap {
+  background-color: white;
+}
+.custom-input-wrap img {
+  padding: 0px 8px;
+}
+.custom-input {
+  width: 92%;
+  border: none;
+  height: 40px;
+  padding: 3px;
+  outline: none;
+}
+input[type="text"]:disabled {
+  background-color: #d3d3d3;
+}
+.button-hover:hover {
+  color: white !important;
+}
+.txt-area {
+  color: #999999 !important;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Accordion } from "react-bootstrap";
+import { Accordion, FormControl, InputGroup } from "react-bootstrap";
 import "./aboutMe.css";
 import "../PersonalSection/PersonalSection.css";
 import Row from "react-bootstrap/Row";
@@ -12,10 +12,12 @@ import VideoIcon from "../../assets/aboutMe/face.png";
 import Select from "react-select";
 import { useFormik } from "formik";
 import Dropzone from "react-dropzone-uploader";
+import chainImage from "../../assets/aboutMe/chain.png";
 
 const AboutMe = () => {
   const [taglineCount, setTaglineCount] = useState(50);
   const [textFieldCount, setTextFieldCount] = useState(700);
+  const [disableUploadVideo, setDisableUploadVideo] = useState(false);
   const options = [
     { value: "facebook", label: "facebook" },
     { value: "instagram", label: "instagram" },
@@ -27,6 +29,7 @@ const AboutMe = () => {
       select: "",
       biography: "",
       video_biography: "",
+      video_link: "",
     },
     onSubmit: (values) => {
       console.log("Values", values);
@@ -36,6 +39,8 @@ const AboutMe = () => {
   const handleChangeStatus = () => {
     console.log("handleChangeStatus triggered in aboutme");
   };
+
+  console.log("formik ", formik);
 
   return (
     <div>
@@ -160,9 +165,31 @@ const AboutMe = () => {
               Choose a video file to upload.
             </label>
             <div className="bio-low-wrap">
-              <button className="button-primary custom-property">
+              <label
+                for="files"
+                className={
+                  `button-primary custom-property ` +
+                  (formik.values.video_link.length > 0 ? "button-hover" : "")
+                }
+                // className="button-primary custom-property"
+                style={{
+                  backgroundColor:
+                    formik.values.video_link.length > 0 ? "#d3d3d3" : "",
+                }}
+              >
                 upload video
-              </button>
+              </label>
+              {!formik.values.video_link.length > 0 && (
+                <input
+                  id="files"
+                  type="file"
+                  className="hidden-input"
+                  value={formik.values.video_biography}
+                  onChange={(e) => {
+                    formik.setFieldValue("video_biography", e.target.value);
+                  }}
+                />
+              )}
               {/*     <div>
                 <Dropzone
                   PreviewComponent={null}
@@ -189,12 +216,50 @@ const AboutMe = () => {
                   <Form.Label className="input-label">
                     Paste a link to your video
                   </Form.Label>
-                  <Form.Control className="input-att" type="text" id="house" />
+
+                  {/* <img src={chainImage} alt="" />
+                  <Form.Control className="input-att" type="text" id="house" /> */}
+                  <div
+                    className="custom-input-wrap"
+                    style={{
+                      backgroundColor:
+                        formik.values.video_biography.length > 0
+                          ? "#d3d3d3"
+                          : "",
+                    }}
+                  >
+                    <img src={chainImage} alt="" srcset="" />
+                    <input
+                      className="custom-input"
+                      type="text"
+                      name=""
+                      id=""
+                      value={formik.values.video_link}
+                      disabled={
+                        formik.values.video_biography.length > 0 ? true : false
+                      }
+                      onChange={(e) => {
+                        formik.setFieldValue("video_link", e.target.value);
+                      }}
+                    />
+                  </div>
                   <Form.Label className="input-label paste-vid-label-spacing">
                     Learn how to upload videos to YouTube or Vimeo
                   </Form.Label>
                 </Form.Group>
               </Form>
+              {/* <InputGroup isDisabled={true} className="mb-3">
+                <InputGroup.Text id="basic-addon1" className="form-group">
+                  <img src={chainImage} alt="" srcset="" />
+                </InputGroup.Text>
+                <FormControl
+                  aria-describedby="basic-addon1"
+                  value={formik.values.video_link}
+                  onChange={(e) => {
+                    formik.setFieldValue("video_link", e.target.value);
+                  }}
+                />
+              </InputGroup> */}
             </div>
           </Col>
         </Row>

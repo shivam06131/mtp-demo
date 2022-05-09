@@ -8,15 +8,12 @@ import "./Sections/PersonalSection/PersonalSection.css";
 
 const MakeProfile = () => {
   const [accordionStatus, setAccordionStatus] = useState(["personal_section"]);
-  const [currentAccordion, setCurrentAccordion] = useState("personal_section");
+  const [currentAccordion, setCurrentAccordion] = useState();
   const acc_status = useSelector((state) => state.acc_status);
   const open_next_accordion = useSelector((state) => state.open_next_accordion);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "UPDATE_ACCORDION_STATUS", payload: "personal_section" });
-    dispatch({ type: "GET_PERSONAL_INFORMATION" });
-
     let lastOpened = localStorage.getItem("current_accordion");
 
     !lastOpened &&
@@ -24,13 +21,17 @@ const MakeProfile = () => {
 
     lastOpened = localStorage.getItem("current_accordion");
 
-    !currentAccordion.includes(lastOpened) && setCurrentAccordion(lastOpened);
+    lastOpened
+      ? setCurrentAccordion(lastOpened)
+      : setCurrentAccordion("personal_section");
+
+    dispatch({ type: "UPDATE_ACCORDION_STATUS", payload: "personal_section" });
+    dispatch({ type: "GET_PERSONAL_INFORMATION" });
+
+    // !currentAccordion.includes(lastOpened) && setCurrentAccordion(lastOpened);
     setAccordionStatus(JSON.parse(localStorage.getItem("accordionStatus")));
-    // console.log(
-    //   "accordionStatus afdsafd",
-    //   JSON.parse(localStorage.getItem("accordionStatus"))
-    // )
   }, []);
+  console.log("accordionStatus", accordionStatus);
 
   useEffect(() => {
     let local_accordionStatus_data = localStorage.getItem("accordionStatus");
@@ -59,6 +60,8 @@ const MakeProfile = () => {
     setCurrentAccordion((prev) => (prev !== current ? current : ""));
     localStorage.setItem("current_accordion", current);
   };
+
+  console.log("currentAccordion", currentAccordion);
 
   return (
     <div>
@@ -92,8 +95,7 @@ const MakeProfile = () => {
             <Accordion.Item
               eventKey="about_section"
               className={`acc-item item-space  ${
-                (acc_status?.includes("about_section") || currentAccordion) &&
-                "change-background"
+                acc_status?.includes("about_section") && "change-background"
               }`}
               disabled={!acc_status?.includes("about_section")}
             >

@@ -99,6 +99,21 @@ function* postMakeProfileData(action) {
 }
 
 function* getPersonalInfo() {
+  let defaultAccordion = [
+    "personal_section",
+    "about_section",
+    "third_section",
+    "fourth_section",
+  ];
+  let newAccordion = [];
+  let currentOpened = localStorage.getItem("current_accordion");
+  let index = defaultAccordion.indexOf(currentOpened);
+  for (let i = 0; i <= index; i++) {
+    newAccordion.push(defaultAccordion[i]);
+  }
+
+  yield put({ type: "UPDATE_ACCORDION_STATUS", payload: newAccordion });
+
   try {
     let token = localStorage.getItem("login_token");
     yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: true });

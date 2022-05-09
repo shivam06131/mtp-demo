@@ -31,6 +31,9 @@ const dataReducer = (state = { acc_status: [] }, action) => {
       return (state = { ...state, teacher_data_updated: true });
 
     case "UPDATE_ACCORDION_STATUS":
+      if (Array.isArray(action.payload)) {
+        return (state = { ...state, acc_status: action.payload });
+      }
       return (state = {
         ...state,
         acc_status: !state.acc_status.includes(action.payload)
