@@ -231,7 +231,6 @@ const PersonalSection = () => {
         currency: values.billing_currency,
         ip,
       };
-      console.log("val", make_profile_detail);
       dispatch({ type: "MAKE_PROFILE", make_profile_detail });
     },
   });

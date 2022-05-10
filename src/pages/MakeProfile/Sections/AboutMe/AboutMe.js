@@ -22,16 +22,16 @@ const AboutMe = () => {
   const [selectValue, setSelectValue] = useState("");
   const [aboutMe, setAboutMe] = useState("");
   const [loading, setLoading] = useState(true);
-
   const dispatch = useDispatch();
-  const about_me_data = useSelector((state) => state.about_me_data);
 
+  //! getting and setting the about me data to the state
+  const about_me_data = useSelector((state) => state.about_me_data);
   useEffect(() => {
     about_me_data && setAboutMe(about_me_data.data.about_me);
   }, [about_me_data]);
 
+  //! populating the input fields when data arrives
   useEffect(() => {
-    console.log("filling data", aboutMe);
     aboutMe.own_tagline &&
       formik.setFieldValue(
         "tagline",
@@ -52,12 +52,12 @@ const AboutMe = () => {
         aboutMe.video_biography_url === null ? "" : aboutMe.video_biography_url
       );
   }, [aboutMe]);
-  console.log("about me", aboutMe);
 
   useEffect(() => {
     dispatch({ type: "GET_ABOUT_ME" });
   }, []);
 
+  //! react select options
   const options = [
     { value: "facebook", label: "facebook" },
     { value: "instagram", label: "instagram" },
@@ -65,6 +65,7 @@ const AboutMe = () => {
     { value: "Reliable Tutor", label: "Reliable Tutor" },
   ];
 
+  //! yup validation
   const schema = Yup.object().shape(
     {
       tagline: Yup.string().when("select", {
@@ -90,7 +91,7 @@ const AboutMe = () => {
     ["tagline", "select"]
   );
 
-  // console.log("aboutMe", aboutMe);
+  //! formik object
   const formik = useFormik({
     initialValues: {
       tagline: "",
@@ -111,14 +112,12 @@ const AboutMe = () => {
           values.video_link === "" ? null : values.video_link,
       };
       dispatch({ type: "UPDATE_ABOUT_ME", payload: payload_object });
-      // console.log("payload_object", payload_object);
     },
     validationSchema: schema,
   });
 
   //! loading state
   const loading_data = useSelector((state) => state.about_me_loader);
-  console.log("loading_data", loading_data);
   useEffect(() => {
     loading_data === false && setLoading(false);
   }, [loading_data]);
@@ -141,8 +140,6 @@ const AboutMe = () => {
       </div>
     );
   }
-
-  console.log("formik ", formik);
 
   return (
     <div>

@@ -47,8 +47,6 @@ const MakeProfile = () => {
     !accordionStatus.includes(...acc_status) && setAccordionStatus(acc_status);
   }, [acc_status]);
 
-  // console.log("accordionStatus", accordionStatus);
-
   useEffect(() => {
     open_next_accordion && setCurrentAccordion(open_next_accordion);
     open_next_accordion &&
@@ -99,7 +97,6 @@ const MakeProfile = () => {
               <Accordion.Header
                 className="acc-header"
                 onClick={(e) => {
-                  console.log("clicked");
                   e.stopPropagation();
                   if (acc_status?.includes("about_section")) {
                     handleCurrentAccordion("about_section");
@@ -124,7 +121,6 @@ const MakeProfile = () => {
               <Accordion.Header
                 className="acc-header"
                 onClick={(e) => {
-                  console.log("clicked");
                   e.stopPropagation();
                   if (acc_status?.includes("qualifications and experience")) {
                     handleCurrentAccordion("qualifications and experience");
