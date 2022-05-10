@@ -44,8 +44,19 @@ const AboutMe = () => {
       ) &&
       setSelectValue(aboutMe.tagline);
     aboutMe.biography && formik.setFieldValue("biography", aboutMe.biography);
+
+    let biography_len = 250 - aboutMe?.biography?.split(" ").length;
+    let tagline_len = 50 - aboutMe?.own_tagline?.split(" ").length;
+
+    tagline_len &&
+      formik.setFieldValue("tagline_count", tagline_len) &&
+      setTaglineCount(tagline_len);
+
     aboutMe.video_biography &&
       formik.setFieldValue("video_biography", aboutMe.video_biography);
+    biography_len &&
+      formik.setFieldValue("biography_count", biography_len) &&
+      setTextFieldCount(biography_len);
     aboutMe.video_biography_url &&
       formik.setFieldValue(
         "video_link",
@@ -99,6 +110,10 @@ const AboutMe = () => {
       biography: "",
       video_biography: "",
       video_link: "",
+      tagline_count: 50,
+      biography_count: aboutMe
+        ? 250 - aboutMe?.biography?.split(" ").length
+        : 250,
     },
     onSubmit: (values) => {
       let payload_object = {
@@ -115,6 +130,8 @@ const AboutMe = () => {
     },
     validationSchema: schema,
   });
+
+  console.log("Formik", formik);
 
   //! loading state
   const loading_data = useSelector((state) => state.about_me_loader);
@@ -165,7 +182,8 @@ const AboutMe = () => {
                     onChange={(e) => {
                       formik.setFieldValue("tagline", e.target.value);
                       let word = e.target.value;
-                      setTaglineCount(50 - word.length);
+                      let char_count = word.split(" ");
+                      setTaglineCount(50 - char_count.length);
                       // formik.handleChange;
                     }}
                     value={formik.values.tagline}
@@ -210,6 +228,7 @@ const AboutMe = () => {
                     // menuIsOpen={true}
                     onChange={(selectedOption) => {
                       setSelectValue(selectedOption?.value);
+
                       formik.setFieldValue("select", selectedOption?.value);
                     }}
                     placeholder={
@@ -250,9 +269,10 @@ const AboutMe = () => {
                     value={formik.values.biography}
                     onChange={(e) => {
                       let word = e.target.value;
-                      word.length < 700 &&
+                      let char_count = word.split(" ");
+                      char_count.length < 250 &&
                         formik.setFieldValue("biography", e.target.value);
-                      setTextFieldCount(700 - word.length);
+                      setTextFieldCount(250 - char_count.length);
                     }}
                   />
                   <p className="remaining-text">
