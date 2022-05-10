@@ -14,12 +14,14 @@ import * as Yup from "yup";
 import Dropzone from "react-dropzone-uploader";
 import chainImage from "../../assets/aboutMe/chain.png";
 import { useDispatch, useSelector } from "react-redux";
+import { ClipLoader } from "react-spinners";
 
 const AboutMe = () => {
   const [taglineCount, setTaglineCount] = useState(50);
   const [textFieldCount, setTextFieldCount] = useState(700);
   const [selectValue, setSelectValue] = useState("");
   const [aboutMe, setAboutMe] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
   const about_me_data = useSelector((state) => state.about_me_data);
@@ -30,18 +32,21 @@ const AboutMe = () => {
 
   useEffect(() => {
     console.log("filling data", aboutMe);
-    aboutMe &&
+    aboutMe.own_tagline &&
       formik.setFieldValue(
         "tagline",
         aboutMe.own_tagline === null ? "" : aboutMe.own_tagline
-      ) &&
+      );
+    aboutMe.tagline &&
       formik.setFieldValue(
         "select",
         aboutMe.tagline === null ? "" : aboutMe.tagline
       ) &&
-      setSelectValue(aboutMe.tagline) &&
-      formik.setFieldValue("biography", aboutMe.biography) &&
-      formik.setFieldValue("video_biography", aboutMe.video_biography) &&
+      setSelectValue(aboutMe.tagline);
+    aboutMe.biography && formik.setFieldValue("biography", aboutMe.biography);
+    aboutMe.video_biography &&
+      formik.setFieldValue("video_biography", aboutMe.video_biography);
+    aboutMe.video_biography_url &&
       formik.setFieldValue(
         "video_link",
         aboutMe.video_biography_url === null ? "" : aboutMe.video_biography_url
@@ -75,6 +80,12 @@ const AboutMe = () => {
         ),
       }),
       biography: Yup.string().required("Enter your biography."),
+      video_link: Yup.string()
+        .matches(
+          /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i,
+          "Please enter valid link"
+        )
+        .required("link is required"),
     },
     ["tagline", "select"]
   );
@@ -104,6 +115,32 @@ const AboutMe = () => {
     },
     validationSchema: schema,
   });
+
+  //! loading state
+  const loading_data = useSelector((state) => state.about_me_loader);
+  console.log("loading_data", loading_data);
+  useEffect(() => {
+    loading_data === false && setLoading(false);
+  }, [loading_data]);
+
+  //! rendering loader
+  if (loading) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          width: "100%",
+          backgroundColor: "#f4efe6",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          opacity: "0.7",
+        }}
+      >
+        <ClipLoader color={"#c6521e"} size={50} />
+      </div>
+    );
+  }
 
   console.log("formik ", formik);
 
@@ -170,14 +207,17 @@ const AboutMe = () => {
                     isDisabled={
                       formik.values.tagline?.length > 0 ? true : false
                     }
-                    value={formik.values.select}
+                    // defaultValue="default"
+                    // value={formik.values.select}
                     options={options}
                     // menuIsOpen={true}
                     onChange={(selectedOption) => {
                       setSelectValue(selectedOption?.value);
                       formik.setFieldValue("select", selectedOption?.value);
                     }}
-                    placeholder="Select..."
+                    placeholder={
+                      formik.values.select ? formik.values.select : "Select..."
+                    }
                   />
                 </Form.Group>
               </Form>
@@ -298,6 +338,11 @@ const AboutMe = () => {
             <p className="about-sub-requirements space-top">
               Maximum {taglineCount} characters.
             </p>
+            {formik.touched.video_link && formik.errors.video_link ? (
+              <span className="error make-profile-er">
+                {formik.errors.video_link}
+              </span>
+            ) : null}
           </Col>
           {/* -------------video link -----------------------  */}
           <p className="about-middle">or</p>

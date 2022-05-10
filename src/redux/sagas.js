@@ -98,12 +98,9 @@ function* postMakeProfileData(action) {
     );
     console.log("post request was successfull");
     yield put({ type: "TEACHER_DATA_UPDATE" });
-    console.log("done one");
     yield put({ type: "UPDATE_ACCORDION_STATUS", payload: "about_section" });
-    console.log("done two");
+
     yield put({ type: "OPEN_NEXT_ACCORDION", payload: "about_section" });
-    console.log("done three");
-    // console.log("action recived data", data);
     // yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
   } catch (error) {
     console.log("error occured at postMakeProfileData in saga.js");
@@ -114,7 +111,7 @@ function* getPersonalInfo() {
   let defaultAccordion = [
     "personal_section",
     "about_section",
-    "third_section",
+    "qualifications and experience",
     "fourth_section",
   ];
   let newAccordion = [];
@@ -127,21 +124,8 @@ function* getPersonalInfo() {
   yield put({ type: "UPDATE_ACCORDION_STATUS", payload: newAccordion });
 
   try {
-    let token = localStorage.getItem("login_token");
     yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: true });
     let data = yield instance.get("/teacher/get-personal-information");
-
-    // let data = yield axios.get(
-    //   "https://api.tutorspoint.uk/api/teacher/get-personal-information",
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${JSON.parse(token)}`,
-    //       "Access-Control-Allow-Origin": "*",
-    //       "content-type": "text/json",
-    //       allow: "*",
-    //     },
-    //   }
-    // );
     yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
     yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: false });
     yield put({ type: "UPDATE_ACCORDION_STATUS", payload: "about_section" });
@@ -160,6 +144,14 @@ function* updateAboutMe(action) {
   try {
     let data = yield instance.post("/teacher/update-about-me", action.payload);
     yield put({ type: "UPDATE_ABOUT_ME_INFO", data });
+    yield put({
+      type: "UPDATE_ACCORDION_STATUS",
+      payload: "qualifications and experience",
+    });
+    yield put({
+      type: "OPEN_NEXT_ACCORDION",
+      payload: "qualifications and experience",
+    });
   } catch (error) {
     console.log("error at updateAboutMe in saga.js", error);
   }
@@ -167,8 +159,28 @@ function* updateAboutMe(action) {
 
 function* getAboutMe() {
   try {
+    let defaultAccordion = [
+      "personal_section",
+      "about_section",
+      "qualifications and experience",
+      "fourth_section",
+    ];
+    let newAccordion = [];
+    let currentOpened = localStorage.getItem("current_accordion");
+    let index = defaultAccordion.indexOf(currentOpened);
+    for (let i = 0; i <= index; i++) {
+      newAccordion.push(defaultAccordion[i]);
+    }
+
+    yield put({ type: "UPDATE_ACCORDION_STATUS", payload: newAccordion });
+    yield put({ type: "STORE_ABOUT_ME_INFO_LOADER", payload: true });
     let data = yield instance.get("/teacher/get-about-me");
     yield put({ type: "STORE_ABOUT_ME", payload: data });
+    yield put({ type: "STORE_ABOUT_ME_INFO_LOADER", payload: false });
+    yield put({
+      type: "UPDATE_ACCORDION_STATUS",
+      payload: "qualifications and experience",
+    });
   } catch (error) {
     console.log("error at getAboutMe ", error);
   }

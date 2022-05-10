@@ -114,25 +114,24 @@ const MakeProfile = () => {
             </Accordion.Item>
             {/*--------------------------item 3 ---------- */}
             <Accordion.Item
-              eventKey="third_section"
+              eventKey="qualifications and experience"
               className={`acc-item item-space  ${
-                acc_status?.includes("third_section") && "change-background"
+                acc_status?.includes("qualifications and experience") &&
+                "change-background"
               }`}
-              disabled={!acc_status?.includes("third_section")}
+              disabled={!acc_status?.includes("qualifications and experience")}
             >
               <Accordion.Header
                 className="acc-header"
                 onClick={(e) => {
                   console.log("clicked");
                   e.stopPropagation();
-                  if (acc_status?.includes("third_section")) {
-                    setCurrentAccordion((prev) =>
-                      prev !== "third_section" ? "third_section" : ""
-                    );
+                  if (acc_status?.includes("qualifications and experience")) {
+                    handleCurrentAccordion("qualifications and experience");
                   }
                 }}
               >
-                Third Section
+                qualifications and experience
               </Accordion.Header>
               <Accordion.Body className="acc-body ">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.

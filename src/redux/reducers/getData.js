@@ -49,6 +49,10 @@ const dataReducer = (state = { acc_status: [] }, action) => {
 
     case "STORE_ABOUT_ME":
       return { ...state, about_me_data: action.payload };
+
+    case "STORE_ABOUT_ME_INFO_LOADER":
+      return { ...state, about_me_loader: action.payload };
+
     default:
       return state;
   }
