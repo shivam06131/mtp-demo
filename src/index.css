@@ -35,3 +35,92 @@ a {
   /* font-family: "Solitaire MVB Pro"; */
   text-decoration: none !important;
 }
+.custom-row {
+  margin-left: -25px !important;
+  margin-right: -25px !important;
+}
+.custom-gutter {
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  max-width: 522px;
+}
+.input-att {
+  outline: none !important;
+  border: none !important;
+  min-height: 40px !important;
+  padding-left: 17px !important;
+  border-radius: 0px !important;
+}
+.input-att.form-control:disabled {
+  background-color: #d6d6d6;
+  opacity: 1;
+}
+.input-field .form-group input {
+  font-size: 14px;
+  color: #999999;
+  line-height: 19px;
+  font-family: "solitaire-mvb-pro" !important;
+}
+.input-field .form-group input[type="text"]:focus,
+.input-field .form-group [type="text"].form-control:focus {
+  box-shadow: none;
+}
+.input-field .form-group textarea[type="textarea"]:focus,
+.input-field .form-group [type="text"].form-control:focus {
+  box-shadow: none;
+}
+.input-field .form-group input[type="number"]:focus,
+.input-field .form-group [type="text"].form-control:focus {
+  box-shadow: none;
+}
+
+.input-field .input-group .form-control {
+  box-shadow: none;
+  border: none;
+  border-radius: 0px;
+}
+.input-field .input-group .form-control:focus {
+  box-shadow: none;
+  border: none;
+  border-radius: 0px;
+}
+.input-field .input-group .input-group-text {
+  box-shadow: none;
+  border: none;
+  border-radius: 0px;
+}
+.input-field .input-group {
+  min-height: 40px;
+}
+
+.input-label {
+  font-size: 16px !important;
+  color: #666666 !important;
+  line-height: 20px !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 0px !important;
+  padding-right: 3px !important;
+  font-weight: 200 !important;
+  font-family: "solitaire-mvb-pro" !important;
+}
+.heading {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 30px;
+  color: #333333;
+  font-family: "solitaire-mvb-pro";
+  /* margin: 0px; */
+  padding-right: 1px;
+}
+.bio-head-wrap {
+  display: flex;
+  align-items: center;
+}
+.bio-head-img {
+  width: 16px;
+}

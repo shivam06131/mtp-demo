@@ -112,7 +112,7 @@ function* getPersonalInfo() {
     "personal_section",
     "about_section",
     "qualifications and experience",
-    "fourth_section",
+    "TEACHING PREFERENCES",
   ];
   let newAccordion = [];
   let currentOpened = localStorage.getItem("current_accordion");
@@ -163,7 +163,7 @@ function* getAboutMe() {
       "personal_section",
       "about_section",
       "qualifications and experience",
-      "fourth_section",
+      "TEACHING PREFERENCES",
     ];
     let newAccordion = [];
     let currentOpened = localStorage.getItem("current_accordion");
@@ -186,6 +186,58 @@ function* getAboutMe() {
   }
 }
 
+function* updateQualification(action) {
+  try {
+    let data = yield instance.post(
+      "/teacher/update-qualifications-and-experiences",
+      action.payload
+    );
+    console.log("data", data);
+    yield put({ type: "UPDATE_QUALIFICATION_INFO", payload: data });
+    yield put({
+      type: "UPDATE_ACCORDION_STATUS",
+      payload: "TEACHING PREFERENCES",
+    });
+    yield put({
+      type: "OPEN_NEXT_ACCORDION",
+      payload: "TEACHING PREFERENCES",
+    });
+  } catch (error) {
+    console.log("error at updateQualification in saga.js", error);
+  }
+}
+
+function* get_qualification() {
+  try {
+    let defaultAccordion = [
+      "personal_section",
+      "about_section",
+      "qualifications and experience",
+      "TEACHING PREFERENCES",
+    ];
+    let newAccordion = [];
+    let currentOpened = localStorage.getItem("current_accordion");
+    let index = defaultAccordion.indexOf(currentOpened);
+    for (let i = 0; i <= index; i++) {
+      newAccordion.push(defaultAccordion[i]);
+    }
+
+    yield put({ type: "UPDATE_ACCORDION_STATUS", payload: newAccordion });
+    yield put({ type: "STORE_QUALIFICATION_LOADER", payload: true });
+    let data = yield instance.get(
+      "/teacher/get-qualifications-and-experiences"
+    );
+    yield put({ type: "UPDATE_QUALIFICATION_INFO", payload: data });
+    yield put({ type: "STORE_QUALIFICATION_LOADER", payload: false });
+    yield put({
+      type: "UPDATE_ACCORDION_STATUS",
+      payload: "TEACHING PREFERENCES",
+    });
+  } catch (error) {
+    console.log("error at updateQualification in saga.js", error);
+  }
+}
+
 function* mySaga() {
   yield takeLatest("USER_FETCH_REQUESTED", fetchData);
   yield takeLatest("GET_VIDEO", getVideo);
@@ -197,6 +249,8 @@ function* mySaga() {
   yield takeLatest("PERSONAL_INFO_LOADER", setPersonalInfoLoader);
   yield takeLatest("UPDATE_ABOUT_ME", updateAboutMe);
   yield takeLatest("GET_ABOUT_ME", getAboutMe);
+  yield takeLatest("UPDATE_QUALIFICATION", updateQualification);
+  yield takeLatest("GET_QUALIFICATION", get_qualification);
 }
 
 export default mySaga;

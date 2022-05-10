@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AboutMe from "./Sections/AboutMe/AboutMe";
 import PersonalSection from "./Sections/PersonalSection/PersonalSection";
 import "./Sections/PersonalSection/PersonalSection.css";
+import Qualification from "./Sections/Qualification/Qualification";
 
 const MakeProfile = () => {
   const [accordionStatus, setAccordionStatus] = useState(["personal_section"]);
@@ -130,13 +131,31 @@ const MakeProfile = () => {
                 qualifications and experience
               </Accordion.Header>
               <Accordion.Body className="acc-body ">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Dolorum placeat praesentium aliquam cum ea rem eum in quisquam,
-                repellendus, nisi dolorem odio? Ipsum laboriosam magnam commodi
-                cupiditate libero id numquam deserunt, facilis iusto impedit
-                temporibus. Provident voluptate officiis voluptas tempore, unde
-                corporis laboriosam ipsum rem quasi. Facere ex voluptatum
-                maiores!
+                <Qualification />
+              </Accordion.Body>
+            </Accordion.Item>
+            {/*--------------------------item 4 ---------- */}
+            <Accordion.Item
+              eventKey="TEACHING PREFERENCES"
+              className={`acc-item item-space  ${
+                acc_status?.includes("TEACHING PREFERENCES") &&
+                "change-background"
+              }`}
+              disabled={!acc_status?.includes("TEACHING PREFERENCES")}
+            >
+              <Accordion.Header
+                className="acc-header"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (acc_status?.includes("TEACHING PREFERENCES")) {
+                    handleCurrentAccordion("TEACHING PREFERENCES");
+                  }
+                }}
+              >
+                TEACHING PREFERENCES
+              </Accordion.Header>
+              <Accordion.Body className="acc-body ">
+                <Qualification />
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

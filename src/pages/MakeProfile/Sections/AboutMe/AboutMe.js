@@ -131,8 +131,6 @@ const AboutMe = () => {
     validationSchema: schema,
   });
 
-  console.log("Formik", formik);
-
   //! loading state
   const loading_data = useSelector((state) => state.about_me_loader);
   useEffect(() => {
@@ -222,13 +220,9 @@ const AboutMe = () => {
                     isDisabled={
                       formik.values.tagline?.length > 0 ? true : false
                     }
-                    // defaultValue="default"
-                    // value={formik.values.select}
                     options={options}
-                    // menuIsOpen={true}
                     onChange={(selectedOption) => {
                       setSelectValue(selectedOption?.value);
-
                       formik.setFieldValue("select", selectedOption?.value);
                     }}
                     placeholder={

@@ -53,6 +53,9 @@ const dataReducer = (state = { acc_status: [] }, action) => {
     case "STORE_ABOUT_ME_INFO_LOADER":
       return { ...state, about_me_loader: action.payload };
 
+    case "UPDATE_QUALIFICATION_INFO":
+      return { ...state, qualification_info: action.payload };
+
     default:
       return state;
   }
