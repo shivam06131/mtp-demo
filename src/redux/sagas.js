@@ -96,12 +96,13 @@ function* postMakeProfileData(action) {
         },
       }
     );
-    console.log("post request was successfull");
+    console.log("post data posted", data);
     yield put({ type: "TEACHER_DATA_UPDATE" });
     yield put({ type: "UPDATE_ACCORDION_STATUS", payload: "about_section" });
 
     yield put({ type: "OPEN_NEXT_ACCORDION", payload: "about_section" });
-    // yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
+    //this was commented
+    yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
   } catch (error) {
     console.log("error occured at postMakeProfileData in saga.js");
   }
@@ -126,9 +127,12 @@ function* getPersonalInfo() {
   try {
     yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: true });
     let data = yield instance.get("/teacher/get-personal-information");
-    yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
     yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: false });
-    yield put({ type: "UPDATE_ACCORDION_STATUS", payload: "about_section" });
+
+    if (data?.data?.personal_information?.id_number) {
+      yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
+      yield put({ type: "UPDATE_ACCORDION_STATUS", payload: "about_section" });
+    }
   } catch (error) {
     yield put({ type: "GET_PERSONAL_DATA_LOADER", payload: true });
     console.log("error occoured at getPersonalInfo in sagas.js");
@@ -175,12 +179,15 @@ function* getAboutMe() {
     yield put({ type: "UPDATE_ACCORDION_STATUS", payload: newAccordion });
     yield put({ type: "STORE_ABOUT_ME_INFO_LOADER", payload: true });
     let data = yield instance.get("/teacher/get-about-me");
-    yield put({ type: "STORE_ABOUT_ME", payload: data });
     yield put({ type: "STORE_ABOUT_ME_INFO_LOADER", payload: false });
-    yield put({
-      type: "UPDATE_ACCORDION_STATUS",
-      payload: "qualifications and experience",
-    });
+
+    if (data?.data?.about_me?.biography?.length > 0) {
+      yield put({ type: "STORE_ABOUT_ME", payload: data });
+      yield put({
+        type: "UPDATE_ACCORDION_STATUS",
+        payload: "qualifications and experience",
+      });
+    }
   } catch (error) {
     console.log("error at getAboutMe ", error);
   }
@@ -192,7 +199,6 @@ function* updateQualification(action) {
       "/teacher/update-qualifications-and-experiences",
       action.payload
     );
-    console.log("data", data);
     yield put({ type: "UPDATE_QUALIFICATION_INFO", payload: data });
     yield put({
       type: "UPDATE_ACCORDION_STATUS",
@@ -227,12 +233,15 @@ function* get_qualification() {
     let data = yield instance.get(
       "/teacher/get-qualifications-and-experiences"
     );
-    yield put({ type: "UPDATE_QUALIFICATION_INFO", payload: data });
     yield put({ type: "STORE_QUALIFICATION_LOADER", payload: false });
-    yield put({
-      type: "UPDATE_ACCORDION_STATUS",
-      payload: "TEACHING PREFERENCES",
-    });
+
+    if (data?.data?.user_qualifications[0]?.college) {
+      yield put({ type: "UPDATE_QUALIFICATION_INFO", payload: data });
+      yield put({
+        type: "UPDATE_ACCORDION_STATUS",
+        payload: "TEACHING PREFERENCES",
+      });
+    }
   } catch (error) {
     console.log("error at updateQualification in saga.js", error);
   }

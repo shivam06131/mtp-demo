@@ -200,6 +200,7 @@ const PersonalSection = () => {
 
     //! formik onsubmit
     onSubmit: (values) => {
+      console.log("clicked");
       let make_profile_detail = {
         first_name: values.first_name,
         last_name: values.last_name,
@@ -231,7 +232,9 @@ const PersonalSection = () => {
         currency: values.billing_currency,
         ip,
       };
+      console.log("dispatching", make_profile_detail);
       dispatch({ type: "MAKE_PROFILE", make_profile_detail });
+      console.log("dispatching done");
     },
   });
 

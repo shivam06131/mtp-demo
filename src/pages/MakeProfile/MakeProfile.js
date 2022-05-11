@@ -155,7 +155,13 @@ const MakeProfile = () => {
                 TEACHING PREFERENCES
               </Accordion.Header>
               <Accordion.Body className="acc-body ">
-                <Qualification />
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Delectus facere hic velit, quisquam vitae repellat assumenda
+                minus explicabo esse saepe cum aliquam, voluptatem porro,
+                molestias iusto provident facilis adipisci. Voluptate nesciunt
+                deserunt iusto, aut quidem tempore quis voluptatibus
+                reprehenderit aliquid eos, alias harum tenetur corporis saepe
+                modi facere! Et, accusamus!
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
