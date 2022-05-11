@@ -92,13 +92,31 @@ const Qualification = () => {
   };
 
   //! yup form validation
-  const validate = Yup.object({
-    college: Yup.string().required("Enter your University or College."),
-    select: Yup.string().required("Select your qualification."),
-    image: Yup.string().required(
-      "Upload the certificate for your qualification."
-    ),
-  });
+  // const validate = Yup.object({
+  //   college: Yup.string().required("Enter your University or College."),
+  //   select: Yup.string().required("Select your qualification."),
+  //   image: Yup.string().required(
+  //     "Upload the certificate for your qualification."
+  //   ),
+  // });
+  const validate = Yup.object().shape(
+    {
+      college: Yup.string().required("Enter your University or College."),
+      select: Yup.string().required("Select your qualification."),
+      dob: Yup.string().when("studying", {
+        is: (studying) => !studying || studying.length === 0,
+        then: Yup.string().required("Enter the date when you graduated."),
+      }),
+      image: Yup.string().when("studying", {
+        is: (studying) => !studying || studying.length === 0,
+        then: Yup.string().required(
+          "Upload the certificate for your qualification."
+        ),
+      }),
+    },
+    ["dob", "image", "studying"]
+  );
+
   const formInitialValues = {
     college: qualificationInfo ? qualificationInfo.college : "",
     select: qualificationInfo
