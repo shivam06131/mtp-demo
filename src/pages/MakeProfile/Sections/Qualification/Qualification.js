@@ -11,36 +11,74 @@ import Dropzone from "react-dropzone-uploader";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
+import { ClipLoader } from "react-spinners";
 
 const Qualification = () => {
   const [dateValue, setDateValue] = useState();
   const [qualificationInfo, setQualificationInfo] = useState();
+  const [loading, setLoading] = useState(true);
+  const [dropdownOptions, setDropdownOptions] = useState([]);
   const dispatch = useDispatch();
 
-  console.log("qualificationInfo", qualificationInfo);
-
+  //! when component mounts
   useEffect(() => {
     dispatch({ type: "GET_QUALIFICATION" });
+    dispatch({ type: "GET_QUALIFICATION_OPTIONS" });
   }, []);
 
-  //! getting and setting the about me data to the state
-  const about_me_data = useSelector((state) => state.about_me_data);
+  //! populating the input fields
   useEffect(() => {
-    about_me_data && setQualificationInfo(about_me_data.data.about_me);
-  }, [about_me_data]);
+    qualificationInfo &&
+      qualificationInfo?.college &&
+      formik.setFieldValue("college", qualificationInfo.college);
+    qualificationInfo?.currently_studing &&
+      formik.setFieldValue("studying", qualificationInfo.currently_studing);
+    qualificationInfo?.file &&
+      formik.setFieldValue("image", qualificationInfo.file);
+    // qualificationInfo.id && formik.setFieldValue("id", qualificationInfo.id);
+    qualificationInfo?.qualification_id &&
+      formik.setFieldValue(
+        "select",
+        dropdownOptions[qualificationInfo?.qualification_id]?.value
+      );
+  }, [qualificationInfo]);
 
-  const handleDateChange = (val) => {
-    setDateValue(val);
-    val = String(val);
-    formik.setFieldValue("dob", val);
-  };
+  //! getting and setting the qualification_info data to the state
+  const qualification_info = useSelector((state) => state.qualification_info);
 
-  const options = [
-    { value: "phD", label: "phD" },
-    { value: "Doctorate", label: "Doctorate" },
-    { value: "A Level", label: "A Level" },
-  ];
+  useEffect(() => {
+    qualification_info?.data?.user_qualifications?.length > 0 &&
+      setQualificationInfo(qualification_info?.data?.user_qualifications[0]);
+  }, [qualification_info]);
 
+  //! getting and setting the qualification_options data to the state
+  const qualification_options = useSelector(
+    (state) => state.qualification_options
+  );
+
+  useEffect(() => {
+    let drpOpt = [];
+    qualification_options &&
+      qualification_options?.data?.qualifications &&
+      qualification_options?.data?.qualifications.map((item) =>
+        drpOpt.push({
+          value: item.en_name,
+          label: item.en_name,
+          ...item,
+        })
+      );
+    setDropdownOptions(drpOpt);
+  }, [qualification_options]);
+
+  //! loading state
+  const qualification_loader = useSelector(
+    (state) => state.qualification_loader
+  );
+  useEffect(() => {
+    qualification_loader === false && setLoading(false);
+  }, [qualification_loader]);
+
+  //! setting up the dropzone value
   const handleChangeStatus = ({ meta, file }, status) => {
     if (status === "done") {
       const reader = new FileReader();
@@ -51,6 +89,7 @@ const Qualification = () => {
     }
   };
 
+  //! yup form validation
   const validate = Yup.object({
     college: Yup.string().required("Enter your University or College."),
     select: Yup.string().required("Select your qualification."),
@@ -67,19 +106,21 @@ const Qualification = () => {
       studying: false,
       image: "",
     },
+
+    //! validation formik with yup
     validationSchema: validate,
 
+    //! handling formik submit
     onSubmit: (values) => {
-      console.log("clicked");
       let count = 1;
       let countValue;
-      for (let x of options) {
+      for (let x of dropdownOptions) {
         if (x.value === values.select) {
           countValue = count;
         }
         count++;
       }
-
+      console.log("submitting");
       let payload_object = {
         deleted_user_experiences: [],
         deleted_user_qualifications: [],
@@ -95,7 +136,7 @@ const Qualification = () => {
         ],
         user_qualifications: [
           {
-            id: null,
+            id: qualificationInfo?.id ? qualificationInfo.id : null,
             certified: false,
             college: values.college,
             graduated_date: values.dob,
@@ -106,9 +147,42 @@ const Qualification = () => {
         ],
       };
       dispatch({ type: "UPDATE_QUALIFICATION", payload: payload_object });
-      //   console.log("payload_object", payload_object);
     },
   });
+
+  //! rendering loader
+  if (loading) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          width: "100%",
+          backgroundColor: "#f4efe6",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          opacity: "0.7",
+        }}
+      >
+        <ClipLoader color={"#c6521e"} size={50} />
+      </div>
+    );
+  }
+  //! select options
+  const options = [
+    { value: "phD", label: "phD" },
+    { value: "Doctorate", label: "Doctorate" },
+    { value: "A Level", label: "A Level" },
+  ];
+
+  //! date change handler
+  const handleDateChange = (val) => {
+    setDateValue(val);
+    val = String(val);
+    formik.setFieldValue("dob", val);
+  };
+
+  console.log("formik", formik);
 
   return (
     <div className="qualification-wrap">
@@ -122,6 +196,7 @@ const Qualification = () => {
           <img className="bio-head-img" src={infoIcon} alt="" />
         </OverlayTrigger>
       </div>
+
       <Row className="custom-row">
         <Col className="custom-gutter">
           {/* -------------------- college ------------------------ */}
@@ -157,7 +232,7 @@ const Qualification = () => {
                   name="select"
                   isClearable
                   className="select-new target2"
-                  options={options}
+                  options={dropdownOptions}
                   onChange={(selectedOption) => {
                     formik.setFieldValue("select", selectedOption?.value);
                   }}
@@ -191,12 +266,8 @@ const Qualification = () => {
                 id="dob"
                 name="dob"
                 calendarIcon={<CalenderIconComponent />}
+                cd
               />
-              {/* {formik.touched.dob && formik.errors.dob ? (
-                  <span className="error make-profile-er">
-                    {formik.errors.dob}
-                  </span>
-                ) : null} */}
             </div>
             <div className="input-field  small-field align-content">
               <Form>
@@ -206,6 +277,7 @@ const Qualification = () => {
                   label="Currently Studying"
                   id="studying"
                   name="studying"
+                  checked={formik.values.studying}
                   value={formik.values.studying}
                   onChange={formik.handleChange}
                 />
@@ -219,7 +291,7 @@ const Qualification = () => {
             onChangeStatus={handleChangeStatus}
             multiple={true}
             maxSizeBytes="3145728"
-            // disabled={formik?.values?.house ? true : false}
+            disabled={formik?.values?.studying ? true : false}
             accept="image/*,audio/*,video/*"
             inputWithFilesContent="Add File"
             inputContent={

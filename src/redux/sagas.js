@@ -247,6 +247,16 @@ function* get_qualification() {
   }
 }
 
+function* get_qualification_options() {
+  try {
+    let data = yield instance.get("/teacher/get-qualifications");
+    console.log("data received", data);
+    yield put({ type: "STORE_QUALIFICATION_OPTIONS", payload: data });
+  } catch (error) {
+    console.log("error at get_qualification_options in saga.js", error);
+  }
+}
+
 function* mySaga() {
   yield takeLatest("USER_FETCH_REQUESTED", fetchData);
   yield takeLatest("GET_VIDEO", getVideo);
@@ -260,6 +270,7 @@ function* mySaga() {
   yield takeLatest("GET_ABOUT_ME", getAboutMe);
   yield takeLatest("UPDATE_QUALIFICATION", updateQualification);
   yield takeLatest("GET_QUALIFICATION", get_qualification);
+  yield takeLatest("GET_QUALIFICATION_OPTIONS", get_qualification_options);
 }
 
 export default mySaga;
