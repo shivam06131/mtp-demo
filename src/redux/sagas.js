@@ -127,12 +127,12 @@ function* getPersonalInfo() {
   try {
     yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: true });
     let data = yield instance.get("/teacher/get-personal-information");
-    yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: false });
 
     if (data?.data?.personal_information?.id_number) {
       yield put({ type: "STORE_PERSONAL_INFO_DATA", payload: data });
       yield put({ type: "UPDATE_ACCORDION_STATUS", payload: "about_section" });
     }
+    yield put({ type: "STORE_PERSONAL_INFO_LOADER", payload: false });
   } catch (error) {
     yield put({ type: "GET_PERSONAL_DATA_LOADER", payload: true });
     console.log("error occoured at getPersonalInfo in sagas.js");
@@ -179,7 +179,6 @@ function* getAboutMe() {
     yield put({ type: "UPDATE_ACCORDION_STATUS", payload: newAccordion });
     yield put({ type: "STORE_ABOUT_ME_INFO_LOADER", payload: true });
     let data = yield instance.get("/teacher/get-about-me");
-    yield put({ type: "STORE_ABOUT_ME_INFO_LOADER", payload: false });
 
     if (data?.data?.about_me?.biography?.length > 0) {
       yield put({ type: "STORE_ABOUT_ME", payload: data });
@@ -187,6 +186,7 @@ function* getAboutMe() {
         type: "UPDATE_ACCORDION_STATUS",
         payload: "qualifications and experience",
       });
+      yield put({ type: "STORE_ABOUT_ME_INFO_LOADER", payload: false });
     }
   } catch (error) {
     console.log("error at getAboutMe ", error);
@@ -233,7 +233,6 @@ function* get_qualification() {
     let data = yield instance.get(
       "/teacher/get-qualifications-and-experiences"
     );
-    yield put({ type: "STORE_QUALIFICATION_LOADER", payload: false });
 
     if (data?.data?.user_qualifications[0]?.college) {
       yield put({ type: "UPDATE_QUALIFICATION_INFO", payload: data });
@@ -241,6 +240,7 @@ function* get_qualification() {
         type: "UPDATE_ACCORDION_STATUS",
         payload: "TEACHING PREFERENCES",
       });
+      yield put({ type: "STORE_QUALIFICATION_LOADER", payload: false });
     }
   } catch (error) {
     console.log("error at updateQualification in saga.js", error);

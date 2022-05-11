@@ -27,21 +27,23 @@ const Qualification = () => {
   }, []);
 
   //! populating the input fields
-  useEffect(() => {
-    qualificationInfo &&
-      qualificationInfo?.college &&
-      formik.setFieldValue("college", qualificationInfo.college);
-    qualificationInfo?.currently_studing &&
-      formik.setFieldValue("studying", qualificationInfo.currently_studing);
-    qualificationInfo?.file &&
-      formik.setFieldValue("image", qualificationInfo.file);
-    // qualificationInfo.id && formik.setFieldValue("id", qualificationInfo.id);
-    qualificationInfo?.qualification_id &&
-      formik.setFieldValue(
-        "select",
-        dropdownOptions[qualificationInfo?.qualification_id]?.value
-      );
-  }, [qualificationInfo]);
+  // useEffect(() => {
+  //   console.log("qualificationInfo", qualificationInfo);
+  //   qualificationInfo &&
+  //     qualificationInfo?.college &&
+  //     formik.setFieldValue("college", qualificationInfo.college);
+  //   qualificationInfo?.currently_studing &&
+  //     formik.setFieldValue("studying", qualificationInfo.currently_studing);
+  //   qualificationInfo?.file &&
+  //     formik.setFieldValue("image", qualificationInfo.file);
+  //   // qualificationInfo.id && formik.setFieldValue("id", qualificationInfo.id);
+  //   qualificationInfo?.qualification_id &&
+  //     formik.setFieldValue(
+  //       "select",
+  //       dropdownOptions[qualificationInfo?.qualification_id - 1]?.value
+  //     ) &&
+  //     formik.setFieldValue("select_id", qualificationInfo.qualification_id);
+  // }, [qualificationInfo, dropdownOptions]);
 
   //! getting and setting the qualification_info data to the state
   const qualification_info = useSelector((state) => state.qualification_info);
@@ -97,31 +99,28 @@ const Qualification = () => {
       "Upload the certificate for your qualification."
     ),
   });
+  const formInitialValues = {
+    college: qualificationInfo ? qualificationInfo.college : "",
+    select: qualificationInfo
+      ? dropdownOptions[qualificationInfo?.qualification_id - 1]?.value
+      : "",
+    dob: "",
+    studying: qualificationInfo ? qualificationInfo.currently_studing : false,
+    image: qualificationInfo ? qualificationInfo.file : "",
+    select_id: qualificationInfo ? qualificationInfo.qualification_id : "",
+  };
 
   const formik = useFormik({
-    initialValues: {
-      college: "",
-      select: "",
-      dob: "",
-      studying: false,
-      image: "",
-    },
+    initialValues: formInitialValues,
+    enableReinitialize: true,
 
     //! validation formik with yup
     validationSchema: validate,
 
     //! handling formik submit
     onSubmit: (values) => {
-      let count = 1;
-      let countValue;
-      for (let x of dropdownOptions) {
-        if (x.value === values.select) {
-          countValue = count;
-        }
-        count++;
-      }
-      console.log("submitting");
-      let payload_object = {
+      console.log("submitting", values);
+      let editFormVariables = {
         deleted_user_experiences: [],
         deleted_user_qualifications: [],
         teaching_experience: "",
@@ -139,16 +138,17 @@ const Qualification = () => {
             id: qualificationInfo?.id ? qualificationInfo.id : null,
             certified: false,
             college: values.college,
-            graduated_date: values.dob,
+            graduated_date: values.dob === "" ? null : values.dob,
             currently_studing: values.studying,
             file: values.image,
-            qualification_id: countValue,
+            qualification_id: values.select_id,
           },
         ],
       };
-      dispatch({ type: "UPDATE_QUALIFICATION", payload: payload_object });
+      dispatch({ type: "UPDATE_QUALIFICATION", payload: editFormVariables });
     },
   });
+  console.log("formik", formik);
 
   //! rendering loader
   if (loading) {
@@ -168,12 +168,6 @@ const Qualification = () => {
       </div>
     );
   }
-  //! select options
-  const options = [
-    { value: "phD", label: "phD" },
-    { value: "Doctorate", label: "Doctorate" },
-    { value: "A Level", label: "A Level" },
-  ];
 
   //! date change handler
   const handleDateChange = (val) => {
@@ -181,8 +175,6 @@ const Qualification = () => {
     val = String(val);
     formik.setFieldValue("dob", val);
   };
-
-  console.log("formik", formik);
 
   return (
     <div className="qualification-wrap">
@@ -234,7 +226,9 @@ const Qualification = () => {
                   className="select-new target2"
                   options={dropdownOptions}
                   onChange={(selectedOption) => {
+                    // console.log("selectedOption", selectedOption);
                     formik.setFieldValue("select", selectedOption?.value);
+                    formik.setFieldValue("select_id", selectedOption?.id);
                   }}
                   placeholder={
                     formik.values.select ? formik.values.select : "Select..."
